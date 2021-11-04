@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -12,29 +12,27 @@ import {
 } from './types';
 import { LoginModel, RegisterModel } from '../models/userModel';
 import setAlert from './alert';
-// import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async (dispatch: any) => {
   const privateToken = localStorage.token ? localStorage.token : '';
 
-  try {
-    const res = await axios.get('http://localhost:5000/api/auth', {
-      headers: {
-        'x-auth-token': privateToken,
-      },
-    });
-
-    dispatch({ type: USER_LOADED, payload: res.data });
-  } catch (err: any) {
-    const { errors } = err.response.data;
-
-    if (errors) {
-      errors.forEach((error: any) =>
-        dispatch(setAlert({ msg: error.msg, alertType: 'danger' })),
-      );
-    }
-    dispatch({ type: AUTH_ERROR });
+  if (privateToken.trim().length > 0) {
+    const res = await axios
+      .get('http://localhost:5000/api/auth', {
+        headers: {
+          'x-auth-token': privateToken,
+        },
+      })
+      .then((response: AxiosResponse) => {
+        dispatch({ type: USER_LOADED, payload: response.data });
+      })
+      .catch((err: Error | AxiosError) => {
+        if (axios.isAxiosError(err)) {
+          dispatch(setAlert({ msg: err.message, alertType: 'danger' }));
+          dispatch({ type: AUTH_ERROR });
+        }
+      });
   }
 };
 
@@ -49,24 +47,24 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
   };
   const body = JSON.stringify({ email, password });
 
-  try {
-    const res = await axios.post(
-      'http://localhost:5000/api/auth',
-      body,
-      config,
-    );
-    dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-    dispatch(loadUser());
-  } catch (err: any) {
-    const { errors } = err.response.data;
+  // try {
+  const res = await axios
+    .post('http://localhost:5000/api/auth', body, config)
+    .then((response) => {
+      dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+      dispatch(loadUser());
+    })
+    .catch((err) => {
+      const { errors } = err.response?.data;
 
-    if (errors) {
-      errors.forEach((error: any) =>
-        dispatch(setAlert({ msg: error.msg, alertType: 'danger' })),
-      );
-    }
-    dispatch({ type: LOGIN_FAIL });
-  }
+      if (errors) {
+        errors.forEach((error: any) => {
+          dispatch(setAlert({ msg: error.msg, alertType: 'danger' }));
+        });
+      }
+
+      dispatch({ type: LOGIN_FAIL });
+    });
 };
 
 // Register User
@@ -77,7 +75,7 @@ export const register = (data: RegisterModel) => async (dispatch: any) => {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ name: username, email, password });
+  const body = JSON.stringify({ username, email, password });
 
   try {
     const res = await axios.post(

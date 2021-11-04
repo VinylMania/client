@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadUser, login } from '../../actions/auth';
 import { LoginModel } from '../../models/userModel';
 import Input from '../UI/Input';
-import Button from '../UI/Button';
 
 export const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -64,9 +63,6 @@ export const Login: React.FC = () => {
           type="submit"
           className="text-white bg-blue-600 border-1 text-center p-2 m-2 rounded-xl cursor-pointer"
         />
-
-        <Button text="Alert" />
-        <Button text="Good" />
       </form>
     </div>
   );

@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { Redirect } from 'react-router';
 import Input from '../UI/Input';
-import Button from '../UI/Button';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RegisterModel } from '../../models/userModel';
 import { loadUser, register } from '../../actions/auth';

@@ -18,6 +18,15 @@ export const Navbar: React.FC = () => {
       <Link className="text-gray-50 hover:underline p-2" to="/login">
         <p>Login</p>
       </Link>
+      <Link className="text-gray-50 hover:underline p-2" to="/artists">
+        <p>Artists</p>
+      </Link>
+      <Link className="text-gray-50 hover:underline p-2" to="/albums">
+        <p>Albums</p>
+      </Link>
+      <Link className="text-gray-50 hover:underline p-2" to="/add-vinyl">
+        <p>Add Vinyl</p>
+      </Link>
     </nav>
   );
   const guestNavbar = (
@@ -31,6 +40,15 @@ export const Navbar: React.FC = () => {
       </a>
       <Link className="text-gray-50 hover:underline p-2" to="/home">
         <p>Homepage</p>
+      </Link>
+      <Link className="text-gray-50 hover:underline p-2" to="/artists">
+        <p>Artists</p>
+      </Link>
+      <Link className="text-gray-50 hover:underline p-2" to="/albums">
+        <p>Albums</p>
+      </Link>
+      <Link className="text-gray-50 hover:underline p-2" to="/add-vinyl">
+        <p>Add Vinyl</p>
       </Link>
     </nav>
   );

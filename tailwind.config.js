@@ -17,6 +17,7 @@ module.exports = {
       blue: colors.blue,
       green: colors.emerald,
       fuschia: colors.fuchsia,
+      violet: colors.violet,
     },
     extend: {},
   },
