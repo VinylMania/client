@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -10,24 +10,26 @@ import {
   CLEAR_PROFILE,
   LOGOUT,
 } from './types';
-import { LoginModel, RegisterModel } from '../models/userModel';
+import { LoginModel, RegisterModel, UserModel } from '../models/userModel';
 import setAlert from './alert';
+import { ErrorModel } from '../models/errorModel';
 
 // Load User
 export const loadUser = () => async (dispatch: any) => {
   const privateToken = localStorage.token ? localStorage.token : '';
 
   if (privateToken.trim().length > 0) {
-    const res = await axios
+    axios
       .get('http://localhost:5000/api/auth', {
         headers: {
           'x-auth-token': privateToken,
         },
       })
-      .then((response: AxiosResponse) => {
+      .then((response: AxiosResponse<UserModel>) => {
         dispatch({ type: USER_LOADED, payload: response.data });
       })
-      .catch((err: Error | AxiosError) => {
+      .catch((err: { response: { data: ErrorModel } }) => {
+        const { errors } = err.response?.data;
         if (axios.isAxiosError(err)) {
           dispatch(setAlert({ msg: err.message, alertType: 'danger' }));
           dispatch({ type: AUTH_ERROR });
@@ -77,25 +79,28 @@ export const register = (data: RegisterModel) => async (dispatch: any) => {
   };
   const body = JSON.stringify({ username, email, password });
 
-  try {
-    const res = await axios.post(
-      'http://localhost:5000/api/users',
-      body,
-      config,
-    );
+  axios
+    .post('http://localhost:5000/api/users', body, config)
+    .then((response: AxiosResponse<string>) => {
+      dispatch({ type: REGISTER_SUCCESS, payload: response.data });
+      dispatch(loadUser());
+    })
+    .catch((err: { response: { data: ErrorModel } }) => {
+      const { errors } = err.response.data;
 
-    dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-    dispatch(loadUser());
-  } catch (err: any) {
-    const { errors } = err.response.data;
+      if (errors) {
+        errors.forEach((error: any) =>
+          dispatch(setAlert({ alertType: 'danger', msg: error.msg })),
+        );
+      }
+      dispatch({ type: REGISTER_FAIL });
+    });
+  // .then((response: AxiosResponse<{ token: string }>) => {
 
-    if (errors) {
-      errors.forEach((error: any) =>
-        dispatch(setAlert({ alertType: 'danger', msg: error.msg })),
-      );
-    }
-    dispatch({ type: REGISTER_FAIL });
-  }
+  // })
+  // .catch((err: AxiosError<ErrorModel>) => {
+  //   const { errors } = err.response.data;
+  // });
 };
 
 // Logout / Clear profile

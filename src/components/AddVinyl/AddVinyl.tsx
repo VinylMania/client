@@ -1,51 +1,70 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import Albums from '../albums/Albums';
-import Artists from '../artists/Artists';
+import { Navigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getLibrary, updateLibrary } from '../../actions/library';
+import { updateLibrary } from '../../actions/library';
+
+import { getArtists, getAlbums } from '../../actions/discogs';
+import DiscogInput from '../API input/DiscogInput';
 
 const AddVinyl: React.FC = (props) => {
   const dispatch = useAppDispatch();
   const [artistDetail, setArtistDetail] = useState<any>();
   const [albumDetail, setAlbumDetail] = useState<any>();
-  const [userId, setUserId] = useState('');
 
-  const user = useAppSelector((state) => state.root.authReducer.user);
+  // Redirect if user authenticated
+  const isAuth = useAppSelector(
+    (state) => state.root.authReducer.isAuthenticated,
+  );
 
-  useEffect(() => {
-    if (user) {
-      const { _id: id } = user;
-      setUserId(id);
-    }
-  }, [user]);
+  if (!isAuth) {
+    return <Navigate to="/home" />;
+  }
 
   const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    dispatch(
-      updateLibrary({
-        artistId: artistDetail.id,
-        albumId: albumDetail.id,
-      }),
-    );
+
+    if (artistDetail && albumDetail) {
+      const albumObject = {
+        artistId: artistDetail.id !== null ? artistDetail.id : '',
+        albumId: albumDetail.id !== null ? albumDetail.id : '',
+        albumCoverUrl:
+          albumDetail.cover_image !== null ? albumDetail.cover_image : '',
+        artistCoverUrl:
+          artistDetail.cover_image !== null ? artistDetail.cover_image : '',
+        releaseDate: albumDetail.year !== null ? albumDetail.year : '',
+        artistTitle: artistDetail.title !== null ? artistDetail.title : '',
+        albumTitle: albumDetail.title !== null ? albumDetail.title : '',
+      };
+
+      dispatch(updateLibrary(albumObject));
+    }
   };
   return (
     <>
       <form onSubmit={(e) => onSubmit(e)}>
-        <input
-          type="text"
-          name="user_id"
-          value={userId.trim().length > 0 ? userId : 'Please log in'}
-          disabled
+        <DiscogInput
+          searchDelay={500}
+          searchLength={2}
+          additionalQuery={null}
+          setResultDetail={setArtistDetail}
+          getResultFn={getArtists}
+          placeholder="Nom de l'artiste"
+          inputValue={artistDetail ? artistDetail.title : ''}
         />
-        <Artists
-          artistDetail={artistDetail}
-          setArtistDetail={setArtistDetail}
-        />
-        <Albums
-          artistDetail={artistDetail}
-          albumDetail={albumDetail}
-          setAlbumDetail={setAlbumDetail}
-        />
+
+        {artistDetail && (
+          <DiscogInput
+            searchDelay={500}
+            searchLength={1}
+            additionalQuery={
+              artistDetail.title.length > 0 ? artistDetail.title : ''
+            }
+            setResultDetail={setAlbumDetail}
+            getResultFn={getAlbums}
+            placeholder="Nom de l'album"
+            inputValue={albumDetail ? albumDetail.title : ''}
+          />
+        )}
         <button type="submit">Submit</button>
       </form>
     </>

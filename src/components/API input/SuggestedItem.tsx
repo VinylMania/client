@@ -3,16 +3,16 @@
 /* eslint-disable camelcase */
 import React, { useState, useRef } from 'react';
 
-const ArtistItem: React.FC<{
-  artist: any;
-  setArtistDetail: any;
+const SuggestedItem: React.FC<{
+  result: any;
+  setResultDetail: any;
   lockInput: any;
 }> = (props) => {
   const [isHover, setIsHover] = useState<boolean>(false);
-  const { artist, setArtistDetail, lockInput } = props;
+  const { result, setResultDetail, lockInput } = props;
   const hoverPosition = useRef<HTMLSpanElement>(null);
-  const onClick = (artistId: number): void => {
-    setArtistDetail(artist);
+  const onClick = (resultId: number): void => {
+    setResultDetail(result);
     lockInput();
   };
 
@@ -26,20 +26,20 @@ const ArtistItem: React.FC<{
 
   return (
     <>
-      {artist && (
+      {result && (
         <div className="cursor-pointer border-black border-b-2 overflow-hidden">
           <p
             // onMouseEnter={onHover}
             // onMouseLeave={stopHover}
-            onClick={() => onClick(artist)}
+            onClick={() => onClick(result)}
             className="text-cyan-700"
           >
-            {artist.title}
+            {result.title}
             {/* <span className={isHover ? 'absolute' : 'hidden'}>
               <img
                 className="w-14 h-auto "
-                src={artist.thumb}
-                alt={artist.title}
+                src={result.thumb}
+                alt={result.title}
               />
             </span> */}
           </p>
@@ -48,4 +48,4 @@ const ArtistItem: React.FC<{
     </>
   );
 };
-export default ArtistItem;
+export default SuggestedItem;

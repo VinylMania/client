@@ -1,4 +1,4 @@
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router';
 import React, { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadUser, login } from '../../actions/auth';
@@ -31,7 +31,7 @@ export const Login: React.FC = () => {
   );
 
   if (isAuth) {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
   return (
     <div className="border-blue-300 mx-auto w-3/5 border-2  p-6 rounded-xl">

@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router';
 import Input from '../UI/Input';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RegisterModel } from '../../models/userModel';
@@ -38,7 +38,7 @@ const Register: React.FC = () => {
   );
 
   if (isAuth) {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
 
   return (
