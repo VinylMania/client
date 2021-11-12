@@ -19,6 +19,8 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks'],
   rules: {
+    camelcase: 'off',
+    'no-underscore-dangle': 'off',
     'object-curly-newline': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',

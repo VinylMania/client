@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ErrorModel } from '../models/errorModel';
 import { UserProfileModel } from '../models/userModel';
 import { setAlert } from './alert';
@@ -17,13 +17,15 @@ export const getUserProfileById =
       .then((response: AxiosResponse<UserProfileModel>) => {
         callback(response.data);
       })
-      .catch((err: { response: { data: ErrorModel } }) => {
-        const { errors } = err.response?.data;
+      .catch((err: AxiosError<ErrorModel>) => {
+        if (err.response !== undefined) {
+          const { errors } = err.response.data;
 
-        if (errors) {
-          errors.forEach((error) => {
-            dispatch(setAlert({ msg: error.msg, alertType: 'danger' }));
-          });
+          if (errors) {
+            errors.forEach((error) => {
+              dispatch(setAlert({ msg: error.msg, alertType: 'warning' }));
+            });
+          }
         }
       });
   };

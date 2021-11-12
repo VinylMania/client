@@ -1,49 +1,30 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable camelcase */
-import React, { useState, useRef } from 'react';
+import React from 'react';
+import { DiscogArtistModel, DiscogAlbumModel } from '../../models/discogModel';
 
 const SuggestedItem: React.FC<{
-  result: any;
+  result: DiscogAlbumModel | DiscogArtistModel | undefined;
   setResultDetail: any;
-  lockInput: any;
+  lockInput: () => void;
 }> = (props) => {
-  const [isHover, setIsHover] = useState<boolean>(false);
   const { result, setResultDetail, lockInput } = props;
-  const hoverPosition = useRef<HTMLSpanElement>(null);
-  const onClick = (resultId: number): void => {
+  const setResultHandler = (): void => {
     setResultDetail(result);
     lockInput();
-  };
-
-  const onHover = (): void => {
-    setIsHover(true);
-  };
-
-  const stopHover = (): void => {
-    setIsHover(false);
   };
 
   return (
     <>
       {result && (
-        <div className="cursor-pointer border-black border-b-2 overflow-hidden">
-          <p
-            // onMouseEnter={onHover}
-            // onMouseLeave={stopHover}
-            onClick={() => onClick(result)}
-            className="text-cyan-700"
-          >
-            {result.title}
-            {/* <span className={isHover ? 'absolute' : 'hidden'}>
-              <img
-                className="w-14 h-auto "
-                src={result.thumb}
-                alt={result.title}
-              />
-            </span> */}
-          </p>
-        </div>
+        <button
+          className="cursor-pointer text-left bg-first hover:bg-third text-second hover:text-first transition-all duration-200 overflow-hidden"
+          type="button"
+          onClick={setResultHandler}
+        >
+          {result.title}
+        </button>
       )}
     </>
   );

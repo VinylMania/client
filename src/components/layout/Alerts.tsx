@@ -1,7 +1,8 @@
 import React from 'react';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AlertModel } from '../../models/alertModel';
 import AlertItem from './AlertItem';
+import setAlert from '../../actions/alert';
 
 export const Alert: React.FC = () => {
   const alerts = useAppSelector((state) => state.root.alertReducer);

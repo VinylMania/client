@@ -1,31 +1,21 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import Moment from 'react-moment';
 import { AlbumModel } from '../../models/albumModel';
 import 'moment/locale/fr';
 
 const AlbumItem: React.FC<{ album: AlbumModel }> = ({ album }) => {
-  const { _id, album_cover_url, release_date, artist_title, album_title } =
-    album;
+  const { album_cover_url, release_date, artist_title, album_title } = album;
 
   return (
-    <div
-      style={{ backgroundColor: '#F8EFD4' }}
-      className="m-2 rounded-2xl p-2 flex flex-col"
-      key={_id}
-    >
+    <div className="w-72 m-4 rounded-3xl p-4 flex flex-col overflow-hidden text-second">
       <p className="font-bold">{album_title}</p>
-      <p className="font-thin italic">{artist_title}</p>
-      <p className="text-center">
-        Sorti le{' '}
-        <Moment locale="fr" format="DD MMMM YYYY">
-          {release_date}
-        </Moment>
+      <p className="font-thin italic">
+        {artist_title} - <Moment format="YYYY">{release_date}</Moment>
       </p>
       <img
-        className="w-72 h-auto items-center self-center"
+        className="w-64 h-auto items-center self-center"
         src={album_cover_url}
-        alt=""
+        alt={album_title}
       />
     </div>
   );

@@ -12,7 +12,10 @@ export const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const authNavbar = (
-    <nav className="bg-cyan-700 flex flex-row-reverse flex-nowrap">
+    <nav
+      style={{ backgroundColor: '#132743' }}
+      className="flex flex-row-reverse flex-nowrap"
+    >
       <Link className="text-gray-50 hover:underline p-2" to="/register">
         <p>Register</p>
       </Link>
@@ -25,14 +28,17 @@ export const Navbar: React.FC = () => {
     </nav>
   );
   const guestNavbar = (
-    <nav className="bg-cyan-700 flex flex-row-reverse flex-nowrap">
-      <a
+    <nav
+      style={{ backgroundColor: '#132743' }}
+      className="flex flex-row-reverse flex-nowrap"
+    >
+      <button
+        type="button"
         className="text-gray-50 hover:underline p-2"
-        href="!#"
         onClick={() => dispatch(logout())}
       >
         <p>Logout</p>
-      </a>
+      </button>
       <Link className="text-gray-50 hover:underline p-2" to="/home">
         <p>Homepage</p>
       </Link>

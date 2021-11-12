@@ -5,6 +5,7 @@ export interface TextInputModel {
   onChange: any;
   placeholder?: string;
   value: string;
-  className: string;
+  className?: string;
   required: boolean;
+  label?: string;
 }

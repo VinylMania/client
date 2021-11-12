@@ -1,15 +1,17 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { Navigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateLibrary } from '../../actions/library';
-
+import Button from '../UI/Button';
 import { getArtists, getAlbums } from '../../actions/discogs';
 import DiscogInput from '../API input/DiscogInput';
+import { AlbumModel } from '../../models/albumModel';
+import { DiscogAlbumModel, DiscogArtistModel } from '../../models/discogModel';
 
-const AddVinyl: React.FC = (props) => {
+const AddVinyl: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [artistDetail, setArtistDetail] = useState<any>();
-  const [albumDetail, setAlbumDetail] = useState<any>();
+  const [artistDetail, setArtistDetail] = useState<DiscogArtistModel>();
+  const [albumDetail, setAlbumDetail] = useState<DiscogAlbumModel>();
 
   // Redirect if user authenticated
   const isAuth = useAppSelector(
@@ -20,54 +22,65 @@ const AddVinyl: React.FC = (props) => {
     return <Navigate to="/home" />;
   }
 
+  const resetAllFields = (): void => {
+    setArtistDetail(undefined);
+    setAlbumDetail(undefined);
+  };
+
   const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
 
     if (artistDetail && albumDetail) {
-      const albumObject = {
-        artistId: artistDetail.id !== null ? artistDetail.id : '',
-        albumId: albumDetail.id !== null ? albumDetail.id : '',
-        albumCoverUrl:
+      const albumObject: AlbumModel = {
+        artistId: artistDetail.id !== null ? artistDetail.id.toString() : '',
+        albumId: albumDetail.id !== null ? albumDetail.id.toString() : '',
+        album_cover_url:
           albumDetail.cover_image !== null ? albumDetail.cover_image : '',
-        artistCoverUrl:
+        artist_cover_url:
           artistDetail.cover_image !== null ? artistDetail.cover_image : '',
-        releaseDate: albumDetail.year !== null ? albumDetail.year : '',
-        artistTitle: artistDetail.title !== null ? artistDetail.title : '',
-        albumTitle: albumDetail.title !== null ? albumDetail.title : '',
+        release_date: albumDetail.year !== null ? albumDetail.year : '',
+        artist_title: artistDetail.title !== null ? artistDetail.title : '',
+        album_title: albumDetail.title !== null ? albumDetail.title : '',
+        trade: true,
       };
 
       dispatch(updateLibrary(albumObject));
     }
   };
   return (
-    <>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <DiscogInput
-          searchDelay={500}
-          searchLength={2}
-          additionalQuery={null}
-          setResultDetail={setArtistDetail}
-          getResultFn={getArtists}
-          placeholder="Nom de l'artiste"
-          inputValue={artistDetail ? artistDetail.title : ''}
-        />
-
-        {artistDetail && (
+    <div className="vinyl-form-wrapper">
+      <div className="mx-32 p-4 bg-fourth">
+        <form className="vinyl-form" onSubmit={(e) => onSubmit(e)}>
           <DiscogInput
+            reset={resetAllFields}
+            inputId="artist-name"
             searchDelay={500}
-            searchLength={1}
-            additionalQuery={
-              artistDetail.title.length > 0 ? artistDetail.title : ''
-            }
-            setResultDetail={setAlbumDetail}
-            getResultFn={getAlbums}
-            placeholder="Nom de l'album"
-            inputValue={albumDetail ? albumDetail.title : ''}
+            searchLength={2}
+            additionalQuery={null}
+            setResultDetail={setArtistDetail}
+            getResultFn={getArtists}
+            placeholder="Nom de l'artiste"
+            inputValue={artistDetail ? artistDetail.title : ''}
           />
-        )}
-        <button type="submit">Submit</button>
-      </form>
-    </>
+
+          {artistDetail && (
+            <DiscogInput
+              inputId="album-name"
+              searchDelay={500}
+              searchLength={1}
+              additionalQuery={
+                artistDetail.title.length > 0 ? artistDetail.title : ''
+              }
+              setResultDetail={setAlbumDetail}
+              getResultFn={getAlbums}
+              placeholder="Nom de l'album"
+              inputValue={albumDetail ? albumDetail.title : ''}
+            />
+          )}
+          <Button className="mt-4" type="submit" text="Ajouter le vinyle" />
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -28,11 +28,22 @@ export const loadUser = () => async (dispatch: any) => {
       .then((response: AxiosResponse<UserModel>) => {
         dispatch({ type: USER_LOADED, payload: response.data });
       })
-      .catch((err: { response: { data: ErrorModel } }) => {
-        const { errors } = err.response?.data;
-        if (axios.isAxiosError(err)) {
-          dispatch(setAlert({ msg: err.message, alertType: 'danger' }));
-          dispatch({ type: AUTH_ERROR });
+      .catch((err: AxiosError<ErrorModel>) => {
+        if (err.response?.data) {
+          const { errors } = err.response?.data;
+          if (errors) {
+            errors.forEach((error) => {
+              dispatch(setAlert({ msg: error.msg, alertType: 'warning' }));
+              dispatch({ type: AUTH_ERROR });
+            });
+          }
+        } else {
+          dispatch(
+            setAlert({
+              msg: 'Un erreur avec le serveur est survenue.',
+              alertType: 'warning',
+            }),
+          );
         }
       });
   }
@@ -49,23 +60,31 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
   };
   const body = JSON.stringify({ email, password });
 
-  // try {
-  const res = await axios
+  axios
     .post('http://localhost:5000/api/auth', body, config)
     .then((response) => {
       dispatch({ type: LOGIN_SUCCESS, payload: response.data });
       dispatch(loadUser());
     })
-    .catch((err) => {
-      const { errors } = err.response?.data;
+    .catch((err: AxiosError<ErrorModel>) => {
+      if (err.response?.data) {
+        const { errors } = err.response?.data;
 
-      if (errors) {
-        errors.forEach((error: any) => {
-          dispatch(setAlert({ msg: error.msg, alertType: 'danger' }));
-        });
+        if (errors) {
+          errors.forEach((error) => {
+            dispatch(setAlert({ msg: error.msg, alertType: 'warning' }));
+          });
+        }
+
+        dispatch({ type: LOGIN_FAIL });
+      } else {
+        dispatch(
+          setAlert({
+            msg: 'Un erreur avec le serveur est survenue.',
+            alertType: 'warning',
+          }),
+        );
       }
-
-      dispatch({ type: LOGIN_FAIL });
     });
 };
 
@@ -85,22 +104,25 @@ export const register = (data: RegisterModel) => async (dispatch: any) => {
       dispatch({ type: REGISTER_SUCCESS, payload: response.data });
       dispatch(loadUser());
     })
-    .catch((err: { response: { data: ErrorModel } }) => {
-      const { errors } = err.response.data;
+    .catch((err: AxiosError<ErrorModel>) => {
+      if (err.response?.data) {
+        const { errors } = err.response.data;
 
-      if (errors) {
-        errors.forEach((error: any) =>
-          dispatch(setAlert({ alertType: 'danger', msg: error.msg })),
+        if (errors) {
+          errors.forEach((error) =>
+            dispatch(setAlert({ alertType: 'warning', msg: error.msg })),
+          );
+        }
+        dispatch({ type: REGISTER_FAIL });
+      } else {
+        dispatch(
+          setAlert({
+            msg: 'Un erreur avec le serveur est survenue.',
+            alertType: 'warning',
+          }),
         );
       }
-      dispatch({ type: REGISTER_FAIL });
     });
-  // .then((response: AxiosResponse<{ token: string }>) => {
-
-  // })
-  // .catch((err: AxiosError<ErrorModel>) => {
-  //   const { errors } = err.response.data;
-  // });
 };
 
 // Logout / Clear profile

@@ -20,7 +20,10 @@ const UserProfile: React.FC = () => {
   return (
     <>
       {userProfile && userProfile.user && (
-        <ProfileHeader user={userProfile.user} />
+        <ProfileHeader
+          albumLength={userProfile.albums ? userProfile.albums.length : 0}
+          user={userProfile.user}
+        />
       )}
       {userProfile && userProfile.albums && userProfile.albums.length > 0 && (
         <Albums albums={userProfile.albums} />

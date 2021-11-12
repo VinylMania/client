@@ -12,8 +12,7 @@ import Register from './components/auth/Register';
 import Homepage from './components/homepage/Homepage';
 import { loadUser } from './actions/auth';
 import AddVinyl from './components/AddVinyl/AddVinyl';
-import Profile from './components/profile/Profile';
-import Library from './components/Library/Library';
+import Libraries from './components/Library/Libraries';
 import UserProfile from './components/profile/UserProfile';
 
 const App: React.FC = () => {
@@ -30,9 +29,8 @@ const App: React.FC = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/add-vinyl" element={<AddVinyl />} />
-          <Route path="/profile/me" element={<Profile />} />
           <Route path="/users/:userId" element={<UserProfile />} />
-          <Route path="/library" element={<Library />} />
+          <Route path="/library" element={<Libraries />} />
         </Routes>
       </Router>
     </Provider>

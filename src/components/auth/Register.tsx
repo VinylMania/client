@@ -1,10 +1,13 @@
 import React, { FormEvent, useState } from 'react';
 import { Navigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import Input from '../UI/Input';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RegisterModel } from '../../models/userModel';
 import { loadUser, register } from '../../actions/auth';
 import setAlert, { removeAllAlerts } from '../../actions/alert';
+import Button from '../UI/Button';
+import FormContainer from './FormContainer';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +28,7 @@ const Register: React.FC = () => {
     e.preventDefault();
     dispatch(removeAllAlerts());
     if (password !== password2) {
-      dispatch(setAlert({ msg: "Password don't match", alertType: 'danger' }));
+      dispatch(setAlert({ msg: "Password don't match", alertType: 'warning' }));
     } else {
       dispatch(register(formData));
       dispatch(loadUser());
@@ -42,27 +45,31 @@ const Register: React.FC = () => {
   }
 
   return (
-    <div className="border-blue-300 mx-auto w-3/5 border-2 p-6 rounded-xl flex flex-row">
-      <h2 className="text-2xl text-center">Connexion</h2>
-      <form onSubmit={(e) => onSubmit(e)}>
+    <FormContainer
+      title="Inscription"
+      link="/register"
+      textLink="Déjà inscrit ?"
+      textLinkBold="Je me connecte"
+    >
+      <form className="vinyl-form" onSubmit={(e) => onSubmit(e)}>
         <Input
           id="username"
+          label="Pseudonyme"
           type="text"
           name="username"
-          placeholder="Username"
+          placeholder="Bob Dylan"
           onChange={onChange}
           value={username}
-          className="border-2 border-black border-opacity-50 rounded-2xl p-2"
           required
         />
         <Input
           id="email"
           type="email"
           name="email"
-          placeholder="Email address"
+          label="Adresse e-mail"
+          placeholder="bob.dylan@gmail.com"
           onChange={onChange}
           value={email}
-          className="border-2 border-black border-opacity-50 rounded-2xl p-2"
           required
         />
 
@@ -70,10 +77,10 @@ const Register: React.FC = () => {
           id="password"
           type="password"
           name="password"
-          placeholder="Pasword"
+          label="Mot de passe"
+          placeholder="********"
           onChange={onChange}
           value={password}
-          className="border-2 border-black border-opacity-50 rounded-2xl p-2"
           required
         />
 
@@ -81,19 +88,16 @@ const Register: React.FC = () => {
           id="password2"
           type="password"
           name="password2"
-          placeholder="Confirm password"
+          label="Confirmation du mot de passe"
+          placeholder="********"
           onChange={onChange}
           value={password2}
-          className="border-2 border-black border-opacity-50 rounded-2xl p-2"
           required
         />
 
-        <input
-          type="submit"
-          className="text-white bg-blue-600 border-1 text-center p-2 m-2 rounded-xl cursor-pointer"
-        />
+        <Button type="submit" text="Je m'inscris" />
       </form>
-    </div>
+    </FormContainer>
   );
 };
 

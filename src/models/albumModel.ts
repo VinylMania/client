@@ -8,7 +8,7 @@ export interface AlbumModel {
   artist_cover_url: string;
   release_date: string;
   trade: boolean;
-  date_created: string;
-  date_updated: string;
-  _id: string;
+  date_created?: string;
+  date_updated?: string;
+  _id?: string;
 }
