@@ -20,7 +20,7 @@ export const updateLibrary =
     };
 
     axios
-      .post('process.env.REACT_APP_BACKEND_URI+/api/library', body, config)
+      .post(`${process.env.REACT_APP_BACKEND_URI}/api/library`, body, config)
       .then((response) => {
         if (response.status === 200) {
           dispatch(
