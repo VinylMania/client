@@ -43,3 +43,18 @@ body {
   background-color: #f8efd4;
   font-family: 'Ubuntu', sans-serif;
 }
+
+.vinyl-spinner {
+  border: 2px solid #eb9bae;
+  border-top-color: #d7385e;
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

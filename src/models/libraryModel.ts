@@ -3,7 +3,7 @@ import { UserModel } from './userModel';
 
 export interface LibraryModel {
   _id: string;
-  user: UserModel;
+  user?: UserModel;
   visibility: boolean;
   albums: AlbumModel[];
 }

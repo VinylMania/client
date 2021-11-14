@@ -20,7 +20,7 @@ export const updateLibrary =
     };
 
     axios
-      .post('http://localhost:5000/api/library', body, config)
+      .post('process.env.REACT_APP_BACKEND_URI+/api/library', body, config)
       .then((response) => {
         if (response.status === 200) {
           dispatch(
@@ -63,7 +63,7 @@ export const getLibraries =
       },
     };
     axios
-      .get('http://localhost:5000/api/library/', config)
+      .get(`${process.env.REACT_APP_BACKEND_URI}/api/library/`, config)
       .then((response: AxiosResponse<LibraryModel[]>) => {
         callback(response.data);
       })
@@ -84,5 +84,39 @@ export const getLibraries =
             }),
           );
         }
+      });
+  };
+
+export const getLibraryByUserId =
+  (userId: string, callback: any, isLoading: any) =>
+  (dispatch: any): void => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URI}/api/library/${userId}`, config)
+      .then((response: AxiosResponse<LibraryModel>) => {
+        callback(response.data);
+      })
+      .catch((err: AxiosError<ErrorModel>) => {
+        if (err.response?.data) {
+          const { errors } = err.response?.data;
+
+          if (errors) {
+            errors.forEach((error) => {
+              dispatch(setAlert({ msg: error.msg, alertType: 'warning' }));
+            });
+          }
+        } else {
+          dispatch(
+            setAlert({
+              msg: 'Un erreur avec le serveur est survenue.',
+              alertType: 'warning',
+            }),
+          );
+        }
+        isLoading(false);
       });
   };

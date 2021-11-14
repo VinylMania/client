@@ -20,7 +20,7 @@ export const loadUser = () => async (dispatch: any) => {
 
   if (privateToken.trim().length > 0) {
     axios
-      .get('http://localhost:5000/api/auth', {
+      .get(`${process.env.REACT_APP_BACKEND_URI}/api/auth`, {
         headers: {
           'x-auth-token': privateToken,
         },
@@ -61,7 +61,7 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
   const body = JSON.stringify({ email, password });
 
   axios
-    .post('http://localhost:5000/api/auth', body, config)
+    .post(`${process.env.REACT_APP_BACKEND_URI}/api/auth`, body, config)
     .then((response) => {
       dispatch({ type: LOGIN_SUCCESS, payload: response.data });
       dispatch(loadUser());
@@ -99,7 +99,7 @@ export const register = (data: RegisterModel) => async (dispatch: any) => {
   const body = JSON.stringify({ username, email, password });
 
   axios
-    .post('http://localhost:5000/api/users', body, config)
+    .post(`${process.env.REACT_APP_BACKEND_URI}/api/users`, body, config)
     .then((response: AxiosResponse<string>) => {
       dispatch({ type: REGISTER_SUCCESS, payload: response.data });
       dispatch(loadUser());

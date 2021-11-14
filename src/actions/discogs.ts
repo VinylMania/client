@@ -11,7 +11,11 @@ export const getArtists =
       },
     };
     axios
-      .post('http://localhost:5000/api/artists/search', body, config)
+      .post(
+        `${process.env.REACT_APP_BACKEND_URI}/api/artists/search`,
+        body,
+        config,
+      )
       .then((response: any) => {
         const {
           data: { data },
@@ -42,7 +46,11 @@ export const getAlbums =
       },
     };
     axios
-      .post('http://localhost:5000/api/albums/search', body, config)
+      .post(
+        `${process.env.REACT_APP_BACKEND_URI}/api/albums/search`,
+        body,
+        config,
+      )
       .then((response: any) => {
         const {
           data: { data },

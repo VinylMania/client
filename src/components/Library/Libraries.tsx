@@ -14,7 +14,7 @@ const Libraries: React.FC = () => {
   return (
     <div className="flex flex-col bg-first p-8">
       {!libraries && (
-        <p className="text-center text-2xl text-white font-bold">
+        <p className="text-center text-2xl text-second font-bold">
           La bibliothèque est vide pour le moment.
         </p>
       )}

@@ -17,6 +17,7 @@ export interface UserModel {
   email: string;
   avatar: string;
   date_created: string;
+  date_updated: string;
 }
 
 export interface UserProfileModel {
