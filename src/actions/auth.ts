@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -10,31 +10,42 @@ import {
   CLEAR_PROFILE,
   LOGOUT,
 } from './types';
-import { LoginModel, RegisterModel } from '../models/userModel';
+import { LoginModel, RegisterModel, UserModel } from '../models/userModel';
 import setAlert from './alert';
-// import setAuthToken from '../utils/setAuthToken';
+import { ErrorModel } from '../models/errorModel';
 
 // Load User
 export const loadUser = () => async (dispatch: any) => {
   const privateToken = localStorage.token ? localStorage.token : '';
 
-  try {
-    const res = await axios.get('http://localhost:5000/api/auth', {
-      headers: {
-        'x-auth-token': privateToken,
-      },
-    });
-
-    dispatch({ type: USER_LOADED, payload: res.data });
-  } catch (err: any) {
-    const { errors } = err.response.data;
-
-    if (errors) {
-      errors.forEach((error: any) =>
-        dispatch(setAlert({ msg: error.msg, alertType: 'danger' })),
-      );
-    }
-    dispatch({ type: AUTH_ERROR });
+  if (privateToken.trim().length > 0) {
+    axios
+      .get('http://localhost:5000/api/auth', {
+        headers: {
+          'x-auth-token': privateToken,
+        },
+      })
+      .then((response: AxiosResponse<UserModel>) => {
+        dispatch({ type: USER_LOADED, payload: response.data });
+      })
+      .catch((err: AxiosError<ErrorModel>) => {
+        if (err.response?.data) {
+          const { errors } = err.response?.data;
+          if (errors) {
+            errors.forEach((error) => {
+              dispatch(setAlert({ msg: error.msg, alertType: 'warning' }));
+              dispatch({ type: AUTH_ERROR });
+            });
+          }
+        } else {
+          dispatch(
+            setAlert({
+              msg: 'Un erreur avec le serveur est survenue.',
+              alertType: 'warning',
+            }),
+          );
+        }
+      });
   }
 };
 
@@ -49,24 +60,32 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
   };
   const body = JSON.stringify({ email, password });
 
-  try {
-    const res = await axios.post(
-      'http://localhost:5000/api/auth',
-      body,
-      config,
-    );
-    dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-    dispatch(loadUser());
-  } catch (err: any) {
-    const { errors } = err.response.data;
+  axios
+    .post('http://localhost:5000/api/auth', body, config)
+    .then((response) => {
+      dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+      dispatch(loadUser());
+    })
+    .catch((err: AxiosError<ErrorModel>) => {
+      if (err.response?.data) {
+        const { errors } = err.response?.data;
 
-    if (errors) {
-      errors.forEach((error: any) =>
-        dispatch(setAlert({ msg: error.msg, alertType: 'danger' })),
-      );
-    }
-    dispatch({ type: LOGIN_FAIL });
-  }
+        if (errors) {
+          errors.forEach((error) => {
+            dispatch(setAlert({ msg: error.msg, alertType: 'warning' }));
+          });
+        }
+
+        dispatch({ type: LOGIN_FAIL });
+      } else {
+        dispatch(
+          setAlert({
+            msg: 'Un erreur avec le serveur est survenue.',
+            alertType: 'warning',
+          }),
+        );
+      }
+    });
 };
 
 // Register User
@@ -77,27 +96,33 @@ export const register = (data: RegisterModel) => async (dispatch: any) => {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ name: username, email, password });
+  const body = JSON.stringify({ username, email, password });
 
-  try {
-    const res = await axios.post(
-      'http://localhost:5000/api/users',
-      body,
-      config,
-    );
+  axios
+    .post('http://localhost:5000/api/users', body, config)
+    .then((response: AxiosResponse<string>) => {
+      dispatch({ type: REGISTER_SUCCESS, payload: response.data });
+      dispatch(loadUser());
+    })
+    .catch((err: AxiosError<ErrorModel>) => {
+      if (err.response?.data) {
+        const { errors } = err.response.data;
 
-    dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-    dispatch(loadUser());
-  } catch (err: any) {
-    const { errors } = err.response.data;
-
-    if (errors) {
-      errors.forEach((error: any) =>
-        dispatch(setAlert({ alertType: 'danger', msg: error.msg })),
-      );
-    }
-    dispatch({ type: REGISTER_FAIL });
-  }
+        if (errors) {
+          errors.forEach((error) =>
+            dispatch(setAlert({ alertType: 'warning', msg: error.msg })),
+          );
+        }
+        dispatch({ type: REGISTER_FAIL });
+      } else {
+        dispatch(
+          setAlert({
+            msg: 'Un erreur avec le serveur est survenue.',
+            alertType: 'warning',
+          }),
+        );
+      }
+    });
 };
 
 // Logout / Clear profile

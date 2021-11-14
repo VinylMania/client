@@ -1,21 +1,19 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
-import { useAppDispatch } from '../../hooks';
-import { setAlert } from '../../actions/alert';
 
-const Button: React.FC<{ text: string }> = (props) => {
-  const { text } = props;
-  const dispatch = useAppDispatch();
-  return (
-    <button
-      className="btn-submit"
-      type="button"
-      onClick={() => {
-        dispatch(setAlert({ msg: 'This is a mistake', alertType: 'warning' }));
-      }}
-    >
-      {text}
-    </button>
-  );
-};
+const Button: React.FC<{
+  text: string;
+  type: 'submit' | 'button';
+  className?: string;
+  clickHandler?: () => void;
+}> = ({ text, type, className, clickHandler }) => (
+  <button
+    type={type === 'submit' ? 'submit' : 'button'}
+    onClick={clickHandler}
+    className={`btn-submit ${className || ''}`}
+  >
+    {text}
+  </button>
+);
 
 export default Button;

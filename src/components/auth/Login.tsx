@@ -1,10 +1,12 @@
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router';
 import React, { FormEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadUser, login } from '../../actions/auth';
 import { LoginModel } from '../../models/userModel';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
+import FormContainer from './FormContainer';
 
 export const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,20 +34,24 @@ export const Login: React.FC = () => {
   );
 
   if (isAuth) {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
   return (
-    <div className="border-blue-300 mx-auto w-3/5 border-2  p-6 rounded-xl">
-      <h2 className="text-2xl text-center">Connexion</h2>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
+    <FormContainer
+      title="Connexion"
+      link="/login"
+      textLink="Pas de compte ?"
+      textLinkBold="Inscrivez-vous dès maintenant !"
+    >
+      <form className="vinyl-form" onSubmit={(e) => onSubmit(e)}>
         <Input
           id="email"
           type="email"
           name="email"
-          placeholder="Email address"
+          label="Adresse e-mail"
+          placeholder="contact@vinylmania.fr"
           onChange={onChange}
           value={email}
-          className="border-2 border-black border-opacity-50 rounded-2xl p-2"
           required
         />
 
@@ -53,22 +59,16 @@ export const Login: React.FC = () => {
           id="password"
           type="password"
           name="password"
-          placeholder="Pasword"
+          label="Mot de passe"
+          placeholder="********"
           onChange={onChange}
           value={password}
-          className="border-2 border-black border-opacity-50 rounded-2xl p-2"
           required
         />
 
-        <input
-          type="submit"
-          className="text-white bg-blue-600 border-1 text-center p-2 m-2 rounded-xl cursor-pointer"
-        />
-
-        <Button text="Alert" />
-        <Button text="Good" />
+        <Button type="submit" text="Se connecter" />
       </form>
-    </div>
+    </FormContainer>
   );
 };
 
