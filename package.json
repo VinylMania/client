@@ -36,7 +36,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "FAST_REFRESH=false craco start",
+    "start": "PORT=4995 FAST_REFRESH=false craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

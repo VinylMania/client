@@ -9,7 +9,13 @@ const DiscogInput: React.FC<{
   reset?: () => void;
   searchDelay: number;
   searchLength: number;
-  getResultFn: any;
+  getResultFn: (
+    query: string,
+    callback: React.Dispatch<
+      React.SetStateAction<DiscogAlbumModel[] | DiscogArtistModel[] | undefined>
+    >,
+    artistName?: string,
+  ) => (dispatch: any) => void;
   additionalQuery: string | null;
   inputId: string;
   setResultDetail:
@@ -41,7 +47,7 @@ const DiscogInput: React.FC<{
     const identifier = setTimeout(() => {
       if (searchQuery.trim().length > searchLength) {
         if (additionalQuery !== null) {
-          dispatch(getResultFn(searchQuery, additionalQuery, setResultList));
+          dispatch(getResultFn(searchQuery, setResultList, additionalQuery));
         } else {
           dispatch(getResultFn(searchQuery, setResultList));
         }

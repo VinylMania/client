@@ -6,7 +6,7 @@ import { store } from './store';
 
 // Components
 import Alerts from './components/layout/Alerts';
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Homepage from './components/homepage/Homepage';

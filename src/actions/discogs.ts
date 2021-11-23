@@ -1,8 +1,19 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import {
+  DiscogAlbumModel,
+  DiscogArtistModel,
+  DiscogAlbumResponseModel,
+} from '../models/discogModel';
+import { AppDispatch } from '../store';
 import setAlert from './alert';
 
 export const getArtists =
-  (query: string, callback: any) =>
+  (
+    query: string,
+    callback: React.Dispatch<
+      React.SetStateAction<DiscogAlbumModel[] | DiscogArtistModel[] | undefined>
+    >,
+  ) =>
   (dispatch: any): void => {
     const body = JSON.stringify({ artist: query });
     const config = {
@@ -37,7 +48,13 @@ export const getArtists =
   };
 
 export const getAlbums =
-  (query: string, artistName: string, callback: any) =>
+  (
+    query: string,
+    callback: React.Dispatch<
+      React.SetStateAction<DiscogAlbumModel[] | DiscogArtistModel[] | undefined>
+    >,
+    artistName?: string,
+  ) =>
   (dispatch: any): void => {
     const body = JSON.stringify({ artist: artistName, album: query });
     const config = {
@@ -52,13 +69,13 @@ export const getAlbums =
         config,
       )
       .then((response: any) => {
-        const {
-          data: { data },
-        } = response;
-        const filteredAlbums = data.results.filter((album: any) =>
-          album.title.toLowerCase().includes(query.toLowerCase()),
-        );
-        callback(filteredAlbums);
+        if (response.data && response.data.results) {
+          const { results } = response.data.data;
+          const filteredAlbums = results.filter((album: DiscogAlbumModel) =>
+            album.title.toLowerCase().includes(query.toLowerCase()),
+          );
+          callback(filteredAlbums);
+        }
       })
       .catch((err) => {
         const { errors } = err.response?.data;

@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../hooks';
-import { logout } from '../actions/auth';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logout } from '../../actions/auth';
 
 export const Navbar: React.FC = () => {
   const authReducer = useAppSelector((state) => state.root.authReducer);

@@ -1,6 +1,6 @@
-FROM node:14.17.5-alpine
-WORKDIR /vinylmania/react
+FROM node:16.13.0-alpine
+WORKDIR /vinylmania/webapp
 COPY ./package*.json ./
-RUN npm i
-COPY . .
-CMD npm start
+RUN npm i --silent
+COPY ./ ./
+CMD ["npm","start"]

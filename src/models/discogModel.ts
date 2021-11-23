@@ -11,3 +11,9 @@ export interface DiscogAlbumModel {
   title: string;
   cover_image: string;
 }
+
+export interface DiscogAlbumResponseModel {
+  data: {
+    results: [{ year: string; id: number; title: string; cover_image: string }];
+  };
+}
