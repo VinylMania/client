@@ -4,12 +4,24 @@
 
 @layer components {
   .btn-submit {
-    @apply w-max p-2  border text-center font-bold cursor-pointer border-white text-white bg-second transition-colors duration-200;
+    @apply w-max p-2  border text-center font-bold cursor-pointer border-white text-white bg-second transition-all duration-200;
   }
 
+  .btn-disabled {
+    @apply w-max p-2 border text-center font-bold cursor-not-allowed border-white text-white bg-gray-600 opacity-60 transition-all duration-200;
+  }
+
+  .btn-cancel {
+    @apply w-max p-2  border text-center font-bold cursor-pointer border-white text-white bg-third transition-colors duration-200;
+  }
   .btn-submit:hover {
     @apply bg-third;
   }
+
+  .btn-cancel:hover {
+    @apply bg-second;
+  }
+
   .alert-msg {
     @apply bg-red-100 border border-red-400 text-red-700;
   }
@@ -29,11 +41,12 @@
     @apply text-3xl font-bold drop-shadow-lg;
   }
 
-  .vinyl-form-wrapper {
-    @apply flex flex-col mx-auto p-6 w-2/5 text-second;
+  .vinyl-form-parent {
+    @apply max-w-3xl flex flex-col mx-auto text-second mt-8;
   }
+
   .vinyl-form {
-    @apply flex flex-col my-4;
+    @apply flex flex-col my-4 bg-fourth p-12 shadow-2xl;
   }
 }
 

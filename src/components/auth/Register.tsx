@@ -47,7 +47,7 @@ const Register: React.FC = () => {
   return (
     <FormContainer
       title="Inscription"
-      link="/register"
+      link="/login"
       textLink="Déjà inscrit ?"
       textLinkBold="Je me connecte"
     >

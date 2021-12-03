@@ -1,6 +1,5 @@
 import { Navigate } from 'react-router';
 import React, { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadUser, login } from '../../actions/auth';
 import { LoginModel } from '../../models/userModel';
@@ -16,6 +15,7 @@ export const Login: React.FC = () => {
   });
 
   const { email, password } = formData;
+
   const onChange = (e: FormEvent): void => {
     const event = e.currentTarget as HTMLInputElement;
     setFormData({ ...formData, [event.name]: event.value });
@@ -39,7 +39,7 @@ export const Login: React.FC = () => {
   return (
     <FormContainer
       title="Connexion"
-      link="/login"
+      link="/register"
       textLink="Pas de compte ?"
       textLinkBold="Inscrivez-vous dès maintenant !"
     >

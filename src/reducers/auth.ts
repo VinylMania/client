@@ -23,7 +23,6 @@ export default function authReducer(state = [], action: AnyAction): any {
         ...state,
         isAuthenticated: true,
         loading: false,
-        payload,
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
@@ -31,7 +30,7 @@ export default function authReducer(state = [], action: AnyAction): any {
     case LOGOUT:
     case DELETE_ACCOUNT:
       localStorage.removeItem('token');
-      return { ...state, token: null, isAuthenticated: false, loading: false };
+      return { isAuthenticated: false };
     default:
       return state;
   }

@@ -14,6 +14,11 @@ export interface DiscogAlbumModel {
 
 export interface DiscogAlbumResponseModel {
   data: {
-    results: [{ year: string; id: number; title: string; cover_image: string }];
+    results: DiscogAlbumModel[];
+  };
+}
+export interface DiscogArtistResponseModel {
+  data: {
+    results: DiscogArtistModel[];
   };
 }

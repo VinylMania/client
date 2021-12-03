@@ -23,10 +23,20 @@ module.exports = {
       third: '#d7385e',
       fourth: '#edc988',
     },
-    extend: {},
+    extend: {
+      brightness: {
+        'dark-1': '-10%',
+        'dark-2': '-20%',
+        'dark-3': '-30%',
+        'dark-4': '-40%',
+        'dark-5': '-50%',
+      },
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ['disabled'],
+    },
   },
   plugins: [],
 };

@@ -7,14 +7,12 @@ const FormContainer: React.FC<{
   textLink: string;
   textLinkBold: string;
 }> = ({ title, link, textLink, textLinkBold, children }) => (
-  <div className="vinyl-form-wrapper">
-    <div className="mx-32 p-4 bg-fourth">
-      <h1 className="vinyl-title text-center text-second underline">{title}</h1>
-      {children}
-      <Link className="text-second hover:underline " to={link}>
-        {textLink} <strong>{textLinkBold}</strong>
-      </Link>
-    </div>
+  <div className="vinyl-form-parent">
+    <h1 className="vinyl-title text-center text-second underline">{title}</h1>
+    {children}
+    <Link className="text-second hover:underline " to={link}>
+      {textLink} <strong>{textLinkBold}</strong>
+    </Link>
   </div>
 );
 

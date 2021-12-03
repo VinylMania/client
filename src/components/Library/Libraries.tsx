@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { getLibraries } from '../../actions/library';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LibraryModel } from '../../models/libraryModel';
+import LoadingSpinner from '../UI/LoadingSpinner';
 import LibraryRow from './LibraryRow';
 
 const Libraries: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [libraries, setLibraries] = useState<LibraryModel[]>();
+  const libraryReducer: { loadingLibs: boolean; libraries: LibraryModel[] } =
+    useAppSelector((state) => state.root.libraryReducer);
+  const { loadingLibs = true, libraries = undefined } = libraryReducer;
 
   useEffect(() => {
-    dispatch(getLibraries(setLibraries));
+    dispatch(getLibraries());
   }, [dispatch]);
   return (
     <div className="flex flex-col bg-first p-8">
-      {!libraries && (
+      {loadingLibs && <LoadingSpinner />}
+      {!loadingLibs && !libraries && (
         <p className="text-center text-2xl text-second font-bold">
           La bibliothèque est vide pour le moment.
         </p>
       )}
-      {libraries &&
+      {!loadingLibs &&
+        libraries &&
         libraries.length > 0 &&
         libraries.map((library) => (
           <div key={library._id}>

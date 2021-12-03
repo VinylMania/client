@@ -1,26 +1,21 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import {
-  DiscogAlbumModel,
-  DiscogArtistModel,
-  DiscogAlbumResponseModel,
-} from '../models/discogModel';
-import { AppDispatch } from '../store';
+import axios from 'axios';
+import { DiscogArtistModel } from '../models/discogModel';
 import setAlert from './alert';
+import { store } from '../store';
+import provideConfig from '../utils/axios-config';
+import {
+  GET_ARTISTS,
+  SEARCH_ARTISTS,
+  GET_ALBUMS,
+  SEARCH_ALBUMS,
+} from './types';
 
 export const getArtists =
-  (
-    query: string,
-    callback: React.Dispatch<
-      React.SetStateAction<DiscogAlbumModel[] | DiscogArtistModel[] | undefined>
-    >,
-  ) =>
-  (dispatch: any): void => {
-    const body = JSON.stringify({ artist: query });
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  (query: { artist: string }) =>
+  async (dispatch: typeof store.dispatch): Promise<void> => {
+    dispatch({ type: SEARCH_ARTISTS });
+    const body = JSON.stringify(query);
+    const config = provideConfig();
     axios
       .post(
         `${process.env.REACT_APP_BACKEND_URI}/api/artists/search`,
@@ -28,13 +23,16 @@ export const getArtists =
         config,
       )
       .then((response: any) => {
-        const {
-          data: { data },
-        } = response;
-        const filteredArtists = data.results.filter((artist: any) =>
-          artist.title.toLowerCase().includes(query.toLowerCase()),
-        );
-        callback(filteredArtists);
+        if (response.data.data.results) {
+          const { results } = response.data.data;
+          const filteredArtists = results.filter((artist: DiscogArtistModel) =>
+            artist.title.toLowerCase().includes(query.artist.toLowerCase()),
+          );
+          dispatch({
+            type: GET_ARTISTS,
+            payload: filteredArtists,
+          });
+        }
       })
       .catch((err) => {
         const { errors } = err.response?.data;
@@ -48,20 +46,11 @@ export const getArtists =
   };
 
 export const getAlbums =
-  (
-    query: string,
-    callback: React.Dispatch<
-      React.SetStateAction<DiscogAlbumModel[] | DiscogArtistModel[] | undefined>
-    >,
-    artistName?: string,
-  ) =>
-  (dispatch: any): void => {
-    const body = JSON.stringify({ artist: artistName, album: query });
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  (query: { artist: string; album: string }) =>
+  (dispatch: typeof store.dispatch): void => {
+    dispatch({ type: SEARCH_ALBUMS });
+    const body = JSON.stringify(query);
+    const config = provideConfig();
     axios
       .post(
         `${process.env.REACT_APP_BACKEND_URI}/api/albums/search`,
@@ -69,12 +58,10 @@ export const getAlbums =
         config,
       )
       .then((response: any) => {
-        if (response.data && response.data.results) {
+        if (response.data.data.results) {
           const { results } = response.data.data;
-          const filteredAlbums = results.filter((album: DiscogAlbumModel) =>
-            album.title.toLowerCase().includes(query.toLowerCase()),
-          );
-          callback(filteredAlbums);
+          const filteredAlbums = results;
+          dispatch({ type: GET_ALBUMS, payload: filteredAlbums });
         }
       })
       .catch((err) => {

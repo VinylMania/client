@@ -7,3 +7,9 @@ export interface LibraryModel {
   visibility: boolean;
   albums: AlbumModel[];
 }
+
+export interface RemoveAlbumFromLibraryModel {
+  type: 'trade' | 'delete';
+  albumId: AlbumModel['_id'];
+  albumTitle: AlbumModel['album_title'];
+}
