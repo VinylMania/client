@@ -28,7 +28,7 @@ const Libraries: React.FC = () => {
         </section>
 
         <section>
-          <article className="flex flex-wrap overflow-hidden items-start justify-start m-auto">
+          <article className="list-vinyles">
             {!loadingLibs &&
               libraries &&
               libraries.length > 0 &&

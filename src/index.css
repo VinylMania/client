@@ -74,6 +74,18 @@
   .vinyl-wrapper:hover {
     @apply bg-black bg-opacity-75 transition-all duration-300;
   }
+
+  .modal {
+    @apply left-0 top-0 z-10 fixed flex bg-black bg-opacity-30 h-full w-full;
+  }
+
+  .modal-content {
+    @apply overflow-auto select-none bg-first rounded-lg max-w-5xl max-h-full m-auto p-8;
+  }
+
+  .list-vinyles {
+    @apply flex flex-wrap overflow-hidden items-start justify-start m-auto;
+  }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap');

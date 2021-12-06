@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "check-types": "tsc",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
-    "prettier": "prettier --ignore-path .gitignore '**/*.{ts,tsx,js,jsx}'",
+    "prettier": "prettier --ignore-path .gitignore '**/*.{ts,tsx,js,jsx,md, css,scss,json,mdx}'",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
     "validate": "npm-run-all --parallel check-types check-format lint build"

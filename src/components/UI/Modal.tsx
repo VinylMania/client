@@ -7,14 +7,8 @@ const ModalBackground: React.FC<{closeModal: () => void}> = ({
   children,
   closeModal,
 }) => (
-  <div
-    onClick={() => closeModal()}
-    className="left-0 top-0 z-10 fixed flex bg-black bg-opacity-30 h-full w-full"
-  >
-    <div
-      onClick={e => e.stopPropagation()}
-      className="overflow-auto select-none bg-first rounded-lg max-w-5xl max-h-full m-auto p-8"
-    >
+  <div onClick={() => closeModal()} className="modal">
+    <div onClick={e => e.stopPropagation()} className="modal-content">
       {children}
     </div>
   </div>
