@@ -1,32 +1,30 @@
-import React, { FormEvent } from 'react';
-import { Navigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { updateLibrary } from '../../actions/library';
-import ArtistInput from '../API input/ArtistInput';
-import AlbumInput from '../API input/AlbumInput';
+import React, {FormEvent} from 'react'
+import {Navigate} from 'react-router'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {updateLibrary} from '../../actions/library'
+import ArtistInput from '../API input/ArtistInput'
+import AlbumInput from '../API input/AlbumInput'
 
 const AddVinyl: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   // Redirect if user authenticated
-  const isAuth = useAppSelector(
-    (state) => state.root.authReducer.isAuthenticated,
-  );
+  const isAuth = useAppSelector(state => state.root.authReducer.isAuthenticated)
 
-  const discogsReducer = useAppSelector((state) => state.root.discogsReducer);
+  const discogsReducer = useAppSelector(state => state.root.discogsReducer)
 
   if (!isAuth) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/home" />
   }
 
   const onSubmit = (e: FormEvent): void => {
-    e.preventDefault();
-    dispatch(updateLibrary());
-  };
+    e.preventDefault()
+    dispatch(updateLibrary())
+  }
 
   return (
     <section className="vinyl-form-parent">
-      <form className="vinyl-form" onSubmit={(e) => onSubmit(e)}>
+      <form className="vinyl-form" onSubmit={e => onSubmit(e)}>
         <ArtistInput />
         <AlbumInput />
 
@@ -41,7 +39,7 @@ const AddVinyl: React.FC = () => {
         </button>
       </form>
     </section>
-  );
-};
+  )
+}
 
-export default AddVinyl;
+export default AddVinyl

@@ -1,7 +1,7 @@
-import React from 'react';
-import { TextInputModel } from '../../models/textInputModel';
+import React from 'react'
+import {TextInputModel} from '../../models/textInputModel'
 
-const Input: React.FC<TextInputModel> = (props) => {
+const Input: React.FC<TextInputModel> = props => {
   const {
     id,
     type,
@@ -12,7 +12,7 @@ const Input: React.FC<TextInputModel> = (props) => {
     value,
     className,
     required,
-  } = props;
+  } = props
   return (
     <>
       <label className="font-semibold text-xl" htmlFor={id}>
@@ -23,13 +23,13 @@ const Input: React.FC<TextInputModel> = (props) => {
         id={id}
         type={type}
         name={name}
-        onChange={(e) => onChange(e)}
+        onChange={e => onChange(e)}
         value={value}
         className={`my-4 p-2 ${className}`}
         required={required}
       />
     </>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

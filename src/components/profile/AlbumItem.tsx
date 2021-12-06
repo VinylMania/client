@@ -1,19 +1,22 @@
-import React from 'react';
-import Moment from 'react-moment';
+import React from 'react'
+import Moment from 'react-moment'
 
-import { AlbumModel } from '../../models/albumModel';
-import 'moment/locale/fr';
-import RemoveAlbumItem from './Edit/RemoveAlbumItem';
+import {AlbumModel} from '../../models/albumModel'
+import 'moment/locale/fr'
+import RemoveAlbumItem from './Edit/RemoveAlbumItem'
 
 const AlbumItem: React.FC<{
-  album: AlbumModel;
-  isAuth: boolean;
-  isOwner: boolean;
-}> = ({ album, isAuth, isOwner }) => {
-  const { album_cover_url, release_date, artist_title, album_title } = album;
+  album: AlbumModel
+  isAuth: boolean
+  isOwner: boolean
+}> = ({album, isAuth, isOwner}) => {
+  const {album_cover_url, release_date, artist_title, album_title} = album
 
   return (
-    <figure className="w-72 m-4 flex flex-col overflow-hidden text-second">
+    <figure
+      id={album.albumId}
+      className="w-72 flex flex-col overflow-hidden text-second p-4"
+    >
       <figcaption>
         <p className="font-bold">{album_title}</p>
         <p className="font-thin italic">
@@ -40,7 +43,7 @@ const AlbumItem: React.FC<{
         </>
       )}
     </figure>
-  );
-};
+  )
+}
 
-export default AlbumItem;
+export default AlbumItem

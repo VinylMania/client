@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import {Link} from 'react-router-dom'
 
 const FormContainer: React.FC<{
-  title: string;
-  link: string;
-  textLink: string;
-  textLinkBold: string;
-}> = ({ title, link, textLink, textLinkBold, children }) => (
+  title: string
+  link: string
+  textLink: string
+  textLinkBold: string
+}> = ({title, link, textLink, textLinkBold, children}) => (
   <div className="vinyl-form-parent">
     <h1 className="vinyl-title text-center text-second underline">{title}</h1>
     {children}
@@ -14,6 +14,6 @@ const FormContainer: React.FC<{
       {textLink} <strong>{textLinkBold}</strong>
     </Link>
   </div>
-);
+)
 
-export default FormContainer;
+export default FormContainer

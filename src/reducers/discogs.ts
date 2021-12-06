@@ -1,4 +1,4 @@
-import { AnyAction } from 'redux';
+import {AnyAction} from 'redux'
 import {
   GET_ARTISTS,
   SEARCH_ARTISTS,
@@ -8,25 +8,25 @@ import {
   SEARCH_ALBUMS,
   CLEAR_ALBUMS,
   SET_ALBUM,
-} from '../actions/types';
-import { DiscogAlbumModel, DiscogArtistModel } from '../models/discogModel';
+} from '../actions/types'
+import {DiscogAlbumModel, DiscogArtistModel} from '../models/discogModel'
 
 const initialState: {
   artists: {
-    search?: DiscogArtistModel[];
-    searching: boolean;
-    loading: boolean;
-    selected?: DiscogArtistModel;
-    locked: boolean;
-  };
+    search?: DiscogArtistModel[]
+    searching: boolean
+    loading: boolean
+    selected?: DiscogArtistModel
+    locked: boolean
+  }
   albums: {
-    search?: DiscogAlbumModel[];
-    searching: boolean;
-    loading: boolean;
-    selected?: DiscogAlbumModel;
-    locked: boolean;
-  };
-  canSubmit: boolean;
+    search?: DiscogAlbumModel[]
+    searching: boolean
+    loading: boolean
+    selected?: DiscogAlbumModel
+    locked: boolean
+  }
+  canSubmit: boolean
 } = {
   artists: {
     search: [],
@@ -43,13 +43,13 @@ const initialState: {
     locked: false,
   },
   canSubmit: false,
-};
+}
 
 export default function discogsReducer(
   state = initialState,
   action: AnyAction,
 ): any {
-  const { type, payload } = action;
+  const {type, payload} = action
 
   switch (type) {
     case GET_ARTISTS: {
@@ -61,13 +61,13 @@ export default function discogsReducer(
           searching: true,
           selected: undefined,
         },
-      };
+      }
     }
     case SET_ARTIST: {
-      return { ...state, artists: { selected: payload, locked: true } };
+      return {...state, artists: {selected: payload, locked: true}}
     }
     case SEARCH_ARTISTS: {
-      return { ...state, artists: { loading: true } };
+      return {...state, artists: {loading: true}}
     }
     case CLEAR_ARTISTS: {
       return {
@@ -75,7 +75,7 @@ export default function discogsReducer(
         canSubmit: false,
         artists: initialState.artists,
         albums: initialState.albums,
-      };
+      }
     }
 
     case GET_ALBUMS: {
@@ -88,22 +88,22 @@ export default function discogsReducer(
           searching: true,
           selected: undefined,
         },
-      };
+      }
     }
     case SET_ALBUM: {
       return {
         ...state,
         canSubmit: true,
-        albums: { selected: payload, locked: true },
-      };
+        albums: {selected: payload, locked: true},
+      }
     }
     case CLEAR_ALBUMS: {
-      return { ...state, canSubmit: false, albums: initialState.albums };
+      return {...state, canSubmit: false, albums: initialState.albums}
     }
     case SEARCH_ALBUMS: {
-      return { ...state, albums: { loading: true } };
+      return {...state, albums: {loading: true}}
     }
     default:
-      return state;
+      return state
   }
 }

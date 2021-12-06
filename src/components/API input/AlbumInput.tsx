@@ -1,62 +1,56 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAlbums } from '../../actions/discogs';
-import SuggestedItem from './SuggestedItem';
-import { DiscogAlbumModel, DiscogArtistModel } from '../../models/discogModel';
-import EmptyResult from './EmptyResult';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import { CLEAR_ALBUMS } from '../../actions/types';
-import LockInput from './LockInput';
+import React, {useEffect} from 'react'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {getAlbums} from '../../actions/discogs'
+import SuggestedItem from './SuggestedItem'
+import {DiscogAlbumModel, DiscogArtistModel} from '../../models/discogModel'
+import EmptyResult from './EmptyResult'
+import LoadingSpinner from '../UI/LoadingSpinner'
+import {CLEAR_ALBUMS} from '../../actions/types'
+import LockInput from './LockInput'
 
 const AlbumInput: React.FC = () => {
-  const [query, setQuery] = React.useState<{ artist: string; album: string }>({
+  const [query, setQuery] = React.useState<{artist: string; album: string}>({
     artist: '',
     album: '',
-  });
-  const dispatch = useAppDispatch();
+  })
+  const dispatch = useAppDispatch()
   const artists: {
-    selected: DiscogArtistModel;
-  } = useAppSelector((state) => state.root.discogsReducer.artists);
+    selected: DiscogArtistModel
+  } = useAppSelector(state => state.root.discogsReducer.artists)
 
   const albums: {
-    search: DiscogAlbumModel[];
-    loading: boolean;
-    searching: boolean;
-    selected: DiscogAlbumModel;
-    locked: boolean;
-  } = useAppSelector((state) => state.root.discogsReducer.albums);
+    search: DiscogAlbumModel[]
+    loading: boolean
+    searching: boolean
+    selected: DiscogAlbumModel
+    locked: boolean
+  } = useAppSelector(state => state.root.discogsReducer.albums)
 
-  const { selected: selectedArtist } = artists;
-  const {
-    search,
-    searching,
-    loading,
-    selected: selectedAlbum,
-    locked,
-  } = albums;
+  const {selected: selectedArtist} = artists
+  const {search, searching, loading, selected: selectedAlbum, locked} = albums
 
   const onChange = (e: React.FormEvent): void => {
-    const event = e.currentTarget as HTMLInputElement;
-    setQuery({ ...query, album: event.value });
-  };
+    const event = e.currentTarget as HTMLInputElement
+    setQuery({...query, album: event.value})
+  }
 
   useEffect(() => {
-    query.artist = selectedArtist?.title;
+    query.artist = selectedArtist?.title
 
     const identifier = setTimeout(() => {
       if (query?.album && query.album.length > 2) {
-        dispatch(getAlbums(query));
+        dispatch(getAlbums(query))
       } else {
-        dispatch({ type: CLEAR_ALBUMS });
+        dispatch({type: CLEAR_ALBUMS})
       }
-    }, 200);
+    }, 200)
 
     return () => {
-      clearTimeout(identifier);
-    };
+      clearTimeout(identifier)
+    }
 
-    return () => undefined;
-  }, [query, dispatch, selectedArtist]);
+    return () => undefined
+  }, [query, dispatch, selectedArtist])
 
   return (
     <>
@@ -84,7 +78,7 @@ const AlbumInput: React.FC = () => {
             search &&
             search.length > 0 &&
             React.Children.toArray(
-              search.map((album) => (
+              search.map(album => (
                 <SuggestedItem type="album" result={album} />
               )),
             )}
@@ -95,7 +89,7 @@ const AlbumInput: React.FC = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default AlbumInput;
+export default AlbumInput

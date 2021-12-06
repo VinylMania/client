@@ -1,38 +1,38 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import Moment from 'react-moment';
-import { UserModel } from '../../models/userModel';
-import 'moment/locale/fr';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getUserProfileById } from '../../actions/profile';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import ProfileEdit from './Edit/ProfileEdit';
+import React, {useState, useEffect, useCallback} from 'react'
+import Moment from 'react-moment'
+import {UserModel} from '../../models/userModel'
+import 'moment/locale/fr'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {getUserProfileById} from '../../actions/profile'
+import LoadingSpinner from '../UI/LoadingSpinner'
+import ProfileEdit from './Edit/ProfileEdit'
 
-const ProfileHeader: React.FC<{ userId: UserModel['_id'] | undefined }> = ({
+const ProfileHeader: React.FC<{userId: UserModel['_id'] | undefined}> = ({
   userId,
 }) => {
-  const dispatch = useAppDispatch();
-  const userAuth = useAppSelector((state) => state.root.authReducer);
-  const profileReducer: { user: UserModel; loading: boolean } = useAppSelector(
-    (state) => state.root.profileReducer,
-  );
-  const { user: userProfile, loading } = profileReducer;
+  const dispatch = useAppDispatch()
+  const userAuth = useAppSelector(state => state.root.authReducer)
+  const profileReducer: {user: UserModel; loading: boolean} = useAppSelector(
+    state => state.root.profileReducer,
+  )
+  const {user: userProfile, loading} = profileReducer
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = (): void => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const closeModal = (): void => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   useEffect(() => {
     if (userId) {
-      dispatch(getUserProfileById(userId));
-      closeModal();
+      dispatch(getUserProfileById(userId))
+      closeModal()
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId])
 
   return (
     <>
@@ -93,7 +93,7 @@ const ProfileHeader: React.FC<{ userId: UserModel['_id'] | undefined }> = ({
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProfileHeader;
+export default ProfileHeader

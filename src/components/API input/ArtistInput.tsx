@@ -1,47 +1,47 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getArtists } from '../../actions/discogs';
-import SuggestedItem from './SuggestedItem';
-import { DiscogArtistModel } from '../../models/discogModel';
-import EmptyResult from './EmptyResult';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import { CLEAR_ARTISTS } from '../../actions/types';
-import LockInput from './LockInput';
+import React, {useEffect} from 'react'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {getArtists} from '../../actions/discogs'
+import SuggestedItem from './SuggestedItem'
+import {DiscogArtistModel} from '../../models/discogModel'
+import EmptyResult from './EmptyResult'
+import LoadingSpinner from '../UI/LoadingSpinner'
+import {CLEAR_ARTISTS} from '../../actions/types'
+import LockInput from './LockInput'
 
 const ArtistInput: React.FC = () => {
-  const [query, setQuery] = React.useState<{ artist: string; album: string }>({
+  const [query, setQuery] = React.useState<{artist: string; album: string}>({
     artist: '',
     album: '',
-  });
-  const dispatch = useAppDispatch();
+  })
+  const dispatch = useAppDispatch()
   const artists: {
-    search: DiscogArtistModel[];
-    loading: boolean;
-    searching: boolean;
-    selected: DiscogArtistModel;
-    locked: boolean;
-  } = useAppSelector((state) => state.root.discogsReducer.artists);
+    search: DiscogArtistModel[]
+    loading: boolean
+    searching: boolean
+    selected: DiscogArtistModel
+    locked: boolean
+  } = useAppSelector(state => state.root.discogsReducer.artists)
 
-  const { search, searching, loading, selected, locked } = artists;
+  const {search, searching, loading, selected, locked} = artists
 
   const onChange = (e: React.FormEvent): void => {
-    const event = e.currentTarget as HTMLInputElement;
-    setQuery({ ...query, artist: event.value });
-  };
+    const event = e.currentTarget as HTMLInputElement
+    setQuery({...query, artist: event.value})
+  }
 
   useEffect(() => {
     const identifier = setTimeout(() => {
       if (query?.artist && query.artist.length > 1) {
-        dispatch(getArtists(query));
+        dispatch(getArtists(query))
       } else {
-        dispatch({ type: CLEAR_ARTISTS });
+        dispatch({type: CLEAR_ARTISTS})
       }
-    }, 200);
+    }, 200)
 
     return () => {
-      clearTimeout(identifier);
-    };
-  }, [query, dispatch]);
+      clearTimeout(identifier)
+    }
+  }, [query, dispatch])
 
   return (
     <>
@@ -67,16 +67,14 @@ const ArtistInput: React.FC = () => {
         search &&
         search.length > 0 &&
         React.Children.toArray(
-          search.map((artist) => (
-            <SuggestedItem type="artist" result={artist} />
-          )),
+          search.map(artist => <SuggestedItem type="artist" result={artist} />),
         )}
 
       {!loading && searching && search && search.length === 0 && (
         <EmptyResult />
       )}
     </>
-  );
-};
+  )
+}
 
-export default ArtistInput;
+export default ArtistInput

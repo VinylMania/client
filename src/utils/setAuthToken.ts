@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const setAuthToken = (token: string): void => {
   //   const instance = axios.create({
@@ -10,6 +10,6 @@ const setAuthToken = (token: string): void => {
   //   } else {
   //     delete axios?.defaults?.headers?.common['x-auth-token'];
   //   }
-};
+}
 
-export default setAuthToken;
+export default setAuthToken

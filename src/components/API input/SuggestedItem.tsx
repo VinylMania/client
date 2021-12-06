@@ -1,25 +1,25 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable camelcase */
-import React from 'react';
-import { DiscogArtistModel, DiscogAlbumModel } from '../../models/discogModel';
-import { useAppDispatch } from '../../hooks';
-import { SET_ALBUM, SET_ARTIST } from '../../actions/types';
+import React from 'react'
+import {DiscogArtistModel, DiscogAlbumModel} from '../../models/discogModel'
+import {useAppDispatch} from '../../hooks'
+import {SET_ALBUM, SET_ARTIST} from '../../actions/types'
 
 const SuggestedItem: React.FC<{
-  type: 'artist' | 'album';
-  result: DiscogAlbumModel | DiscogArtistModel;
-}> = ({ result, type }) => {
-  const dispatch = useAppDispatch();
+  type: 'artist' | 'album'
+  result: DiscogAlbumModel | DiscogArtistModel
+}> = ({result, type}) => {
+  const dispatch = useAppDispatch()
 
   const selector = (): void => {
     if (type === 'artist') {
-      dispatch({ type: SET_ARTIST, payload: result });
+      dispatch({type: SET_ARTIST, payload: result})
     }
     if (type === 'album') {
-      dispatch({ type: SET_ALBUM, payload: result });
+      dispatch({type: SET_ALBUM, payload: result})
     }
-  };
+  }
 
   return (
     <>
@@ -33,7 +33,7 @@ const SuggestedItem: React.FC<{
         </button>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SuggestedItem;
+export default SuggestedItem
