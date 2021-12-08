@@ -1,4 +1,7 @@
-const colors = require('tailwindcss/colors');
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-extraneous-dependencies */
+
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
@@ -23,10 +26,20 @@ module.exports = {
       third: '#d7385e',
       fourth: '#edc988',
     },
-    extend: {},
+    extend: {
+      brightness: {
+        'dark-1': '-10%',
+        'dark-2': '-20%',
+        'dark-3': '-30%',
+        'dark-4': '-40%',
+        'dark-5': '-50%',
+      },
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ['disabled'],
+    },
   },
   plugins: [],
-};
+}

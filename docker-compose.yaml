@@ -5,38 +5,10 @@ services:
     container_name: vinylmania-webapp
     image: varkoff/vinylmania-webapp
     restart: always
-    depends_on:
-      - back
     build:
       context: .
     ports:
       - '4995:4995'
     volumes:
+      - ./public/index.html:/vinylmania/webapp/public/index.html
       - ./src:/vinylmania/webapp/src
-    environment:
-      VIRTUAL_HOST: staging.front.vinylmania.varkoff.fr
-      LETSENCRYPT_HOST: staging.front.vinylmania.varkoff.fr
-      LETSENCRYPT_EMAIL: virgileboris96@hotmail.fr
-    networks:
-      - proxy
-
-  back:
-    container_name: vinylmania-backend
-    image: varkoff/vinylmania-backend
-    restart: always
-    build:
-      context: ./../back/.
-      dockerfile: Dockerfile
-    ports:
-      - '4994:4994'
-    volumes:
-      - ./../back/src:/vinylmania/back/src
-    environment:
-      VIRTUAL_HOST: staging.back.vinylmania.varkoff.fr
-      LETSENCRYPT_HOST: staging.back.vinylmania.varkoff.fr
-      LETSENCRYPT_EMAIL: virgileboris96@hotmail.fr
-    networks:
-      - proxy
-
-networks:
-  proxy:

@@ -1,49 +1,47 @@
-import { Navigate } from 'react-router';
-import React, { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loadUser, login } from '../../actions/auth';
-import { LoginModel } from '../../models/userModel';
-import Input from '../UI/Input';
-import Button from '../UI/Button';
-import FormContainer from './FormContainer';
+import {Navigate} from 'react-router'
+import React, {FormEvent, useState} from 'react'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {loadUser, login} from '../../actions/auth'
+import {LoginModel} from '../../models/userModel'
+import Input from '../UI/Input'
+import Button from '../UI/Button'
+import FormContainer from './FormContainer'
 
 export const Login: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const [formData, setFormData] = useState<LoginModel>({
     email: '',
     password: '',
-  });
+  })
 
-  const { email, password } = formData;
+  const {email, password} = formData
+
   const onChange = (e: FormEvent): void => {
-    const event = e.currentTarget as HTMLInputElement;
-    setFormData({ ...formData, [event.name]: event.value });
-  };
+    const event = e.currentTarget as HTMLInputElement
+    setFormData({...formData, [event.name]: event.value})
+  }
 
   const onSubmit = (e: FormEvent): void => {
-    e.preventDefault();
+    e.preventDefault()
 
-    dispatch(login(formData));
-    dispatch(loadUser());
-  };
+    dispatch(login(formData))
+    dispatch(loadUser())
+  }
 
   // Redirect if user authenticated
-  const isAuth = useAppSelector(
-    (state) => state.root.authReducer.isAuthenticated,
-  );
+  const isAuth = useAppSelector(state => state.root.authReducer.isAuthenticated)
 
   if (isAuth) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/home" />
   }
   return (
     <FormContainer
       title="Connexion"
-      link="/login"
+      link="/register"
       textLink="Pas de compte ?"
       textLinkBold="Inscrivez-vous dès maintenant !"
     >
-      <form className="vinyl-form" onSubmit={(e) => onSubmit(e)}>
+      <form className="vinyl-form" onSubmit={e => onSubmit(e)}>
         <Input
           id="email"
           type="email"
@@ -69,7 +67,7 @@ export const Login: React.FC = () => {
         <Button type="submit" text="Se connecter" />
       </form>
     </FormContainer>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

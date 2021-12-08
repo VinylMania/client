@@ -1,11 +1,11 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../hooks';
-import { AlertModel } from '../../models/alertModel';
-import AlertItem from './AlertItem';
-import setAlert from '../../actions/alert';
+import React from 'react'
+import {useAppSelector, useAppDispatch} from '../../hooks'
+import {AlertModel} from '../../models/alertModel'
+import AlertItem from './AlertItem'
+import setAlert from '../../actions/alert'
 
 export const Alert: React.FC = () => {
-  const alerts = useAppSelector((state) => state.root.alertReducer);
+  const alerts = useAppSelector(state => state.root.alertReducer)
 
   return (
     <>
@@ -16,6 +16,6 @@ export const Alert: React.FC = () => {
           <AlertItem key={alert.id} alert={alert} />
         ))}
     </>
-  );
-};
-export default Alert;
+  )
+}
+export default Alert

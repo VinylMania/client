@@ -1,80 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { AlbumModel } from '../../models/albumModel';
-import { UserModel } from '../../models/userModel';
-import AlbumItem from './AlbumItem';
-import { getLibraryByUserId } from '../../actions/library';
-import { LibraryModel } from '../../models/libraryModel';
-import LoadingSpinner from '../UI/LoadingSpinner';
+import React, {useEffect, useCallback} from 'react'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {AlbumModel} from '../../models/albumModel'
+import {UserModel} from '../../models/userModel'
+import AlbumItem from './AlbumItem'
+import {getLibraryByUserId} from '../../actions/library'
+import LoadingSpinner from '../UI/LoadingSpinner'
 
-const Albums: React.FC<{ userId: UserModel['_id'] | undefined }> = ({
-  userId,
-}) => {
-  const [albums, setAlbums] = useState<LibraryModel>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [deleteAlbums, setDeleteAlbums] = useState<AlbumModel['_id'][]>();
-  const dispatch = useAppDispatch();
+const Albums: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
+  const libraryReducer: {loadingLib: boolean; library: AlbumModel[]} =
+    useAppSelector(state => state.root.libraryReducer)
+  const userAuth: {
+    isAuthenticated: boolean
+    loading: boolean
+    user: UserModel
+  } = useAppSelector(state => state.root.authReducer)
+
+  const {isAuthenticated: isAuth = false} = userAuth
+  const isOwner = isAuth && userId === userAuth.user._id
+
+  const dispatch = useAppDispatch()
+
+  const {loadingLib = true, library} = libraryReducer
+
+  const getLibaryCallback = useCallback(() => {
+    dispatch(getLibraryByUserId(userId))
+  }, [dispatch, userId])
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getLibraryByUserId(userId, setAlbums, setIsLoading));
-    }
-  }, [dispatch, userId]);
+    getLibaryCallback()
+  }, [getLibaryCallback])
 
-  const onChange = (event: React.FormEvent): void => {
-    const e = event.currentTarget as HTMLInputElement;
-    if (e.checked) {
-      const album = e.value as AlbumModel['_id'];
-      deleteAlbums?.push(album);
-      setDeleteAlbums(deleteAlbums);
-    } else {
-      const filter = deleteAlbums?.filter((item) => item !== e.value);
-      setDeleteAlbums(filter);
-    }
-    console.log(deleteAlbums);
-  };
-
-  const message = "Nous n'arrivons pas à charger la bibliothèque.";
   return (
-    <div className="flex flex-row flex-wrap justify-center items-end">
-      {isLoading && !albums && <LoadingSpinner />}
-      {!isLoading && !albums && <p>{message}</p>}
+    <section className="flex flex-row flex-wrap justify-center items-end py-16">
+      {loadingLib && !library && <LoadingSpinner />}
+      {!loadingLib && !library && (
+        <p>Nous n&apos;arrivons pas à charger la bibliothèque.</p>
+      )}
 
-      {albums &&
-        albums.albums.length > 0 &&
-        albums.albums.map((album: AlbumModel) => (
-          <AlbumItem key={album._id} album={album} />
-        ))}
+      {!loadingLib &&
+        library &&
+        library.length &&
+        React.Children.toArray(
+          library.map(album => (
+            <AlbumItem isAuth={isAuth} isOwner={isOwner} album={album} />
+          )),
+        )}
+    </section>
+  )
+}
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Checkbox</th>
-            <th>Id</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {albums &&
-            albums.albums.length > 0 &&
-            albums.albums.map((album: AlbumModel) => (
-              <tr key={album._id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    className="w-16 h-16"
-                    value={album._id}
-                    onChange={(e) => onChange(e)}
-                  />
-                </td>
-                <td>{album._id}</td>
-                <td>{album.album_title}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-export default Albums;
+export default Albums

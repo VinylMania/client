@@ -1,57 +1,55 @@
-import React, { FormEvent, useState } from 'react';
-import { Navigate } from 'react-router';
-import { Link } from 'react-router-dom';
-import Input from '../UI/Input';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { RegisterModel } from '../../models/userModel';
-import { loadUser, register } from '../../actions/auth';
-import setAlert, { removeAllAlerts } from '../../actions/alert';
-import Button from '../UI/Button';
-import FormContainer from './FormContainer';
+import React, {FormEvent, useState} from 'react'
+import {Navigate} from 'react-router'
+import {Link} from 'react-router-dom'
+import Input from '../UI/Input'
+import {useAppDispatch, useAppSelector} from '../../hooks'
+import {RegisterModel} from '../../models/userModel'
+import {loadUser, register} from '../../actions/auth'
+import setAlert, {removeAllAlerts} from '../../actions/alert'
+import Button from '../UI/Button'
+import FormContainer from './FormContainer'
 
 const Register: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const [formData, setFormData] = useState<RegisterModel>({
     username: '',
     email: '',
     password: '',
     password2: '',
-  });
+  })
 
-  const { username, email, password, password2 } = formData;
+  const {username, email, password, password2} = formData
   const onChange = (e: FormEvent): void => {
-    const event = e.currentTarget as HTMLInputElement;
-    setFormData({ ...formData, [event.name]: event.value });
-  };
+    const event = e.currentTarget as HTMLInputElement
+    setFormData({...formData, [event.name]: event.value})
+  }
 
   const onSubmit = (e: FormEvent): void => {
-    e.preventDefault();
-    dispatch(removeAllAlerts());
+    e.preventDefault()
+    dispatch(removeAllAlerts())
     if (password !== password2) {
-      dispatch(setAlert({ msg: "Password don't match", alertType: 'warning' }));
+      dispatch(setAlert({msg: "Password don't match", alertType: 'warning'}))
     } else {
-      dispatch(register(formData));
-      dispatch(loadUser());
+      dispatch(register(formData))
+      dispatch(loadUser())
     }
-  };
+  }
 
   //  Redirect if user authenticated
-  const isAuth = useAppSelector(
-    (state) => state.root.authReducer.isAuthenticated,
-  );
+  const isAuth = useAppSelector(state => state.root.authReducer.isAuthenticated)
 
   if (isAuth) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/home" />
   }
 
   return (
     <FormContainer
       title="Inscription"
-      link="/register"
+      link="/login"
       textLink="Déjà inscrit ?"
       textLinkBold="Je me connecte"
     >
-      <form className="vinyl-form" onSubmit={(e) => onSubmit(e)}>
+      <form className="vinyl-form" onSubmit={e => onSubmit(e)}>
         <Input
           id="username"
           label="Pseudonyme"
@@ -98,7 +96,7 @@ const Register: React.FC = () => {
         <Button type="submit" text="Je m'inscris" />
       </form>
     </FormContainer>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

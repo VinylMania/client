@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import { removeAlert } from '../../actions/alert';
-import { useAppDispatch } from '../../hooks';
-import { AlertModel } from '../../models/alertModel';
+import {removeAlert} from '../../actions/alert'
+import {useAppDispatch} from '../../hooks'
+import {AlertModel} from '../../models/alertModel'
 
-const AlertItem: React.FC<{ alert: AlertModel }> = (props) => {
+const AlertItem: React.FC<{alert: AlertModel}> = props => {
   const {
-    alert: { id, msg, alertType },
-  } = props;
-  const dispatch = useAppDispatch();
+    alert: {id, msg, alertType},
+  } = props
+  const dispatch = useAppDispatch()
 
   return (
     <div
@@ -28,7 +28,7 @@ const AlertItem: React.FC<{ alert: AlertModel }> = (props) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           onClick={() => {
-            if (id) dispatch(removeAlert(id));
+            if (id) dispatch(removeAlert(id))
           }}
         >
           <title>Fermer</title>
@@ -36,7 +36,7 @@ const AlertItem: React.FC<{ alert: AlertModel }> = (props) => {
         </svg>
       </span>
     </div>
-  );
-};
+  )
+}
 
-export default AlertItem;
+export default AlertItem
