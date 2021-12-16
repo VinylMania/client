@@ -4,11 +4,11 @@ import {useParams} from 'react-router'
 import {UserModel} from '../../models/userModel'
 import ProfileHeader from './ProfileHeader'
 import Albums from './Albums'
-import {AlbumModel} from '../../models/albumModel'
+import {VinyleResponse} from '../../models/albumModel'
 
 const UserProfile: React.FC = () => {
   const {userId} = useParams<UserModel['_id']>()
-  const {albumId} = useParams<AlbumModel['albumId']>()
+  const {albumId} = useParams<VinyleResponse['albumId']>()
 
   useEffect(() => {
     if (albumId) {

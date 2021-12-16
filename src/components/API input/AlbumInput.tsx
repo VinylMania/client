@@ -35,10 +35,10 @@ const AlbumInput: React.FC = () => {
   }
 
   useEffect(() => {
-    query.artist = selectedArtist?.title
+    query.artist = selectedArtist?.name
 
     const identifier = setTimeout(() => {
-      if (query?.album && query.album.length > 2) {
+      if (query?.album && query.album.length > 1) {
         dispatch(getAlbums(query))
       } else {
         dispatch({type: CLEAR_ALBUMS})
@@ -48,13 +48,11 @@ const AlbumInput: React.FC = () => {
     return () => {
       clearTimeout(identifier)
     }
-
-    return () => undefined
   }, [query, dispatch, selectedArtist])
 
   return (
     <>
-      {selectedArtist && selectedArtist.title && (
+      {selectedArtist && selectedArtist.name && (
         <>
           <label className="font-semibold text-xl" htmlFor="album">
             Nom de l&apos;album
@@ -62,13 +60,13 @@ const AlbumInput: React.FC = () => {
               id="album"
               className="mt-2 p-2 block w-full"
               type="text"
-              minLength={2}
+              minLength={1}
               maxLength={20}
               required
               onChange={onChange}
               disabled={locked}
               autoComplete="off"
-              value={locked ? selectedAlbum.title : query?.album}
+              value={locked ? selectedAlbum?.name : query?.album}
             />
           </label>
           <LockInput setInput={setQuery} type="album" locked={locked} />

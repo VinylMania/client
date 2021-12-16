@@ -1,8 +1,6 @@
 import React, {FormEvent, useState} from 'react'
-import {Navigate} from 'react-router'
-import {Link} from 'react-router-dom'
 import Input from '../UI/Input'
-import {useAppDispatch, useAppSelector} from '../../hooks'
+import {useAppDispatch} from '../../hooks'
 import {RegisterModel} from '../../models/userModel'
 import {loadUser, register} from '../../actions/auth'
 import setAlert, {removeAllAlerts} from '../../actions/alert'
@@ -33,13 +31,6 @@ const Register: React.FC = () => {
       dispatch(register(formData))
       dispatch(loadUser())
     }
-  }
-
-  //  Redirect if user authenticated
-  const isAuth = useAppSelector(state => state.root.authReducer.isAuthenticated)
-
-  if (isAuth) {
-    return <Navigate to="/home" />
   }
 
   return (

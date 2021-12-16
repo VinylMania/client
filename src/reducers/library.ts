@@ -10,10 +10,15 @@ export default function libraryReducer(state = [], action: AnyAction): any {
   const {type, payload} = action
   switch (type) {
     case GET_LIBRARY_BY_USER_ID: {
-      return {...state, loadingLib: false, library: payload.albums}
+      return {...state, loadingLib: false, library: payload}
     }
     case GET_LIBRARIES: {
-      return {...state, loadingLibs: false, libraries: payload}
+      return {
+        ...state,
+        loadingLibs: false,
+        libraries: payload,
+        filteredLibraries: payload,
+      }
     }
     case EMPTY_LIBRARY: {
       return {...state, loadingLib: true, library: null}

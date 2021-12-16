@@ -1,15 +1,18 @@
 const provideConfig = (): {
   headers: {
     'Content-Type': string
-    'x-auth-token': string
+    Authorization: string
   }
 } => {
   const privateToken = localStorage.token ? localStorage.token : ''
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      'x-auth-token': privateToken,
+      Authorization: '',
     },
+  }
+  if (localStorage.token) {
+    config.headers.Authorization = `Bearer ${privateToken}`
   }
   return config
 }

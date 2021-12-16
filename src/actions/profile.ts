@@ -1,34 +1,30 @@
-import axios, {Axios, AxiosError, AxiosResponse} from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import React from 'react'
-import {ErrorModel} from '../models/errorModel'
 import {UserModel, UserProfileModel} from '../models/userModel'
 import {setAlert} from './alert'
 import {GET_PROFILE, EMPTY_PROFILE} from './types'
 import provideConfig from '../utils/axios-config'
 import {store} from '../store'
+import handleErrors from '../utils/errorHandler'
 
 export const getUserProfileById =
   (userId: UserProfileModel['_id']) =>
-  (dispatch: typeof store.dispatch): void => {
+  async (dispatch: typeof store.dispatch): Promise<void> => {
     dispatch({type: EMPTY_PROFILE})
     const config = provideConfig()
 
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URI}/api/users/${userId}`, config)
-      .then((response: AxiosResponse<UserProfileModel>) => {
-        dispatch({type: GET_PROFILE, payload: response.data})
-      })
-      .catch((err: AxiosError<ErrorModel>) => {
-        if (err.response !== undefined) {
-          const {errors} = err.response.data
+    try {
+      const response = await axios.get<AxiosResponse<UserProfileModel>>(
+        `${process.env.REACT_APP_BACKEND_URI}/api/users/${userId}`,
+        config,
+      )
 
-          if (errors) {
-            errors.forEach(error => {
-              dispatch(setAlert({msg: error.msg, alertType: 'warning'}))
-            })
-          }
-        }
-      })
+      dispatch({type: GET_PROFILE, payload: response.data})
+    } catch (err) {
+      handleErrors(
+        err as {error: string; message: string | string[]; statusCode: number},
+      )
+    }
   }
 
 export const updateProfile =
@@ -50,12 +46,13 @@ export const updateProfile =
       }
 
       try {
-        const {data: user} = await axios.put<
-          FormData,
-          AxiosResponse<UserModel>
-        >(`${process.env.REACT_APP_BACKEND_URI}/api/users`, formData, config)
+        const response = await axios.put<FormData, AxiosResponse<UserModel>>(
+          `${process.env.REACT_APP_BACKEND_URI}/api/users`,
+          formData,
+          config,
+        )
 
-        dispatch(getUserProfileById(user._id))
+        dispatch(getUserProfileById(response.data._id))
 
         dispatch(
           setAlert({
@@ -64,16 +61,13 @@ export const updateProfile =
           }),
         )
       } catch (err) {
-        if (axios.isAxiosError(err)) {
-          const errors = err as AxiosError<ErrorModel>
-          const messages = errors.response?.data.errors
-
-          if (messages) {
-            messages.forEach(error => {
-              dispatch(setAlert({msg: error.msg, alertType: 'warning'}))
-            })
-          }
-        }
+        handleErrors(
+          err as {
+            error: string
+            message: string | string[]
+            statusCode: number
+          },
+        )
       }
     }
   }

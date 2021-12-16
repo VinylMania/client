@@ -1,8 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {
-  DiscogAlbumResponseModel,
-  DiscogArtistResponseModel,
-} from '../models/discogModel'
+import {DiscogAlbumModel, DiscogArtistModel} from '../models/discogModel'
 import {store} from '../store'
 import provideConfig from '../utils/axios-config'
 import {GET_ARTISTS, SEARCH_ARTISTS, GET_ALBUMS, SEARCH_ALBUMS} from './types'
@@ -17,16 +14,13 @@ export const getArtists =
     try {
       const response = await axios.post<
         string,
-        AxiosResponse<DiscogArtistResponseModel>
-      >(`${process.env.REACT_APP_BACKEND_URI}/api/artists/search`, body, config)
+        AxiosResponse<DiscogArtistModel[]>
+      >(`${process.env.REACT_APP_BACKEND_URI}/api/discog/artist`, body, config)
+      const {data} = response
 
-      const {results} = response.data.data
-      const filteredArtists = results.filter(artist =>
-        artist.title.toLowerCase().includes(query.artist.toLowerCase()),
-      )
       dispatch({
         type: GET_ARTISTS,
-        payload: filteredArtists,
+        payload: data,
       })
     } catch (error) {
       // TODO : handle error
@@ -47,12 +41,11 @@ export const getAlbums =
     try {
       const response = await axios.post<
         string,
-        AxiosResponse<DiscogAlbumResponseModel>
-      >(`${process.env.REACT_APP_BACKEND_URI}/api/albums/search`, body, config)
-      const {results} = response.data.data
+        AxiosResponse<DiscogAlbumModel[]>
+      >(`${process.env.REACT_APP_BACKEND_URI}/api/discog/album`, body, config)
+      const {data} = response
 
-      const filteredAlbums = results
-      dispatch({type: GET_ALBUMS, payload: filteredAlbums})
+      dispatch({type: GET_ALBUMS, payload: data})
     } catch (error) {
       // TODO : handle error
       dispatch({type: GET_ALBUMS, payload: []})

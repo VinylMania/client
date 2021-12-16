@@ -57,7 +57,7 @@ const ArtistInput: React.FC = () => {
           onChange={onChange}
           disabled={locked}
           autoComplete="off"
-          value={locked ? selected.title : query.artist}
+          value={locked ? selected.name : query.artist}
         />
       </label>
       <LockInput setInput={setQuery} type="artist" locked={locked} />

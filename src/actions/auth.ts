@@ -1,18 +1,14 @@
-import axios, {AxiosError, AxiosResponse} from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import {
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
+  AUTH_SUCCESS,
+  AUTH_FAILURE,
   REMOVE_ALERTS,
   USER_LOADED,
-  AUTH_ERROR,
-  REGISTER_FAIL,
-  REGISTER_SUCCESS,
   CLEAR_PROFILE,
   LOGOUT,
 } from './types'
 import {LoginModel, RegisterModel, UserModel} from '../models/userModel'
-import setAlert from './alert'
-import {ErrorModel} from '../models/errorModel'
+import handleErrors from '../utils/errorHandler'
 import {store} from '../store'
 import provideConfig from '../utils/axios-config'
 
@@ -22,30 +18,25 @@ export const loadUser =
   async (dispatch: typeof store.dispatch): Promise<void> => {
     const config = provideConfig()
 
-    if (config.headers['x-auth-token'].trim().length > 0) {
-      axios
-        .get(`${process.env.REACT_APP_BACKEND_URI}/api/auth`, config)
-        .then((response: AxiosResponse<UserModel>) => {
-          dispatch({type: USER_LOADED, payload: response.data})
-        })
-        .catch((err: AxiosError<ErrorModel>) => {
-          if (err.response?.data) {
-            const {errors} = err.response?.data
-            if (errors) {
-              errors.forEach(error => {
-                dispatch(setAlert({msg: error.msg, alertType: 'warning'}))
-                dispatch({type: AUTH_ERROR})
-              })
-            }
-          } else {
-            dispatch(
-              setAlert({
-                msg: 'Un erreur avec le serveur est survenue.',
-                alertType: 'warning',
-              }),
-            )
-          }
-        })
+    if (config.headers.Authorization) {
+      try {
+        const response = await axios.get<AxiosResponse<UserModel>>(
+          `${process.env.REACT_APP_BACKEND_URI}/api/auth`,
+          config,
+        )
+
+        dispatch({type: USER_LOADED, payload: response.data})
+      } catch (err) {
+        handleErrors(
+          err as {
+            error: string
+            message: string | string[]
+            statusCode: number
+          },
+        )
+
+        dispatch({type: AUTH_FAILURE})
+      }
     }
   }
 
@@ -58,67 +49,48 @@ export const login =
     const config = provideConfig()
     const body = JSON.stringify({email, password})
 
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URI}/api/auth`, body, config)
-      .then(response => {
-        dispatch({type: LOGIN_SUCCESS, payload: response.data})
+    try {
+      const response = await axios.post<
+        string,
+        AxiosResponse<{accessToken: string}>
+      >(`${process.env.REACT_APP_BACKEND_URI}/api/auth/login`, body, config)
+
+      if (response.data.accessToken) {
+        dispatch({type: AUTH_SUCCESS, payload: response.data})
         dispatch(loadUser())
-      })
-      .catch((err: AxiosError<ErrorModel>) => {
-        if (err.response?.data) {
-          const {errors} = err.response?.data
-
-          if (errors) {
-            errors.forEach(error => {
-              dispatch(setAlert({msg: error.msg, alertType: 'warning'}))
-            })
-          }
-
-          dispatch({type: LOGIN_FAIL})
-        } else {
-          dispatch(
-            setAlert({
-              msg: 'Un erreur avec le serveur est survenue.',
-              alertType: 'warning',
-            }),
-          )
-        }
-      })
+      }
+    } catch (err) {
+      handleErrors(
+        err as {error: string; message: string | string[]; statusCode: number},
+      )
+      dispatch({type: AUTH_FAILURE})
+    }
   }
 
 // Register User
 export const register =
-  (data: RegisterModel) =>
+  (registerModel: RegisterModel) =>
   async (dispatch: typeof store.dispatch): Promise<void> => {
-    const {username, email, password} = data
+    const {username, email, password} = registerModel
     const config = provideConfig()
     const body = JSON.stringify({username, email, password})
 
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URI}/api/users`, body, config)
-      .then(response => {
-        dispatch({type: REGISTER_SUCCESS, payload: response.data})
-        dispatch(loadUser())
-      })
-      .catch((err: AxiosError<ErrorModel>) => {
-        if (err.response?.data) {
-          const {errors} = err.response.data
+    try {
+      const {data} = await axios.post<
+        string,
+        AxiosResponse<{accessToken: string}>
+      >(`${process.env.REACT_APP_BACKEND_URI}/api/auth/register`, body, config)
 
-          if (errors) {
-            errors.forEach(error =>
-              dispatch(setAlert({alertType: 'warning', msg: error.msg})),
-            )
-          }
-          dispatch({type: REGISTER_FAIL})
-        } else {
-          dispatch(
-            setAlert({
-              msg: 'Un erreur avec le serveur est survenue.',
-              alertType: 'warning',
-            }),
-          )
-        }
-      })
+      if (data.accessToken) {
+        dispatch({type: AUTH_SUCCESS, payload: data})
+        dispatch(loadUser())
+      }
+    } catch (err) {
+      handleErrors(
+        err as {error: string; message: string | string[]; statusCode: number},
+      )
+      dispatch({type: AUTH_FAILURE})
+    }
   }
 
 // Logout / Clear profile

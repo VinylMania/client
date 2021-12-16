@@ -1,7 +1,6 @@
-import {Navigate} from 'react-router'
 import React, {FormEvent, useState} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {loadUser, login} from '../../actions/auth'
+import {useAppDispatch} from '../../hooks'
+import {login} from '../../actions/auth'
 import {LoginModel} from '../../models/userModel'
 import Input from '../UI/Input'
 import Button from '../UI/Button'
@@ -25,15 +24,8 @@ export const Login: React.FC = () => {
     e.preventDefault()
 
     dispatch(login(formData))
-    dispatch(loadUser())
   }
 
-  // Redirect if user authenticated
-  const isAuth = useAppSelector(state => state.root.authReducer.isAuthenticated)
-
-  if (isAuth) {
-    return <Navigate to="/home" />
-  }
   return (
     <FormContainer
       title="Connexion"

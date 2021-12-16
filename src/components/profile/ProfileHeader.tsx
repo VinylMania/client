@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect} from 'react'
 import Moment from 'react-moment'
 import {UserModel} from '../../models/userModel'
 import 'moment/locale/fr'

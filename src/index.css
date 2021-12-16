@@ -86,9 +86,37 @@
   .list-vinyles {
     @apply flex flex-wrap overflow-hidden items-start justify-start m-auto;
   }
+
+  .dropdown:hover .dropdown-content {
+    @apply flex;
+  }
+
+  .dropdown .dropdown-content {
+    @apply hidden;
+  }
+
+  .dropdown-content a,
+  .dropdown-content button {
+    @apply bg-black bg-opacity-0 transition-all duration-300 py-2 px-4;
+  }
+  .dropdown-content a:hover,
+  .dropdown-content button:hover {
+    @apply bg-opacity-25 transition-all duration-300;
+  }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap');
+
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 
 body {
   background-color: #f8efd4;

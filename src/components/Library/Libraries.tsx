@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react'
 import {getLibraries} from '../../actions/library'
 import {useAppDispatch, useAppSelector} from '../../hooks'
-import {LibraryModel} from '../../models/libraryModel'
 import LoadingSpinner from '../UI/LoadingSpinner'
-import LibraryRow from './LibraryRow'
+import Filters from './Filters/Filters'
+import {VinyleResponse} from '../../models/albumModel'
+import LibraryDetail from './LibraryDetail'
 
 const Libraries: React.FC = () => {
   const dispatch = useAppDispatch()
-  const libraryReducer: {loadingLibs: boolean; libraries: LibraryModel[]} =
+  const libraryReducer: {loadingLibs: boolean; libraries: VinyleResponse[]} =
     useAppSelector(state => state.root.libraryReducer)
   const {loadingLibs = true, libraries = undefined} = libraryReducer
 
@@ -22,9 +23,16 @@ const Libraries: React.FC = () => {
           La bibliothèque est vide pour le moment.
         </p>
       )}
+
+      {!loadingLibs && libraries?.length === 0 && (
+        <p className="text-center text-2xl text-second font-bold">
+          La bibliothèque est vide pour le moment.
+        </p>
+      )}
+
       <main className="flex flex-row bg-first p-8 h-full">
         <section className="bg-third px-16">
-          <p>Filters</p>
+          <Filters />
         </section>
 
         <section>
@@ -33,13 +41,7 @@ const Libraries: React.FC = () => {
               libraries &&
               libraries.length > 0 &&
               React.Children.toArray(
-                libraries.map(library => (
-                  <>
-                    {library.albums && library.albums.length > 0 && (
-                      <LibraryRow library={library} />
-                    )}
-                  </>
-                )),
+                libraries.map(vinyle => <LibraryDetail vinyle={vinyle} />),
               )}
           </article>
         </section>

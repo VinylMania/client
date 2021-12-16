@@ -1,15 +1,7 @@
-import {AlbumModel} from './albumModel'
-import {UserModel} from './userModel'
-
-export interface LibraryModel {
-  _id: string
-  user: UserModel
-  visibility: boolean
-  albums: AlbumModel[]
-}
+import {VinyleResponse} from './albumModel'
 
 export interface RemoveAlbumFromLibraryModel {
   type: 'trade' | 'delete'
-  albumId: AlbumModel['_id']
-  albumTitle: AlbumModel['album_title']
+  albumId: VinyleResponse['_id']
+  albumTitle: VinyleResponse['albumTitle']
 }

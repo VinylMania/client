@@ -1,4 +1,4 @@
-import {AlbumModel} from './albumModel'
+import {VinyleResponse} from './albumModel'
 
 /* eslint-disable camelcase */
 export interface LoginModel {
@@ -24,5 +24,5 @@ export interface UserProfileModel {
   _id: string
   user: UserModel
   visibility: boolean
-  albums: AlbumModel[]
+  albums: VinyleResponse[]
 }

@@ -14,6 +14,9 @@ import {loadUser} from './actions/auth'
 import AddVinyl from './components/AddVinyl/AddVinyl'
 import Libraries from './components/Library/Libraries'
 import UserProfile from './components/profile/UserProfile'
+import Footer from './components/layout/Footer'
+import PrivateRoute from './routing/PrivateRoute'
+import OfflineRoute from './routing/OfflineRoute'
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -25,14 +28,20 @@ const App: React.FC = () => {
         <Navbar />
         <Alerts />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Homepage />} />
-          <Route path="/add-vinyl" element={<AddVinyl />} />
+          <Route element={<OfflineRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+          <Route path="/" element={<Homepage />} />
+
           <Route path="/users/:userId" element={<UserProfile />} />
           <Route path="/users/:userId/:albumId" element={<UserProfile />} />
           <Route path="/library" element={<Libraries />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/add-vinyl" element={<AddVinyl />} />
+          </Route>
         </Routes>
+        <Footer />
       </Router>
     </Provider>
   )

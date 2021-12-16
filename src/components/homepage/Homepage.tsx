@@ -5,19 +5,16 @@ import {useAppSelector} from '../../hooks'
 const Homepage: React.FC = () => {
   const users = useAppSelector(state => state.root.authReducer)
 
-  const url =
-    'https://images.unsplash.com/photo-1582730147924-d92f4da00252?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80'
+  const url = 'https://images.unsplash.com/photo-1582730147924-d92f4da00252'
 
-  const url2 =
-    'https://images.unsplash.com/photo-1526394931762-90052e97b376?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+  const url2 = 'https://images.unsplash.com/photo-1526394931762-90052e97b376'
 
-  const url3 =
-    'https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2073&q=80'
+  const url3 = 'https://images.unsplash.com/photo-1483412033650-1015ddeb83d1'
   const {isAuthenticated} = users
 
   return (
     <div id="home-wrapper" className="bg-black pt-16 text-white">
-      <section className="max-w-6xl mx-auto p-8 border-8 border-green-400">
+      <section className="max-w-4xl mx-auto p-8 border-8 border-green-400">
         <figure className="relative">
           <img src={url3} alt="bibliothèque de vinyles" />
           <Link to="/library" className="home-library">

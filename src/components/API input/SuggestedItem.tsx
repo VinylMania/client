@@ -29,7 +29,7 @@ const SuggestedItem: React.FC<{
           className="cursor-pointer text-left bg-first hover:bg-third text-second hover:text-first transition-all duration-200 overflow-hidden"
           type="button"
         >
-          {result.title}
+          {result.name}
         </button>
       )}
     </>
