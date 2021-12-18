@@ -84,6 +84,7 @@ export const getLibraries =
       handleErrors(
         err as {error: string; message: string | string[]; statusCode: number},
       )
+      dispatch({type: GET_LIBRARIES, payload: []})
     }
   }
 

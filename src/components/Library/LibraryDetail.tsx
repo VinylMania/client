@@ -8,7 +8,7 @@ const LibraryDetail: React.FC<{
 }> = ({vinyle}) => {
   const {user, albumTitle, albumCoverUrl, artistTitle, year, albumId} = vinyle
   return (
-    <div className="p-4 border-2 border-green-400">
+    <div className="p-4">
       <figure className="relative">
         <Link
           to={`/users/${user}/${albumId}`}

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import React from 'react'
-import {Link} from 'react-router-dom'
+import CustomLink from './CustomLink'
 import {useAppSelector} from '../../hooks'
 import {UserModel} from '../../models/userModel'
 
@@ -19,16 +19,19 @@ export const Navbar: React.FC = () => {
   return (
     <header className="bg-second">
       <nav className="flex justify-center items-center">
-        <Link
+        <CustomLink
           to="/"
           className="text-2xl font-bold text-white p-2 hover:underline"
         >
           Accueil
-        </Link>
+        </CustomLink>
         <ul className="items-end flex flex-row justify-end flex-nowrap">
-          <Link className="text-gray-50 hover:underline p-2" to="/library">
+          <CustomLink
+            className="text-gray-50 hover:underline p-2"
+            to="/library"
+          >
             <p>Bibliothèque</p>
-          </Link>
+          </CustomLink>
           {isAuth && <NavbarAuthenticated authReducer={authReducer} />}
           {!isAuth && <NavbarOffline />}
         </ul>

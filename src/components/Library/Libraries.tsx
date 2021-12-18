@@ -18,20 +18,14 @@ const Libraries: React.FC = () => {
   return (
     <>
       {loadingLibs && <LoadingSpinner />}
-      {!loadingLibs && !libraries && (
+      {!loadingLibs && !libraries?.length && (
         <p className="text-center text-2xl text-second font-bold">
           La bibliothèque est vide pour le moment.
         </p>
       )}
 
-      {!loadingLibs && libraries?.length === 0 && (
-        <p className="text-center text-2xl text-second font-bold">
-          La bibliothèque est vide pour le moment.
-        </p>
-      )}
-
-      <main className="flex flex-row bg-first p-8 h-full">
-        <section className="bg-third px-16">
+      <main className="flex flex-col bg-first p-8 h-full">
+        <section className="bg-fourth px-16">
           <Filters />
         </section>
 

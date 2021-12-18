@@ -1,44 +1,13 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-extraneous-dependencies */
-
-const colors = require('tailwindcss/colors')
-
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      cyan: colors.cyan,
-      black: colors.black,
-      white: colors.white,
-      gray: colors.trueGray,
-      indigo: colors.indigo,
-      red: colors.rose,
-      yellow: colors.amber,
-      blue: colors.blue,
-      green: colors.emerald,
-      fuschia: colors.fuchsia,
-      violet: colors.violet,
-      first: '#f8efd4',
-      second: '#132743',
-      third: '#d7385e',
-      fourth: '#edc988',
-    },
     extend: {
-      brightness: {
-        'dark-1': '-10%',
-        'dark-2': '-20%',
-        'dark-3': '-30%',
-        'dark-4': '-40%',
-        'dark-5': '-50%',
+      colors: {
+        first: '#f8efd4',
+        second: '#132743',
+        third: '#d7385e',
+        fourth: '#edc988',
       },
-    },
-  },
-  variants: {
-    extend: {
-      opacity: ['disabled'],
     },
   },
   plugins: [],

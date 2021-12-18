@@ -4,9 +4,8 @@
 
 @layer components {
   .btn-submit {
-    @apply w-max p-2  border text-center font-bold cursor-pointer border-white text-white bg-second transition-all duration-200;
+    @apply w-max p-2 border text-center font-bold cursor-pointer border-white text-white bg-second transition-all duration-200;
   }
-
   .btn-disabled {
     @apply w-max p-2 border text-center font-bold cursor-not-allowed border-white text-white bg-gray-600 opacity-60 transition-all duration-200;
   }
