@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {getArtists} from '../../actions/discogs'
+import {useAppDispatch, useAppSelector} from '../../../hooks'
+import {getArtists} from '../../../actions/discogs'
 import SuggestedItem from './SuggestedItem'
-import {DiscogArtistModel} from '../../models/discogModel'
+import {DiscogArtistModel} from '../../../models/discogModel'
 import EmptyResult from './EmptyResult'
 import LoadingSpinner from '../UI/LoadingSpinner'
-import {CLEAR_ARTISTS} from '../../actions/types'
+import {CLEAR_ARTISTS} from '../../../actions/types'
 import LockInput from './LockInput'
 
 const ArtistInput: React.FC = () => {

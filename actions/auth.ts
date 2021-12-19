@@ -8,9 +8,9 @@ import {
   LOGOUT,
 } from './types'
 import {LoginModel, RegisterModel, UserModel} from '../models/userModel'
-import handleErrors from '../utils/errorHandler'
+import handleErrors from '../src/utils/errorHandler'
 import {store} from '../store'
-import provideConfig from '../utils/axios-config'
+import provideConfig from '../src/utils/axios-config'
 
 // Load User
 export const loadUser =

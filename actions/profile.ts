@@ -3,9 +3,9 @@ import React from 'react'
 import {UserModel, UserProfileModel} from '../models/userModel'
 import {setAlert} from './alert'
 import {GET_PROFILE, EMPTY_PROFILE} from './types'
-import provideConfig from '../utils/axios-config'
+import provideConfig from '../src/utils/axios-config'
 import {store} from '../store'
-import handleErrors from '../utils/errorHandler'
+import handleErrors from '../src/utils/errorHandler'
 
 export const getUserProfileById =
   (userId: UserProfileModel['_id']) =>

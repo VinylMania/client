@@ -1,8 +1,8 @@
 import React from 'react'
 import {CgProfile, CgDisc, CgLogOut} from 'react-icons/cg'
-import {logout} from '../../../actions/auth'
-import {UserModel} from '../../../models/userModel'
-import {useAppDispatch} from '../../../hooks'
+import {logout} from '../../../../actions/auth'
+import {UserModel} from '../../../../models/userModel'
+import {useAppDispatch} from '../../../../hooks'
 import CustomLink from '../CustomLink'
 
 const NavbarAuthenticated: React.FC<{

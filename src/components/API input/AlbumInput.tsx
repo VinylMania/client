@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {getAlbums} from '../../actions/discogs'
+import {useAppDispatch, useAppSelector} from '../../../hooks'
+import {getAlbums} from '../../../actions/discogs'
 import SuggestedItem from './SuggestedItem'
-import {DiscogAlbumModel, DiscogArtistModel} from '../../models/discogModel'
+import {DiscogAlbumModel, DiscogArtistModel} from '../../../models/discogModel'
 import EmptyResult from './EmptyResult'
 import LoadingSpinner from '../UI/LoadingSpinner'
-import {CLEAR_ALBUMS} from '../../actions/types'
+import {CLEAR_ALBUMS} from '../../../actions/types'
 import LockInput from './LockInput'
 
 const AlbumInput: React.FC = () => {

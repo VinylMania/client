@@ -1,9 +1,9 @@
 import React from 'react'
 import {FaExchangeAlt} from 'react-icons/fa'
 import {BsFillTrashFill} from 'react-icons/bs'
-import {VinyleResponse} from '../../../models/albumModel'
-import {useAppDispatch} from '../../../hooks'
-import {removeAlbumFromLibrary} from '../../../actions/library'
+import {VinyleResponse} from '../../../../models/albumModel'
+import {useAppDispatch} from '../../../../hooks'
+import {removeAlbumFromLibrary} from '../../../../actions/library'
 
 const RemoveAlbumItem: React.FC<{
   type: 'trade' | 'delete'

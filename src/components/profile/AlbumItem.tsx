@@ -1,7 +1,7 @@
 import React from 'react'
 import Moment from 'react-moment'
 
-import {VinyleResponse} from '../../models/albumModel'
+import {VinyleResponse} from '../../../models/albumModel'
 import 'moment/locale/fr'
 import RemoveAlbumItem from './Edit/RemoveAlbumItem'
 

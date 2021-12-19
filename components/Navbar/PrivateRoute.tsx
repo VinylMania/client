@@ -1,8 +1,8 @@
 import React from 'react'
 import {Outlet, Navigate} from 'react-router-dom'
-import {useAppSelector} from '../hooks'
+import {useAppSelector} from '../../hooks'
 
-const OfflineRoute: React.FC = () => {
+const PrivateRoute: React.FC = () => {
   const {
     isAuthenticated,
     loading,
@@ -10,9 +10,9 @@ const OfflineRoute: React.FC = () => {
     state => state.root.authReducer,
   )
   if (isAuthenticated && !loading) {
-    return <Navigate to="/" />
+    return <Outlet />
   }
-  return <Outlet />
+  return <Navigate to="/" />
 }
 
-export default OfflineRoute
+export default PrivateRoute

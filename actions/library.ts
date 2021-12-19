@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from 'axios'
 import {AlbumModelDto, VinyleResponse} from '../models/albumModel'
 import {RemoveAlbumFromLibraryModel} from '../models/libraryModel'
 import {setAlert} from './alert'
-import provideConfig from '../utils/axios-config'
+import provideConfig from '../src/utils/axios-config'
 import {UserModel} from '../models/userModel'
 import {
   EMPTY_LIBRARIES,
@@ -11,7 +11,7 @@ import {
   GET_LIBRARY_BY_USER_ID,
 } from './types'
 import {store} from '../store'
-import handleErrors from '../utils/errorHandler'
+import handleErrors from '../src/utils/errorHandler'
 import {DiscogAlbumModel, DiscogArtistModel} from '../models/discogModel'
 
 export const addVinyle =

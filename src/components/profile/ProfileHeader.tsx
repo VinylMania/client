@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import Moment from 'react-moment'
-import {UserModel} from '../../models/userModel'
+import {UserModel} from '../../../models/userModel'
 import 'moment/locale/fr'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {getUserProfileById} from '../../actions/profile'
+import {useAppDispatch, useAppSelector} from '../../../hooks'
+import {getUserProfileById} from '../../../actions/profile'
 import LoadingSpinner from '../UI/LoadingSpinner'
 import ProfileEdit from './Edit/ProfileEdit'
 

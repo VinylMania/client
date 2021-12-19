@@ -1,5 +1,5 @@
 import React from 'react'
-import {TextInputModel} from '../../models/textInputModel'
+import {TextInputModel} from '../../../models/textInputModel'
 
 const Input: React.FC<TextInputModel> = props => {
   const {

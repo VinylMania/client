@@ -1,6 +1,5 @@
 {
   "name": "client",
-  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
@@ -9,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.22.0",
     "moment": "^2.29.1",
+    "next": "^12.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
@@ -16,8 +16,6 @@
     "react-moment": "^1.1.1",
     "react-redux": "^7.2.5",
     "react-router": "^6.0.0",
-    "react-router-dom": "^6.0.0",
-    "react-scripts": "5.0.0",
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
@@ -25,22 +23,17 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "PORT=4995 FAST_REFRESH=false react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "PORT=4995 next dev",
+    "start": "PORT=4995 next start",
+    "build": "next build",
+    "test": "next test",
     "check-types": "tsc",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "secondLint": "next lint",
     "prettier": "prettier --ignore-path .gitignore '**/*.{ts,tsx,js,jsx,md, css,scss,json,mdx}'",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
     "validate": "npm-run-all --parallel check-types check-format lint build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -61,7 +54,6 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-redux": "^7.1.20",
     "@types/react-router": "^5.1.17",
-    "@types/react-router-dom": "^5.3.2",
     "@types/redux-actions": "^2.6.2",
     "@types/tailwindcss": "^2.2.4",
     "@types/uuid": "^8.3.1",
@@ -70,6 +62,7 @@
     "autoprefixer": "^10.4.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-next": "^12.0.7",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.24.2",

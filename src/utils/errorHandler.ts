@@ -1,5 +1,5 @@
-import setAlert from '../actions/alert'
-import {store} from '../store'
+import setAlert from '../../actions/alert'
+import {store} from '../../store'
 
 // Load User
 export const handleErrors = (err: {

@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios'
 import {DiscogAlbumModel, DiscogArtistModel} from '../models/discogModel'
 import {store} from '../store'
-import provideConfig from '../utils/axios-config'
+import provideConfig from '../src/utils/axios-config'
 import {GET_ARTISTS, SEARCH_ARTISTS, GET_ALBUMS, SEARCH_ALBUMS} from './types'
 
 export const getArtists =

@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable camelcase */
 import React from 'react'
-import {DiscogArtistModel, DiscogAlbumModel} from '../../models/discogModel'
-import {useAppDispatch} from '../../hooks'
-import {SET_ALBUM, SET_ARTIST} from '../../actions/types'
+import {DiscogArtistModel, DiscogAlbumModel} from '../../../models/discogModel'
+import {useAppDispatch} from '../../../hooks'
+import {SET_ALBUM, SET_ARTIST} from '../../../actions/types'
 
 const SuggestedItem: React.FC<{
   type: 'artist' | 'album'

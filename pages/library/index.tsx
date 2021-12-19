@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react'
 import {getLibraries} from '../../actions/library'
 import {useAppDispatch, useAppSelector} from '../../hooks'
-import LoadingSpinner from '../UI/LoadingSpinner'
+// import {getLibraries} from '../../actions/library'
+// import {useAppDispatch, useAppSelector} from '../../hooks'
+// import LoadingSpinner from '../UI/LoadingSpinner'
 import Filters from './Filters/Filters'
 import {VinyleResponse} from '../../models/albumModel'
-import LibraryDetail from './LibraryDetail'
+import LibraryDetail from '../../components/LibraryDetail'
 
 const Libraries: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -15,14 +17,15 @@ const Libraries: React.FC = () => {
   useEffect(() => {
     dispatch(getLibraries())
   }, [dispatch])
+
   return (
     <>
-      {loadingLibs && <LoadingSpinner />}
-      {!loadingLibs && !libraries?.length && (
+      {/* {loadingLibs && <LoadingSpinner />} */}
+      {/* {!loadingLibs && !libraries?.length && (
         <p className="text-center text-2xl text-second font-bold">
           La bibliothèque est vide pour le moment.
         </p>
-      )}
+      )} */}
 
       <main className="flex flex-col bg-first p-8 h-full">
         <section className="bg-fourth px-16">
@@ -31,12 +34,19 @@ const Libraries: React.FC = () => {
 
         <section>
           <article className="list-vinyles">
-            {!loadingLibs &&
+            {libraries &&
+              React.Children.toArray(
+                libraries.map((vinyle, index) => (
+                  <LibraryDetail key={index} vinyle={vinyle} />
+                )),
+              )}
+
+            {/* {!loadingLibs &&
               libraries &&
               libraries.length > 0 &&
               React.Children.toArray(
                 libraries.map(vinyle => <LibraryDetail vinyle={vinyle} />),
-              )}
+              )} */}
           </article>
         </section>
       </main>

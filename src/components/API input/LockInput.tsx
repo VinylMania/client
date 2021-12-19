@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {ImCross} from 'react-icons/im'
-import {useAppDispatch} from '../../hooks'
-import {CLEAR_ALBUMS, CLEAR_ARTISTS} from '../../actions/types'
+import {useAppDispatch} from '../../../hooks'
+import {CLEAR_ALBUMS, CLEAR_ARTISTS} from '../../../actions/types'
 
 const LockInput: React.FC<{
   locked: boolean

@@ -1,9 +1,9 @@
 import React, {useEffect, useCallback} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {VinyleResponse} from '../../models/albumModel'
-import {UserModel} from '../../models/userModel'
+import {useAppDispatch, useAppSelector} from '../../../hooks'
+import {VinyleResponse} from '../../../models/albumModel'
+import {UserModel} from '../../../models/userModel'
 import AlbumItem from './AlbumItem'
-import {getLibraryByUserId} from '../../actions/library'
+import {getLibraryByUserId} from '../../../actions/library'
 import LoadingSpinner from '../UI/LoadingSpinner'
 
 const Albums: React.FC<{userId: UserModel['_id']}> = ({userId}) => {

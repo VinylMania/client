@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react'
 
 import {MdOutlineFileUpload} from 'react-icons/md'
-import {useAppDispatch} from '../../../hooks'
-import {updateProfile} from '../../../actions/profile'
+import {useAppDispatch} from '../../../../hooks'
+import {updateProfile} from '../../../../actions/profile'
 
 const UploadAvatar: React.FC<{closeModal: () => void}> = ({closeModal}) => {
   const dispatch = useAppDispatch()

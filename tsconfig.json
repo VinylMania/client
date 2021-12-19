@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./pages",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -16,8 +17,21 @@
     "noEmit": true,
     "noImplicitAny": true,
     "removeComments": false,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "incremental": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "pages/library/Filters",
+    "components/Alerts/Alerts.tsx",
+    "components/Footer/Footer.tsx",
+    "components/Navbar/routing",
+    "src/**/*",
+    "pages/components/Navbar.tsx",
+    "models",
+    "hooks.ts",
+    "actions",
+    "reducers",
+    "store.ts"
+  ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

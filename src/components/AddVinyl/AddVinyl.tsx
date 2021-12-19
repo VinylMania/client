@@ -1,13 +1,12 @@
 import React, {FormEvent} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {addVinyle} from '../../actions/library'
+import {useAppDispatch, useAppSelector} from '../../../hooks'
+import {addVinyle} from '../../../actions/library'
 import ArtistInput from '../API input/ArtistInput'
 import AlbumInput from '../API input/AlbumInput'
 
 const AddVinyl: React.FC = () => {
   const dispatch = useAppDispatch()
   const discogsReducer = useAppSelector(state => state.root.discogsReducer)
-
 
   const onSubmit = (e: FormEvent): void => {
     e.preventDefault()

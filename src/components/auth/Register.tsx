@@ -1,9 +1,9 @@
 import React, {FormEvent, useState} from 'react'
 import Input from '../UI/Input'
-import {useAppDispatch} from '../../hooks'
-import {RegisterModel} from '../../models/userModel'
-import {loadUser, register} from '../../actions/auth'
-import setAlert, {removeAllAlerts} from '../../actions/alert'
+import {useAppDispatch} from '../../../hooks'
+import {RegisterModel} from '../../../models/userModel'
+import {loadUser, register} from '../../../actions/auth'
+import setAlert, {removeAllAlerts} from '../../../actions/alert'
 import Button from '../UI/Button'
 import FormContainer from './FormContainer'
 

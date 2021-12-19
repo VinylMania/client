@@ -1,21 +1,21 @@
 import React, {useEffect} from 'react'
 import {Provider} from 'react-redux'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import {store} from './store'
+import {store} from '../store'
 
 // Components
-import Alerts from './components/layout/Alerts'
-import Navbar from './components/layout/Navbar'
+import Alerts from '../components/Alerts/Alerts'
+import Navbar from '../components/Navbar/Navbar'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Homepage from './components/homepage/Homepage'
-import {loadUser} from './actions/auth'
+import {loadUser} from '../actions/auth'
 import AddVinyl from './components/AddVinyl/AddVinyl'
 import Libraries from './components/Library/Libraries'
 import UserProfile from './components/profile/UserProfile'
-import Footer from './components/layout/Footer'
-import PrivateRoute from './routing/PrivateRoute'
-import OfflineRoute from './routing/OfflineRoute'
+import Footer from '../components/Footer/Footer'
+import PrivateRoute from '../components/Navbar/PrivateRoute'
+import OfflineRoute from '../components/Navbar/routing/OfflineRoute'
 
 const App: React.FC = () => {
   useEffect(() => {
