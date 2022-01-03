@@ -20,18 +20,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "pages/library/Filters",
-    "components/Alerts/Alerts.tsx",
-    "components/Footer/Footer.tsx",
-    "components/Navbar/routing",
-    "src/**/*",
-    "pages/components/Navbar.tsx",
-    "models",
-    "hooks.ts",
-    "actions",
-    "reducers",
-    "store.ts"
-  ],
+  "include": ["**/**/*.tsx"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

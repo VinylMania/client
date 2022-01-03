@@ -8,9 +8,9 @@ import {
   LOGOUT,
 } from './types'
 import {LoginModel, RegisterModel, UserModel} from '../models/userModel'
-import handleErrors from '../src/utils/errorHandler'
+import handleErrors from '../utils/errorHandler'
 import {store} from '../store'
-import provideConfig from '../src/utils/axios-config'
+import provideConfig from '../utils/axios-config'
 
 // Load User
 export const loadUser =
@@ -21,7 +21,7 @@ export const loadUser =
     if (config.headers.Authorization) {
       try {
         const response = await axios.get<AxiosResponse<UserModel>>(
-          `${process.env.REACT_APP_BACKEND_URI}/api/auth`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/auth`,
           config,
         )
 
@@ -53,7 +53,7 @@ export const login =
       const response = await axios.post<
         string,
         AxiosResponse<{accessToken: string}>
-      >(`${process.env.REACT_APP_BACKEND_URI}/api/auth/login`, body, config)
+      >(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/auth/login`, body, config)
 
       if (response.data.accessToken) {
         dispatch({type: AUTH_SUCCESS, payload: response.data})
@@ -79,7 +79,11 @@ export const register =
       const {data} = await axios.post<
         string,
         AxiosResponse<{accessToken: string}>
-      >(`${process.env.REACT_APP_BACKEND_URI}/api/auth/register`, body, config)
+      >(
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/auth/register`,
+        body,
+        config,
+      )
 
       if (data.accessToken) {
         dispatch({type: AUTH_SUCCESS, payload: data})

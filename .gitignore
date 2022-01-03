@@ -24,3 +24,5 @@ yarn-error.log*
 .env
 .vscode
 .next
+public/*.jpg
+public/*.png

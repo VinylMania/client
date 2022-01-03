@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+  #__next {
+    @apply flex flex-col min-h-full;
+  }
   .btn-submit {
     @apply w-max p-2 border text-center font-bold cursor-pointer border-white text-white bg-second transition-all duration-200;
   }
@@ -41,7 +44,7 @@
   }
 
   .vinyl-form-parent {
-    @apply max-w-3xl flex flex-col mx-auto text-second mt-8;
+    @apply max-w-4xl flex flex-col mx-auto text-second mt-8;
   }
 
   .vinyl-form {
@@ -49,7 +52,7 @@
   }
 
   .home-library {
-    @apply absolute top-0 left-0 w-full h-full flex bg-black bg-opacity-0 hover:bg-opacity-50 transition-all duration-500;
+    @apply absolute top-0 left-0 w-full h-full flex bg-black bg-opacity-0 hover:bg-opacity-70 transition-all duration-300;
   }
 
   .home-library p {
@@ -57,6 +60,10 @@
   }
   .home-library:hover p {
     @apply bg-third transition-all duration-500;
+  }
+
+  .home-library:hover > span {
+    @apply border-2 border-third bg-second transition-all duration-300;
   }
 
   .vinyl-wrapper {
@@ -104,17 +111,15 @@
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap');
-
 html,
 body,
-body > div {
-  height: 100%;
+body #__next {
+  min-height: 100%;
 }
 
 body {
   background-color: #f8efd4;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 .vinyl-spinner {
@@ -133,36 +138,4 @@ body {
 }
 #modal-content {
   margin: 0 auto;
-}
-
-.home-library::before,
-.home-library::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #d7385e;
-  transform: scaleX(0);
-  transition: transform 0.5s ease;
-}
-
-.home-library::before {
-  top: 0;
-  transform-origin: center right;
-}
-
-.home-library:hover::before {
-  transform-origin: center left;
-  transform: scaleX(1);
-}
-
-.home-library::after {
-  bottom: 0;
-  transform-origin: center left;
-}
-
-.home-library:hover::after {
-  transform-origin: center right;
-  transform: scaleX(1);
 }

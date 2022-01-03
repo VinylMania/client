@@ -1,0 +1,7 @@
+.avatar {
+  border-radius: 100%;
+  width: 4rem;
+  height: 4rem;
+  border-color: purple;
+  border-width: 10px;
+}

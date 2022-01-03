@@ -9,7 +9,6 @@ export const Alert: React.FC = () => {
   return (
     <>
       {alerts &&
-        alerts !== null &&
         alerts.length > 0 &&
         alerts.map((alert: AlertModel) => (
           <AlertItem key={alert.id} alert={alert} />

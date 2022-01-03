@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios'
 import {DiscogAlbumModel, DiscogArtistModel} from '../models/discogModel'
 import {store} from '../store'
-import provideConfig from '../src/utils/axios-config'
+import provideConfig from '../utils/axios-config'
 import {GET_ARTISTS, SEARCH_ARTISTS, GET_ALBUMS, SEARCH_ALBUMS} from './types'
 
 export const getArtists =
@@ -15,7 +15,11 @@ export const getArtists =
       const response = await axios.post<
         string,
         AxiosResponse<DiscogArtistModel[]>
-      >(`${process.env.REACT_APP_BACKEND_URI}/api/discog/artist`, body, config)
+      >(
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/discog/artist`,
+        body,
+        config,
+      )
       const {data} = response
 
       dispatch({
@@ -42,7 +46,7 @@ export const getAlbums =
       const response = await axios.post<
         string,
         AxiosResponse<DiscogAlbumModel[]>
-      >(`${process.env.REACT_APP_BACKEND_URI}/api/discog/album`, body, config)
+      >(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/discog/album`, body, config)
       const {data} = response
 
       dispatch({type: GET_ALBUMS, payload: data})

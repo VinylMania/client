@@ -3,9 +3,9 @@ import React from 'react'
 import {UserModel, UserProfileModel} from '../models/userModel'
 import {setAlert} from './alert'
 import {GET_PROFILE, EMPTY_PROFILE} from './types'
-import provideConfig from '../src/utils/axios-config'
+import provideConfig from '../utils/axios-config'
 import {store} from '../store'
-import handleErrors from '../src/utils/errorHandler'
+import handleErrors from '../utils/errorHandler'
 
 export const getUserProfileById =
   (userId: UserProfileModel['_id']) =>
@@ -15,7 +15,7 @@ export const getUserProfileById =
 
     try {
       const response = await axios.get<AxiosResponse<UserProfileModel>>(
-        `${process.env.REACT_APP_BACKEND_URI}/api/users/${userId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/${userId}`,
         config,
       )
 
@@ -47,7 +47,7 @@ export const updateProfile =
 
       try {
         const response = await axios.put<FormData, AxiosResponse<UserModel>>(
-          `${process.env.REACT_APP_BACKEND_URI}/api/users`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users`,
           formData,
           config,
         )

@@ -1,14 +1,16 @@
 import {useAppSelector} from '../../hooks'
 import {UserModel} from '../../models/userModel'
 import Link from 'next/link'
+import NavbarAuthenticated from '../../components/Navbar/NavbarAuthenticated'
+import NavbarOffline from '../../components/Navbar/NavbarOffline'
 
 const Navbar: React.FC = () => {
-  // const authReducer: {
-  //   isAuthenticated: boolean
-  //   loading: boolean
-  //   user: UserModel
-  // } = useAppSelector(state => state.root.authReducer)
-  // const isAuth = authReducer.isAuthenticated
+  const authReducer: {
+    isAuthenticated: boolean
+    loading: boolean
+    user: UserModel
+  } = useAppSelector(state => state.root.authReducer)
+  const isAuth = authReducer.isAuthenticated
 
   return (
     <header className="bg-second">
@@ -22,8 +24,8 @@ const Navbar: React.FC = () => {
           <Link href="/library">
             <a className="text-gray-50 hover:underline p-2">Bibliothèque</a>
           </Link>
-          {/* {isAuth && <NavbarAuthenticated authReducer={authReducer} />}
-          {!isAuth && <NavbarOffline />} */}
+          {isAuth && <NavbarAuthenticated authReducer={authReducer} />}
+          {!isAuth && <NavbarOffline />}
         </ul>
       </nav>
     </header>
