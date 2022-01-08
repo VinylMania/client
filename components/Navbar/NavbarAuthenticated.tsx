@@ -5,8 +5,6 @@ import {UserModel} from '../../models/userModel'
 import {useAppDispatch} from '../../hooks'
 import Link from 'next/link'
 import Image from 'next/image'
-import profilePic from '../../public/mystery-man.jpg'
-import styles from '../../styles/avatar.module.css'
 
 const NavbarAuthenticated: React.FC<{
   authReducer: {
@@ -21,15 +19,13 @@ const NavbarAuthenticated: React.FC<{
       <div className="dropdown relative ml-2">
         <div className="w-8 h-8 rounded-full border-2 border-third bg-third overflow-hidden">
           <Image
-            placeholder="blur"
-            blurDataURL={profilePic}
             src={`https:${authReducer?.user?.avatar}`}
             alt="Avatar de profil"
             layout="intrinsic"
-            quality={60}
-            priority
+            quality={50}
             width={40}
             height={40}
+            priority
           />
         </div>
         <ul className="min-w-max dropdown-content bg-second shadow-2xl absolute z-10 flex flex-col">

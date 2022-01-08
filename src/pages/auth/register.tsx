@@ -1,11 +1,11 @@
 import React, {FormEvent, useState} from 'react'
-import Input from '../../components/UI/Input'
+import Input from '../../../components/UI/Input'
 
-import {useAppDispatch} from '../../hooks'
-import {RegisterModel} from '../../models/userModel'
-import {loadUser, register} from '../../actions/auth'
-import setAlert, {removeAllAlerts} from '../../actions/alert'
-import FormContainer from '../../components/Layout/FormContainer'
+import {useAppDispatch} from '../../../hooks'
+import {RegisterModel} from '../../../models/userModel'
+import {loadUser, register} from '../../../actions/auth'
+import setAlert, {removeAllAlerts} from '../../../actions/alert'
+import FormContainer from '../../../components/Layout/FormContainer'
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch()

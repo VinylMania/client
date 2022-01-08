@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./pages",
+    "baseUrl": "src/pages",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

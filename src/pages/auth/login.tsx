@@ -1,9 +1,9 @@
 import React, {FormEvent, useState} from 'react'
-import {useAppDispatch} from '../../hooks'
-import {login} from '../../actions/auth'
-import {LoginModel} from '../../models/userModel'
-import Input from '../../components/UI/Input'
-import FormContainer from '../../components/Layout/FormContainer'
+import {useAppDispatch} from '../../../hooks'
+import {login} from '../../../actions/auth'
+import {LoginModel} from '../../../models/userModel'
+import Input from '../../../components/UI/Input'
+import FormContainer from '../../../components/Layout/FormContainer'
 import type {NextPage} from 'next/types'
 
 export const Login: NextPage = () => {

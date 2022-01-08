@@ -1,8 +1,8 @@
 import React, {FormEvent} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {addVinyle} from '../../actions/library'
-import ArtistInput from '../../components/API input/ArtistInput'
-import AlbumInput from '../../components/API input/AlbumInput'
+import {useAppDispatch, useAppSelector} from '../../../hooks'
+import {addVinyle} from '../../../actions/library'
+import ArtistInput from '../../../components/API input/ArtistInput'
+import AlbumInput from '../../../components/API input/AlbumInput'
 
 const AddVinyl: React.FC = () => {
   const dispatch = useAppDispatch()

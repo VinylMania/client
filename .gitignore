@@ -26,3 +26,4 @@ yarn-error.log*
 .next
 public/*.jpg
 public/*.png
+.vercel

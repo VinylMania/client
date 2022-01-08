@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
-import {Link} from 'react-router-dom'
-import {UserModel} from '../../models/userModel'
+import Link from 'next/link'
+import {UserModel} from '../../../models/userModel'
 
 const UserDetail: React.FC<{user: UserModel}> = ({user}) => {
   const {username, avatar, _id: userId} = user
@@ -19,8 +19,8 @@ const UserDetail: React.FC<{user: UserModel}> = ({user}) => {
         placeholder="blur"
         blurDataURL={avatar}
       />
-      <Link className="btn-submit" to={`/users/${userId}`}>
-        Consulter le profil
+      <Link href={`/users/${userId}`}>
+        <a className="btn-submit">Consulter le profil</a>
       </Link>
     </div>
   )

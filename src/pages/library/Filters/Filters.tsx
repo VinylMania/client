@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {VinyleResponse} from '../../../models/albumModel'
+import {VinyleResponse} from '../../../../models/albumModel'
 
 const Filters: React.FC<{
   libraries: VinyleResponse[]
