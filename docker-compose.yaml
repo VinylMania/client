@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  webapp:
+    container_name: vinylmania-webapp
+    image: varkoff/vinylmania-webapp
+    restart: always
+    build:
+      context: .
+    ports:
+      - '4995:4995'
+    volumes:
+      - ./public/index.html:/vinylmania/webapp/public/index.html
+      - ./src:/vinylmania/webapp/src

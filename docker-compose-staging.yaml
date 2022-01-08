@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  webapp:
+    container_name: vinylmania_webapp
+    image: varkoff/vinylmania_webapp
+    restart: always
+    build:
+      context: .
+    ports:
+      - '4995:4995'
+    volumes:
+      - ./src:/vinylmania/webapp/src
+    environment:
+      VIRTUAL_HOST: staging.front.vinylmania.varkoff.fr
+      LETSENCRYPT_HOST: staging.front.vinylmania.varkoff.fr
+      LETSENCRYPT_EMAIL: virgileboris96@hotmail.fr
+    networks:
+      - service-network
+      - proxy
+networks:
+  proxy:
+  service-network:
+    external: true
+
+volumes:
+  back:

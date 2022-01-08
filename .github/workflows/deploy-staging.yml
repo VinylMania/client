@@ -1,0 +1,21 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 'Autodeploy Staging'
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+jobs:
+  deploy:
+    runs-on: [self-hosted]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy To Server
+        run: |
+          touch .env
+          echo "REACT_APP_BACKEND_URI=${{ secrets.BACKEND_URL }}" >> .env
+          docker-compose -f docker-compose-staging.yaml up --build -d

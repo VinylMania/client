@@ -20,4 +20,12 @@
 
 npm-debug.log*
 yarn-debug.log*
+
+yarn-error.log*
+.env
+.vscode
+.next
+public/*.jpg
+public/*.png
+.vercel
 yarn-error.log*
