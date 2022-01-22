@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
+    "@tailwindcss/forms": "^0.4.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -15,6 +16,7 @@
     "next": "^12.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-feather": "^2.0.9",
     "react-icons": "^4.3.1",
     "react-image-crop": "^9.0.5",
     "react-moment": "^1.1.1",
@@ -29,8 +31,8 @@
     "zod": "^3.11.6"
   },
   "scripts": {
-    "dev": "PORT=4995 next dev",
-    "start": "PORT=4995 next start",
+    "dev": "next dev",
+    "start": "next start",
     "build": "next build",
     "test": "next test",
     "check-types": "tsc",

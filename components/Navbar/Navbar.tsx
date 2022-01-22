@@ -3,30 +3,39 @@ import {UserModel} from '../../models/userModel'
 import Link from 'next/link'
 import NavbarAuthenticated from '../../components/Navbar/NavbarAuthenticated'
 import NavbarOffline from '../../components/Navbar/NavbarOffline'
+import {useContext} from 'react'
+import AuthContext from '../../src/context/auth-context'
 
 const Navbar: React.FC = () => {
-  const authReducer: {
-    isAuthenticated: boolean
-    loading: boolean
-    user: UserModel
-  } = useAppSelector(state => state.root.authReducer)
-  const isAuth = authReducer.isAuthenticated
+  // const authReducer: {
+  //   isAuthenticated: boolean
+  //   loading: boolean
+  //   user: UserModel
+  // } = useAppSelector(state => state.root.authReducer)
+  // const isAuth = authReducer.isAuthenticated
+  // Get React.context
 
   return (
-    <header className="bg-second">
-      <nav className="flex justify-center items-center">
+    <header className="relative md:fixed w-full isolate z-10 bg-buttonText text-heading drop-shadow-xl">
+      <nav className="max-w-4xl m-auto flex flex-col justify-center items-center md:flex-row gap-4 py-2 md:justify-end">
         <Link href="/">
-          <a className="text-2xl font-bold text-white p-2 hover:underline">
-            Accueil
-          </a>
+          <a className="navlink md:mr-auto text-3xl font-bold">Accueil</a>
         </Link>
-        <ul className="items-end flex flex-row justify-end flex-nowrap">
-          <Link href="/library">
-            <a className="text-gray-50 hover:underline p-2">Bibliothèque</a>
-          </Link>
-          {isAuth && <NavbarAuthenticated authReducer={authReducer} />}
-          {!isAuth && <NavbarOffline />}
-        </ul>
+        <Link href="/library">
+          <a className="navlink">Bibliothèque</a>
+        </Link>
+        <AuthContext.Consumer>
+          {ctx => {
+            return (
+              <>
+                {ctx.isAuthenticated && (
+                  <NavbarAuthenticated user={ctx.user} logout={ctx.logout} />
+                )}
+                {!ctx.isAuthenticated && <NavbarOffline />}
+              </>
+            )
+          }}
+        </AuthContext.Consumer>
       </nav>
     </header>
   )

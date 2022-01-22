@@ -1,69 +1,73 @@
 import React, {useEffect, useState} from 'react'
-import {getLibraries} from '../../../actions/library'
-import {useAppDispatch, useAppSelector} from '../../../hooks'
 import LoadingSpinner from '../../../components/UI/LoadingSpinner'
-import Filters from './Filters/Filters'
 import {VinyleResponse} from '../../../models/albumModel'
-import LibraryDetail from '../../../components/LibraryDetail'
+import LibraryDetail from '../../../components/Library/LibraryDetail'
 import {NextPage} from 'next'
+import {useQuery} from 'react-query'
+import Filters from '../../../components/Library/Filters'
+
+const getVinyles = async (): Promise<VinyleResponse[]> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles`,
+  )
+  return await response.json()
+}
 
 export async function getStaticProps() {
-  console.log('Getting them props !!')
-  const data = await fetch('http://localhost:3000/api/vinyles') // getLibraries()
-  const vinyles: VinyleResponse[] = await data.json()
+  const initialVinyles = await getVinyles()
   return {
     props: {
-      vinyles,
+      initialVinyles,
     },
   }
 }
 
-const Libraries: NextPage<{vinyles: VinyleResponse[]}> = ({vinyles}) => {
-  console.log(vinyles)
-  const dispatch = useAppDispatch()
-  const libraryReducer: {loadingLibs: boolean; libraries: VinyleResponse[]} =
-    useAppSelector(state => state.root.libraryReducer)
-  const {loadingLibs = true, libraries = undefined} = libraryReducer
-  const [filteredLibs, setFilteredLibs] = useState<VinyleResponse[]>()
+const Libraries: NextPage<{initialVinyles: VinyleResponse[]}> = ({
+  initialVinyles,
+}) => {
+  const {
+    data: listVinyles,
+    isLoading,
+    isError,
+  } = useQuery('vinyles', getVinyles, {initialData: initialVinyles})
+
+  const [vinyles, setFilters] = useState<VinyleResponse[]>()
 
   useEffect(() => {
-    setFilteredLibs(libraries)
-  }, [libraries])
-
-  useEffect(() => {
-    dispatch(getLibraries())
-  }, [dispatch])
+    setFilters(listVinyles)
+  }, [listVinyles])
 
   return (
-    <>
-      <main className="flex flex-col p-8 h-full">
-        {/* <Filters libraries={libraries} setFilteredLibs={setFilteredLibs} />
-        {loadingLibs && <LoadingSpinner />}
-        {!loadingLibs && !libraries?.length && (
-          <p className="text-center text-2xl text-second font-bold py-8">
+    <main className="bg-buttonText pt-8 md:pt-32 pb-16 min-h-full">
+      <div className="max-w-full px-8 md:max-w-5xl flex flex-col mx-auto">
+        {isError && <div>Error</div>}
+        {listVinyles && vinyles && (
+          <Filters vinyles={listVinyles} setFilters={setFilters} />
+        )}
+
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && !listVinyles?.length && (
+          <p className="text-center text-2xl text-headline font-bold py-8">
             La bibliothèque est vide pour le moment.
           </p>
         )}
 
-        {!loadingLibs && libraries.length && !filteredLibs?.length && (
-          <p className="text-center text-2xl text-second font-bold py-8">
+        {listVinyles && listVinyles.length > 0 && vinyles?.length === 0 && (
+          <p className="text-center text-2xl text-headline font-bold py-8">
             Aucun résultat correspondant à votre recherche.
           </p>
-        )} */}
-
-        {/* <section>
-          <article className="list-vinyles">
-            {!loadingLibs &&
-              filteredLibs &&
-              React.Children.toArray(
-                filteredLibs.map((vinyle, index) => (
-                  <LibraryDetail key={index} vinyle={vinyle} />
-                )),
-              )}
-          </article>
-        </section> */}
-      </main>
-    </>
+        )}
+        {listVinyles && vinyles && vinyles!.length > 0 && (
+          <section>
+            <article className="bg-background p-4 rounded-xl flex flex-wrap gap-8 overflow-hidden justify-center md:justify-between">
+              {vinyles.map((vinyle, index) => (
+                <LibraryDetail key={index} vinyle={vinyle} />
+              ))}
+            </article>
+          </section>
+        )}
+      </div>
+    </main>
   )
 }
 

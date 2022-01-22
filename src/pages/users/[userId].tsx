@@ -10,11 +10,10 @@ const UserProfile: NextPage = () => {
   const userId = router.query.userId as UserModel['_id']
 
   return (
-    <>
+    <section className="mx-auto">
       {userId && <ProfileHeader userId={userId} />}
       {userId && <Albums userId={userId} />}
-    </>
-    // <>
+    </section>
   )
 }
 

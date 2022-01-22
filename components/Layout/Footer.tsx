@@ -1,23 +1,25 @@
+import Link from 'next/link'
 import React from 'react'
+import Moment from 'react-moment'
+import {Disc} from 'react-feather'
 
 const Footer: React.FC = () => (
-  <footer className="p-8 columns-3 mt-auto bg-second text-white">
-    <p>
-      I love carrot cake soufflé chocolate I love gummies jujubes. Chocolate
-      cake lollipop caramels macaroon I love macaroon pudding. Shortbread halvah
-      I love chocolate chupa chups sesame snaps marzipan halvah.
-    </p>
-    <p>
-      Fruitcake caramels I love I love icing tootsie roll cake halvah. Gummies
-      marshmallow soufflé jelly beans I love croissant lemon drops. Biscuit
-      pastry cake soufflé muffin pie soufflé icing cotton candy.
-    </p>
-    <p>
-      Caramels I love pudding gingerbread donut tootsie roll chocolate sweet
-      roll. Dessert tootsie roll fruitcake cookie macaroon jelly beans jelly
-      dessert. Jelly beans I love dragée I love wafer. Tootsie roll lemon drops
-      cheesecake I love jelly beans candy canes croissant I love pie.
-    </p>
+  <footer className="mt-auto bg-black flex flex-row justify-center p-8">
+    <div className="flex flex-row gap-8 justify-center w-full max-w-4xl">
+      <p className="flex gap-4 items-center mr-auto text-lg font-semibold">
+        {' '}
+        <Disc size={30} strokeWidth={2} /> VinylMania
+      </p>
+      <p>
+        Développé par{' '}
+        <strong>
+          <Link href="https://varkoff.fr">
+            <a>Varkoff</a>
+          </Link>
+        </strong>{' '}
+        © 2022
+      </p>
+    </div>
   </footer>
 )
 

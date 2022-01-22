@@ -6,22 +6,18 @@
   #__next {
     @apply flex flex-col min-h-full;
   }
+  body {
+    @apply bg-background text-paragraph;
+  }
   .btn-submit {
-    @apply w-max p-2 border text-center font-bold cursor-pointer border-white text-white bg-second transition-all duration-200;
+    @apply w-max px-2 py-1 border border-button rounded-full text-center font-bold cursor-pointer text-button bg-buttonText transition-all duration-300 hover:border-buttonText hover:bg-button hover:text-buttonText;
   }
   .btn-disabled {
-    @apply w-max p-2 border text-center font-bold cursor-not-allowed border-white text-white bg-gray-600 opacity-60 transition-all duration-200;
+    @apply w-max p-2 border text-center font-bold cursor-not-allowed border-white text-white opacity-60 transition-all duration-200;
   }
 
   .btn-cancel {
-    @apply w-max p-2  border text-center font-bold cursor-pointer border-white text-white bg-third transition-colors duration-200;
-  }
-  .btn-submit:hover {
-    @apply bg-third;
-  }
-
-  .btn-cancel:hover {
-    @apply bg-second;
+    @apply w-max p-2  border text-center font-bold cursor-pointer border-white text-white button transition-colors duration-200;
   }
 
   .alert-msg {
@@ -39,86 +35,38 @@
     @apply text-green-500;
   }
 
-  .vinyl-title {
-    @apply text-3xl font-bold drop-shadow-lg;
-  }
-
-  .vinyl-form-parent {
-    @apply max-w-4xl flex flex-col mx-auto text-second mt-8;
-  }
-
-  .vinyl-form {
-    @apply flex flex-col my-4 bg-fourth p-12 shadow-2xl;
-  }
-
-  .home-library {
-    @apply absolute top-0 left-0 w-full h-full flex bg-black bg-opacity-0 hover:bg-opacity-70 transition-all duration-300;
-  }
-
-  .home-library p {
-    @apply p-2 cursor-pointer border-white text-white bg-second transition-all duration-500;
-  }
-  .home-library:hover p {
-    @apply bg-third transition-all duration-500;
-  }
-
-  .home-library:hover > span {
-    @apply border-2 border-third bg-second transition-all duration-300;
-  }
-
-  .vinyl-wrapper {
-    @apply bg-black bg-opacity-0 transition-all duration-300;
-  }
-
-  .vinyl-wrapper ul {
-    @apply opacity-0 text-white transition-all duration-500;
-  }
-  .vinyl-wrapper:hover ul {
-    @apply opacity-100 transition-all duration-500;
-  }
-
-  .vinyl-wrapper:hover {
-    @apply bg-black bg-opacity-75 transition-all duration-300;
-  }
-
   .modal {
     @apply left-0 top-0 z-10 fixed flex bg-black bg-opacity-30 h-full w-full;
   }
 
   .modal-content {
-    @apply overflow-auto select-none bg-first rounded-lg max-w-5xl max-h-full m-auto p-8;
-  }
-
-  .list-vinyles {
-    @apply flex flex-wrap overflow-hidden items-start justify-start m-auto;
-  }
-
-  .dropdown:hover .dropdown-content {
-    @apply flex;
-  }
-
-  .dropdown .dropdown-content {
-    @apply hidden;
-  }
-
-  .dropdown-content a,
-  .dropdown-content button {
-    @apply bg-black bg-opacity-0 transition-all duration-300 py-2 px-4;
-  }
-  .dropdown-content a:hover,
-  .dropdown-content button:hover {
-    @apply bg-opacity-25 transition-all duration-300;
+    @apply overflow-auto select-none rounded-lg max-w-5xl max-h-full m-auto p-8;
   }
 }
 
-html,
-body,
-body #__next {
-  min-height: 100%;
+.navlink {
+  position: relative;
+}
+
+.navlink::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #ffc0ad;
+  transform-origin: bottom right;
+  transform: scaleX(0);
+  transition: transform 0.33s ease;
+}
+
+.navlink:hover::before {
+  transform-origin: bottom left;
+  transform: scaleX(1);
 }
 
 body {
-  background-color: #f8efd4;
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 

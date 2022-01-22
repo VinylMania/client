@@ -8,6 +8,22 @@ import LoadingSpinner from '../UI/LoadingSpinner'
 import ProfileEdit from './Edit/ProfileEdit'
 import Image from 'next/image'
 
+const getUserProfile = async (): Promise<UserModel[]> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles`,
+  )
+  return await response.json()
+}
+
+// export async function getStaticProps() {
+//   const initialVinyles = await getVinyles()
+//   return {
+//     props: {
+//       initialVinyles,
+//     },
+//   }
+// }
+
 const ProfileHeader: React.FC<{userId: UserModel['_id'] | undefined}> = ({
   userId,
 }) => {
@@ -37,7 +53,7 @@ const ProfileHeader: React.FC<{userId: UserModel['_id'] | undefined}> = ({
 
   return (
     <>
-      <div className="flex flex-row flex-wrap justify-center bg-fourth py-4">
+      <div className="pt-32 pb-16 flex flex-row flex-wrap justify-center bg-black text-buttonText">
         {loading && !userProfile && <LoadingSpinner />}
         {!loading && !userProfile && (
           <p>Nous n&apos;arrivons pas à charger le profil.</p>
@@ -45,6 +61,18 @@ const ProfileHeader: React.FC<{userId: UserModel['_id'] | undefined}> = ({
 
         {!loading && userProfile && (
           <>
+            <div className="relative border border-black">
+              <Image
+                alt="profile wave effect"
+                layout="intrinsic"
+                src="/profile-background.png"
+                width={960}
+                height={540}
+                quality={1}
+                blurDataURL="/profile-background.png"
+                placeholder="blur"
+              />
+            </div>
             <div className="space-y-2 mx-6 p-2 text-second flex flex-col items-center">
               <p className="text-2xl font-bold uppercase text-center underline">
                 {userProfile.username}

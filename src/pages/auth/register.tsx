@@ -36,11 +36,14 @@ const Register: React.FC = () => {
   return (
     <FormContainer
       title="Inscription"
-      link="/login"
+      link="/auth/login"
       textLink="Déjà inscrit ?"
       textLinkBold="Je me connecte"
     >
-      <form className="vinyl-form" onSubmit={e => onSubmit(e)}>
+      <form
+        className="w-full flex flex-col gap-2 px-8"
+        onSubmit={e => onSubmit(e)}
+      >
         <Input
           id="username"
           label="Pseudonyme"
@@ -84,7 +87,9 @@ const Register: React.FC = () => {
           required
         />
 
-        <button type="submit">Je m&apos;inscris</button>
+        <button className="btn-submit mt-auto" type="submit">
+          Je m&apos;inscris
+        </button>
       </form>
     </FormContainer>
   )

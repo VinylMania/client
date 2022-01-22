@@ -12,7 +12,7 @@ export interface AlbumModelDto {
 }
 
 export interface VinyleResponse {
-  user: string
+  user: UserModel
   _id?: string
   artistTitle: string
   albumTitle: string
