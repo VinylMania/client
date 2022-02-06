@@ -1,11 +1,13 @@
 export interface TextInputModel {
-  id: string
+  id?: string
   type: string
-  name: string
-  onChange: any
+  name?: string
+  onChange?: React.Dispatch<React.SetStateAction<string>>
   placeholder?: string
-  value: string
+  value?: string
   className?: string
-  required: boolean
+  required?: boolean
   label?: string
+  minLength?: number
+  maxLength?: number
 }

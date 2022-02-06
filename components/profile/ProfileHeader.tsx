@@ -1,38 +1,42 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import Moment from 'react-moment'
 import {UserModel} from '../../models/userModel'
 import 'moment/locale/fr'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {getUserProfileById} from '../../actions/profile'
-import LoadingSpinner from '../UI/LoadingSpinner'
 import ProfileEdit from './Edit/ProfileEdit'
 import Image from 'next/image'
+import provideConfig from '../../utils/axios-config'
+import axios from 'axios'
+import {useQuery} from 'react-query'
+import AuthContext from '../../context/auth-context'
+import {ErrorBoundary} from 'react-error-boundary'
+import LoadingError from '../UI/LoadingError'
 
-const getUserProfile = async (): Promise<UserModel[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles`,
+const getProfile = async (userId: UserModel['_id']): Promise<UserModel> => {
+  const config = provideConfig()
+
+  const {data} = await axios.get<UserModel>(
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/${userId}`,
+    config,
   )
-  return await response.json()
+  return data
 }
 
-// export async function getStaticProps() {
-//   const initialVinyles = await getVinyles()
-//   return {
-//     props: {
-//       initialVinyles,
-//     },
-//   }
-// }
-
-const ProfileHeader: React.FC<{userId: UserModel['_id'] | undefined}> = ({
-  userId,
-}) => {
-  const dispatch = useAppDispatch()
-  const userAuth = useAppSelector(state => state.root.authReducer)
-  const profileReducer: {user: UserModel; loading: boolean} = useAppSelector(
-    state => state.root.profileReducer,
+const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
+  const {data: userProfile} = useQuery(
+    ['getProfile'],
+    async () => {
+      return await getProfile(userId)
+    },
+    {
+      onError: err => {
+        console.error(err)
+      },
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
   )
-  const {user: userProfile, loading} = profileReducer
+  const isAuth = useContext(AuthContext)
+  const {isAuthenticated, user} = isAuth
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -44,88 +48,61 @@ const ProfileHeader: React.FC<{userId: UserModel['_id'] | undefined}> = ({
     setIsModalOpen(false)
   }
 
-  useEffect(() => {
-    if (userId) {
-      dispatch(getUserProfileById(userId))
-      closeModal()
-    }
-  }, [dispatch, userId])
-
   return (
-    <>
-      <div className="pt-32 pb-16 flex flex-row flex-wrap justify-center bg-black text-buttonText">
-        {loading && !userProfile && <LoadingSpinner />}
-        {!loading && !userProfile && (
-          <p>Nous n&apos;arrivons pas à charger le profil.</p>
-        )}
-
-        {!loading && userProfile && (
-          <>
-            <div className="relative border border-black">
+    <div className="flex flex-col w-full items-center">
+      <ErrorBoundary fallback={<LoadingError />}>
+        {userProfile && (
+          <div className="flex flex-row items-center py-4">
+            <div className="relative w-[100px] h-[100px] border rounded-full overflow-hidden">
               <Image
-                alt="profile wave effect"
-                layout="intrinsic"
-                src="/profile-background.png"
-                width={960}
-                height={540}
-                quality={1}
-                blurDataURL="/profile-background.png"
-                placeholder="blur"
+                layout="fill"
+                objectFit="cover"
+                quality={75}
+                src={user?.avatar ? user.avatar : userProfile.avatar}
+                alt={`Avatar de l'utilisateur ${userProfile.username}`}
+                placeholder="empty"
               />
             </div>
-            <div className="space-y-2 mx-6 p-2 text-second flex flex-col items-center">
-              <p className="text-2xl font-bold uppercase text-center underline">
+
+            <div className="flex flex-col gap-1 mx-4">
+              <p className="text-2xl font-bold capitalize text-headline">
                 {userProfile.username}
               </p>
-
-              <Image
-                layout="intrinsic"
-                className="rounded-full"
-                src={`https:${userProfile.avatar}`}
-                alt={`Avatar de l'utilisateur ${userProfile.username}`}
-                width={100}
-                height={100}
-              />
-              {userAuth.isAuthenticated && userAuth.user._id === userId && (
-                <ProfileEdit
-                  openModal={openModal}
-                  closeModal={closeModal}
-                  isOpen={isModalOpen}
-                />
-              )}
+              <p>
+                Membre depuis :{' '}
+                <Moment className="italic" locale="fr" format="DD MMMM YYYY">
+                  {userProfile.date_created}
+                </Moment>
+              </p>
+              <p>
+                Mise à jour du profil :{' '}
+                <Moment className="italic" locale="fr" fromNow>
+                  {userProfile.date_updated
+                    ? userProfile.date_updated
+                    : userProfile.date_created}
+                </Moment>
+              </p>
+              <a
+                className="max-w-fit hover:text-button hover:underline transition-all duration-300"
+                href={`mailto:${userProfile.email}`}
+              >
+                Email : {userProfile.email}
+              </a>
             </div>
-            <div className="mx-6 p-2">
-              <ul className="mx-6">
-                <li>
-                  <p>
-                    Membre depuis :{' '}
-                    <Moment locale="fr" format="DD MMMM YYYY">
-                      {userProfile.date_created}
-                    </Moment>
-                  </p>
-                </li>
-                <li>
-                  Mise à jour du profil :{' '}
-                  <Moment locale="fr" fromNow>
-                    {userProfile.date_updated
-                      ? userProfile.date_updated
-                      : userProfile.date_created}
-                  </Moment>
-                </li>
-                <li>
-                  <p>Email : {userProfile.email}</p>
-                </li>
-              </ul>
-            </div>
-          </>
+          </div>
         )}
-      </div>
-      <div className="flex flex-row flex-wrap justify-center bg-third py-4">
-        <p className="font-bold text-2xl text-white text-center">
-          {userProfile?.username} vous propose
-        </p>
-      </div>
-    </>
+        {isAuthenticated &&
+          user &&
+          userProfile &&
+          user._id === userProfile._id && (
+            <ProfileEdit
+              openModal={openModal}
+              closeModal={closeModal}
+              isOpen={isModalOpen}
+            />
+          )}
+      </ErrorBoundary>
+    </div>
   )
 }
 

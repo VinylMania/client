@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
 import {ImCross} from 'react-icons/im'
-import {useAppDispatch} from '../../hooks'
-import {CLEAR_ALBUMS, CLEAR_ARTISTS} from '../../actions/types'
 
 const LockInput: React.FC<{
   locked: boolean
@@ -14,17 +12,8 @@ const LockInput: React.FC<{
   >
 }> = ({locked, type, setInput}) => {
   const [isHover, setIsHover] = useState(false)
-  const dispatch = useAppDispatch()
 
-  const onUnlock = (): void => {
-    if (type === 'artist') {
-      dispatch({type: CLEAR_ARTISTS})
-      dispatch({type: CLEAR_ALBUMS})
-    }
-    if (type === 'album') {
-      dispatch({type: CLEAR_ALBUMS})
-    }
-  }
+  const onUnlock = (): void => {}
   return (
     <>
       {locked && (

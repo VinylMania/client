@@ -11,7 +11,7 @@ const LibraryDetail: React.FC<{
   return (
     <div className="flex-initial">
       <figure className="relative group w-[200px] h-[200px] overflow-hidden">
-        <div className="group-hover:filter group-hover:blur-md transition-all duration-300">
+        <div className="group-focus:filter group:focus:blur-md group-hover:filter group-hover:blur-md transition-all duration-300">
           <Image
             alt={albumTitle}
             layout="intrinsic"
@@ -24,8 +24,8 @@ const LibraryDetail: React.FC<{
           />
         </div>
         <Link href={`/vinyles/${_id}`}>
-          <a className="bg-black bg-opacity-0 transition-all duration-300 absolute top-0 left-0 h-full w-full hover:bg-black hover:bg-opacity-30 hover:transition-all hover:duration-300">
-            <ul className="absolute top-0 opacity-0 right-0 bottom-0 left-0 overflow-hidden text-white transition-all duration-500 hover:opacity-100">
+          <a className="bg-black bg-opacity-0 transition-all duration-300 absolute top-0 left-0 h-full w-full focus:bg-black hover:bg-black focus:bg-opacity-30 hover:bg-opacity-30 hover:transition-all focus:transition-all hover:duration-300 focus:duration-300">
+            <ul className="absolute top-0 opacity-0 right-0 bottom-0 left-0 overflow-hidden text-white transition-all duration-500 hover:opacity-100 focus:opacity-100">
               <li className="text-lg px-2">{artistTitle}</li>
               <li className="italic px-2">{albumTitle}</li>
               <li className="px-2">

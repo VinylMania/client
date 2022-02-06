@@ -14,18 +14,3 @@ const HomeButton: React.FC = () => {
 }
 
 export default HomeButton
-
-// .home-library {
-//     @apply absolute top-0 left-0 w-full h-full flex bg-opacity-0 hover:bg-opacity-70 transition-all duration-300;
-//   }
-
-//   .home-library p {
-//     @apply p-2 cursor-pointer border-white text-white transition-all duration-500;
-//   }
-//   .home-library:hover p {
-//     @apply bg-third transition-all duration-500 text-buttonText;
-//   }
-
-//   .home-library:hover > span {
-//     @apply border-2 border-third  transition-all duration-300;
-//   }

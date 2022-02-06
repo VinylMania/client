@@ -16,7 +16,7 @@ export interface VinyleResponse {
   _id?: string
   artistTitle: string
   albumTitle: string
-  year: string
+  year: number
   artistId: string
   albumId: string
   albumCoverUrl: string

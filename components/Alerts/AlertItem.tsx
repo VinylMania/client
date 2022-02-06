@@ -1,14 +1,11 @@
 import React from 'react'
-
-import {removeAlert} from '../../actions/alert'
-import {useAppDispatch} from '../../hooks'
 import {AlertModel} from '../../models/alertModel'
 
-const AlertItem: React.FC<{alert: AlertModel}> = props => {
-  const {
-    alert: {id, msg, alertType},
-  } = props
-  const dispatch = useAppDispatch()
+const AlertItem: React.FC<{
+  alert: AlertModel
+  remove: (msg: AlertModel['msg']) => void
+}> = ({alert, remove}) => {
+  const {msg, alertType} = alert
 
   return (
     <div
@@ -28,7 +25,7 @@ const AlertItem: React.FC<{alert: AlertModel}> = props => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           onClick={() => {
-            if (id) dispatch(removeAlert(id))
+            remove(msg)
           }}
         >
           <title>Fermer</title>

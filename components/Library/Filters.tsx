@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {VinyleResponse} from '../../models/albumModel'
+import Input from '../UI/Input'
 
 const Filters: React.FC<{
   vinyles: VinyleResponse[]
-  setFilters: React.Dispatch<React.SetStateAction<VinyleResponse[] | undefined>>
+  setFilters: React.Dispatch<
+    React.SetStateAction<VinyleResponse[] | null | undefined>
+  >
 }> = ({vinyles, setFilters}) => {
   const [artistName, setArtistName] = useState('')
   const [albumTitle, setAlbumTitle] = useState('')
@@ -44,24 +47,38 @@ const Filters: React.FC<{
           Affiner la recherche
         </h2>
         <form className="flex flex-col md:flex-row gap-8 py-8">
-          <label className="flex-1 text-headline font-light text-lg">
-            Nom de l&apos;artiste
+          <div className="flex flex-col flex-1">
+            <label
+              className="text-headline font-light text-lg"
+              htmlFor="artist-name"
+            >
+              Nom de l&apos;artiste
+            </label>
             <input
-              className="block text-black rounded-xl p-2 w-full"
-              type="text"
               placeholder="Bruce Springsteen"
-              onChange={e => setArtistName(e.target.value.toLowerCase().trim())}
-            />
-          </label>
-          <label className="flex-1 text-headline font-light text-lg">
-            Nom de l&apos;album
-            <input
-              className="block text-black rounded-xl p-2 w-full"
+              id="artist-name"
               type="text"
-              placeholder="Born In The U.S.A."
-              onChange={e => setAlbumTitle(e.target.value.toLowerCase().trim())}
+              name="artist-name"
+              onChange={e => setArtistName(e.target.value.toLowerCase().trim())}
+              className="form-text-inputs uppercase"
             />
-          </label>
+          </div>
+          <div className="flex flex-col flex-1">
+            <label
+              className="text-headline font-light text-lg"
+              htmlFor="album-name"
+            >
+              Nom de l&apos;album
+            </label>
+            <input
+              placeholder="Born In The U.S.A."
+              id="album-name"
+              type="text"
+              name="album-name"
+              onChange={e => setAlbumTitle(e.target.value.toLowerCase().trim())}
+              className="form-text-inputs uppercase"
+            />
+          </div>
         </form>
       </section>
     </>

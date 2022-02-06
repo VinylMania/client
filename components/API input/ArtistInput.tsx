@@ -1,79 +1,135 @@
-import React, {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks'
-import {getArtists} from '../../actions/discogs'
-import SuggestedItem from './SuggestedItem'
+import React, {useEffect, useState} from 'react'
 import {DiscogArtistModel} from '../../models/discogModel'
-import EmptyResult from './EmptyResult'
 import LoadingSpinner from '../UI/LoadingSpinner'
-import {CLEAR_ARTISTS} from '../../actions/types'
-import LockInput from './LockInput'
+import {useQuery} from 'react-query'
+import axios, {AxiosResponse} from 'axios'
+import provideConfig from '../../utils/axios-config'
+import {flushSync} from 'react-dom'
+import Image from 'next/image'
 
-const ArtistInput: React.FC = () => {
-  const [query, setQuery] = React.useState<{artist: string; album: string}>({
-    artist: '',
-    album: '',
-  })
-  const dispatch = useAppDispatch()
-  const artists: {
-    search: DiscogArtistModel[]
-    loading: boolean
-    searching: boolean
-    selected: DiscogArtistModel
-    locked: boolean
-  } = useAppSelector(state => state.root.discogsReducer.artists)
+const getArtist = async (artistName: string): Promise<DiscogArtistModel[]> => {
+  const response = await axios.post<string, AxiosResponse<DiscogArtistModel[]>>(
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/discog/artist`,
+    JSON.stringify({artist: artistName}),
+    provideConfig(),
+  )
+  return response.data
+}
 
-  const {search, searching, loading, selected, locked} = artists
+const ArtistInput: React.FC<{
+  isArtistInputLocked: boolean
+  selectedArtist: DiscogArtistModel | undefined
+  artistName: DiscogArtistModel['name']
+  setArtistName: React.Dispatch<React.SetStateAction<string>>
+  setSelectedArtist: React.Dispatch<
+    React.SetStateAction<DiscogArtistModel | undefined>
+  >
+  artistInputRef: React.MutableRefObject<HTMLInputElement | null>
+}> = ({
+  artistInputRef,
+  isArtistInputLocked,
+  artistName,
+  selectedArtist,
+  setArtistName,
+  setSelectedArtist,
+}) => {
+  const [displayList, setDisplayList] = useState(false)
+
+  const onClick = (artist: DiscogArtistModel): void => {
+    flushSync(() => {
+      setSelectedArtist(artist)
+      setDisplayList(false)
+    })
+  }
+
+  const {
+    data: artists,
+    refetch,
+    isLoading,
+  } = useQuery(
+    'getArtists',
+    () => {
+      return getArtist(artistName)
+    },
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+      enabled: false,
+      suspense: false,
+    },
+  )
 
   const onChange = (e: React.FormEvent): void => {
     const event = e.currentTarget as HTMLInputElement
-    setQuery({...query, artist: event.value})
+    setArtistName(event.value)
   }
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      if (query?.artist && query.artist.length > 1) {
-        dispatch(getArtists(query))
+      if (artistName && artistName.length > 1) {
+        setDisplayList(true)
+        refetch()
       } else {
-        dispatch({type: CLEAR_ARTISTS})
+        setDisplayList(false)
       }
     }, 200)
 
     return () => {
       clearTimeout(identifier)
     }
-  }, [query, dispatch])
+  }, [artistName, refetch])
 
   return (
     <>
-      <label className="font-semibold text-xl" htmlFor="artist">
+      <label className="w-full font-semibold text-xl" htmlFor="artist">
         Nom de l&apos;artiste
-        <input
-          id="artist"
-          className="mt-2 p-2 block w-full"
-          type="text"
-          minLength={2}
-          maxLength={20}
-          required
-          onChange={onChange}
-          disabled={locked}
-          autoComplete="off"
-          value={locked ? selected.name : query.artist}
-        />
       </label>
-      <LockInput setInput={setQuery} type="artist" locked={locked} />
+      <input
+        ref={artistInputRef}
+        id="artist"
+        className="form-text-inputs"
+        type="text"
+        minLength={2}
+        maxLength={20}
+        required
+        onChange={onChange}
+        autoComplete="off"
+        value={selectedArtist ? selectedArtist.name : artistName}
+        disabled={isArtistInputLocked}
+      />
+      {isLoading && <LoadingSpinner />}
 
-      {loading && !search && <LoadingSpinner />}
-      {!loading &&
-        search &&
-        search.length > 0 &&
-        React.Children.toArray(
-          search.map(artist => (
-            <SuggestedItem key={artist.id} type="artist" result={artist} />
-          )),
-        )}
-
-      {!loading && searching && search && search.length === 0 && (
-        <EmptyResult />
+      <div className="flex flex-row flex-wrap gap-8 justify-center">
+        {!isLoading &&
+          artists &&
+          displayList &&
+          artists.map(artist => (
+            <div className="flex-1" key={artist.id}>
+              <button
+                onClick={() => onClick(artist)}
+                className="group outline-none cursor-pointer text-paragraph transition-all duration-300 overflow-hidden"
+                type="button"
+              >
+                <span>{artist.name}</span>
+                <div className="border-transparent border group-hover:border-button group-focus:border-button  relative w-[160px] h-[160px] overflow-hidden">
+                  <Image
+                    alt={artist.name}
+                    layout="fill"
+                    objectFit="contain"
+                    quality={50}
+                    src={artist.image}
+                    placeholder="blur"
+                    blurDataURL={artist.image}
+                  />
+                </div>
+              </button>
+            </div>
+          ))}
+      </div>
+      {!isLoading && artists && artists.length === 0 && (
+        <p className="p-2 text-center text-first text-sm bg-buttonText">
+          Aucun résultat trouvé
+        </p>
       )}
     </>
   )
