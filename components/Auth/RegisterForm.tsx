@@ -183,7 +183,7 @@ const RegisterForm: React.FC = () => {
               className="group btn-submit mt-auto flex items-center disabled:cursor-not-allowed"
             >
               {mutation.isLoading && <ButtonLoader />}
-              Je m&apos;inscris
+              Je m&apos;inscris !
             </button>
           </fieldset>
         </form>
