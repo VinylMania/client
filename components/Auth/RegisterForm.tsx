@@ -4,11 +4,12 @@ import FormContainer from '../Layout/FormContainer'
 import AuthContext from '../../context/auth-context'
 import {useMutation} from 'react-query'
 import provideConfig from '../../utils/axios-config'
-import axios, {AxiosResponse} from 'axios'
+import axios, {AxiosError, AxiosResponse} from 'axios'
 import {AlertWrapper} from '../Alerts/Alerts'
 import ButtonLoader from '../UI/ButtonLoader'
 import {AlertModel} from '../../models/alertModel'
 import {flushSync} from 'react-dom'
+import {ErrorModel} from '../../models/errorModel'
 
 const RegisterForm: React.FC = () => {
   const [registerData, setRegisterData] = useState<RegisterModel>({
@@ -40,13 +41,18 @@ const RegisterForm: React.FC = () => {
         console.log(token)
         loadUser()
       },
-      onError: (err: any) => {
+      onError: (err: AxiosError<ErrorModel>) => {
         resetContext()
         let newAlerts: AlertModel[] = []
 
         if (Array.isArray(err.response?.data?.message)) {
           err.response?.data?.message?.forEach((message: string) => {
             newAlerts.push({alertType: 'warning', msg: message})
+          })
+        } else if (err.response?.data.message.length) {
+          newAlerts.push({
+            alertType: 'warning',
+            msg: err.response?.data.message,
           })
         } else {
           newAlerts.push({

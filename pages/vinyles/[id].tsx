@@ -9,6 +9,7 @@ import Owners from '../../components/Vinyle/Owners'
 import Link from 'next/link'
 import axios from 'axios'
 import LoadingError from '../../components/UI/LoadingError'
+import {ErrorBoundary} from 'react-error-boundary'
 
 const getVinyle = async (
   id: VinyleResponse['_id'],
@@ -33,7 +34,7 @@ export async function getStaticPaths() {
   return {paths, fallback: 'blocking'}
 }
 
-export async function getStaticProps(ctx) {
+export async function getStaticProps(ctx: any) {
   const vinyleId = ctx.params.id
   const initialVinyle = await getVinyle(vinyleId)
   return {
@@ -66,9 +67,8 @@ const Vinyle: NextPage<{
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <LoadingError />
-      <section className="flex flex-row justify-center">
-        <div className="border w-2/4 py-2 flex flex-row">
+      <section className="py-8 flex flex-row justify-center">
+        <div className="border w-2/4 py-2 flex flex-col items-center md:items-start md:flex-row">
           {vinyle && (
             <>
               <div className="relative w-[200px] h-[200px]">
@@ -107,7 +107,7 @@ const Vinyle: NextPage<{
                     </h3>
                   </a>
                 </Link>
-                <div className="flex flex-row">
+                {/* <div className="flex flex-row">
                   <button className="flex-1 bg-green-500">
                     Envoyer un message
                   </button>
@@ -115,15 +115,32 @@ const Vinyle: NextPage<{
                     Consulter le profil
                   </button>
                   <button className="flex-1 bg-red-600">Signaler</button>
-                </div>
+                </div> */}
               </div>
             </>
           )}
         </div>
       </section>
-      <div className="text-white flex flex-row justify-start">
-        {vinyle && <SameArtist artistId={vinyle.artistId} vinyle={vinyle} />}
-        {vinyle && <Owners albumId={vinyle.albumId} vinyle={vinyle} />}
+      <div className="text-white flex flex-col md:flex-row justify-start">
+        <Suspense
+          fallback={
+            <div className="flex-1">
+              <LoadingSpinner />
+            </div>
+          }
+        >
+          {vinyle && <SameArtist artistId={vinyle.artistId} vinyle={vinyle} />}
+        </Suspense>
+
+        <Suspense
+          fallback={
+            <div className="flex-1">
+              <LoadingSpinner />
+            </div>
+          }
+        >
+          {vinyle && <Owners albumId={vinyle.albumId} vinyle={vinyle} />}
+        </Suspense>
       </div>
     </Suspense>
   )

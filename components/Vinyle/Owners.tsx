@@ -11,11 +11,12 @@ import LoadingError from '../UI/LoadingError'
 
 const getSimilarVinyles = async (
   albumId: VinyleResponse['albumId'],
+  userId: VinyleResponse['user']['_id'],
 ): Promise<VinyleResponse[]> => {
   const {data} = await axios.get<VinyleResponse[]>(
     `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles/owners/${albumId}`,
   )
-  return data
+  return data.filter(vinyle => vinyle.user._id !== userId)
 }
 
 const Owners: React.FC<{
@@ -25,7 +26,7 @@ const Owners: React.FC<{
   const {data: similarVinyles} = useQuery(
     'similarVinyles',
     async () => {
-      return await getSimilarVinyles(albumId)
+      return await getSimilarVinyles(albumId, vinyle.user._id)
     },
     {
       onError: err => {
@@ -35,38 +36,42 @@ const Owners: React.FC<{
   )
 
   return (
-    <div className="flex-1 bg-slate-600 py-4">
-      <h2 className="py-4 text-2xl font-bold text-center">
-        Utilisateurs possédant ce vinyle
-      </h2>
-      <div className="mx-auto overflow-hidden relative w-[128px] h-[128px] rounded-full">
-        <Image
-          alt={vinyle.artistTitle}
-          layout="fill"
-          objectFit="cover"
-          quality={50}
-          src={vinyle.artistCoverUrl}
-          placeholder="blur"
-          blurDataURL={vinyle.artistCoverUrl}
-        />
-      </div>
-      <ErrorBoundary fallback={<LoadingError />}>
-        <div className="w-2/3 py-4 overflow-hidden mx-auto">
-          {similarVinyles &&
-            similarVinyles
-              .filter(album => album.user._id !== vinyle.user._id)
-              .map(artistVinyle => (
-                <VinyleLinkItem
-                  key={artistVinyle._id}
-                  text={artistVinyle.user.username}
-                  avatar={artistVinyle.user.avatar}
-                  link={`/vinyles/${artistVinyle._id}`}
-                  alt={`Image de profil de ${artistVinyle.user.username}`}
-                />
-              ))}
+    <>
+      {similarVinyles && similarVinyles.length > 0 && (
+        <div className="flex-1 bg-slate-600 py-4">
+          <h2 className="py-4 text-2xl font-bold text-center">
+            Utilisateurs possédant ce vinyle
+          </h2>
+          <div className="mx-auto overflow-hidden relative w-[128px] h-[128px] rounded-full">
+            <Image
+              alt={vinyle.artistTitle}
+              layout="fill"
+              objectFit="cover"
+              quality={50}
+              src={vinyle.artistCoverUrl}
+              placeholder="blur"
+              blurDataURL={vinyle.artistCoverUrl}
+            />
+          </div>
+          <ErrorBoundary fallback={<LoadingError />}>
+            <div className="w-2/3 py-4 overflow-hidden mx-auto">
+              {similarVinyles &&
+                similarVinyles
+                  .filter(album => album.user._id !== vinyle.user._id)
+                  .map(artistVinyle => (
+                    <VinyleLinkItem
+                      key={artistVinyle._id}
+                      text={artistVinyle.user.username}
+                      avatar={artistVinyle.user.avatar}
+                      link={`/vinyles/${artistVinyle._id}`}
+                      alt={`Image de profil de ${artistVinyle.user.username}`}
+                    />
+                  ))}
+            </div>
+          </ErrorBoundary>
         </div>
-      </ErrorBoundary>
-    </div>
+      )}
+    </>
   )
 }
 

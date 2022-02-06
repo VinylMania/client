@@ -6,12 +6,13 @@ import Image from 'next/image'
 import {ImCross} from 'react-icons/im'
 import {flushSync} from 'react-dom'
 import {AlbumModelDto, VinyleResponse} from '../../models/albumModel'
-import axios, {AxiosResponse} from 'axios'
+import axios, {AxiosError, AxiosResponse} from 'axios'
 import provideConfig from '../../utils/axios-config'
 import {useQuery} from 'react-query'
 import ButtonLoader from '../../components/UI/ButtonLoader'
 import AlertWrapper from '../../components/Alerts/Alerts'
 import {AlertModel} from '../../models/alertModel'
+import {ErrorModel} from '../../models/errorModel'
 
 const postVinyle = async (
   artist: DiscogArtistModel,
@@ -68,13 +69,13 @@ const AddVinyl: React.FC = () => {
       refetchOnWindowFocus: false,
       enabled: false,
       suspense: false,
-      onError: err => {
+      onError: (err: AxiosError<ErrorModel>) => {
         let newAlerts: AlertModel[] = []
         window.scroll({behavior: 'smooth', top: 0})
-        if (err.response?.data?.message) {
+        if (!Array.isArray(err.response?.data?.message)) {
           newAlerts.push({
             alertType: 'warning',
-            msg: err.response?.data?.message,
+            msg: err.response?.data?.message || '',
           })
         } else {
           newAlerts.push({
