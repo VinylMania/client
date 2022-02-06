@@ -32,21 +32,32 @@ const Albums: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
 
   return (
     <section className="flex justify-center w-full h-full bg-buttonText">
-      <div className="max-w-full w-full md:max-w-5xl px-4 md:px-0  h-full py-8">
-        <h1 className="text-3xl pb-8">Collection</h1>
-        <div className="py-8 flex gap-4 gap-y-8 flex-row flex-wrap justify-center md:justify-around items-end">
-          {userVinyles &&
-            userVinyles.length > 0 &&
-            userVinyles.map(album => (
-              <AlbumItem
-                refreshAlbums={refetch}
-                key={album._id}
-                isAuth={isAuthenticated}
-                isOwner={user && user._id === userId ? true : false}
-                album={album}
-              />
-            ))}
-        </div>
+      <div className="max-w-full w-full md:max-w-5xl px-4 md:px-0 h-full py-8">
+        {userVinyles && userVinyles.length > 0 && (
+          <>
+            <h1 className="text-3xl pb-8">Collection</h1>
+            <div className="py-8 flex gap-4 gap-y-8 flex-row flex-wrap justify-center md:justify-around items-end">
+              {userVinyles &&
+                userVinyles.length > 0 &&
+                userVinyles.map(album => (
+                  <AlbumItem
+                    refreshAlbums={refetch}
+                    key={album._id}
+                    isAuth={isAuthenticated}
+                    isOwner={user && user._id === userId ? true : false}
+                    album={album}
+                  />
+                ))}
+            </div>
+          </>
+        )}
+        {!userVinyles ||
+          (userVinyles.length === 0 && (
+            <h1 className="text-3xl pb-8">
+              Cet utilisateur n&apos;a pas encore ajouté de vinyle à sa
+              collection.
+            </h1>
+          ))}
       </div>
     </section>
   )

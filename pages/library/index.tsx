@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect, useRef, useState} from 'react'
+import React, {Suspense, useEffect, useState} from 'react'
 import LoadingSpinner from '../../components/UI/LoadingSpinner'
 import type {VinyleResponse} from '../../models/albumModel'
 import LibraryDetail from '../../components/Library/LibraryDetail'
@@ -7,16 +7,11 @@ import {useQuery} from 'react-query'
 import Filters from '../../components/Library/Filters'
 import axios from 'axios'
 
-const getVinyles = async (): Promise<VinyleResponse[] | null> => {
-  try {
-    const response = await axios.get<VinyleResponse[]>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles`,
-    )
-    return response.data
-  } catch (err) {
-    console.log(err)
-  }
-  return null
+const getVinyles = async (): Promise<VinyleResponse[]> => {
+  const response = await axios.get<VinyleResponse[]>(
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles`,
+  )
+  return response.data
 }
 
 export async function getStaticProps() {
@@ -50,7 +45,7 @@ const Libraries: NextPage<{initialVinyles: VinyleResponse[] | null}> = ({
 
   return (
     <>
-      <main className="bg-buttonText pt-8 md:pt-32 pb-16 min-h-full">
+      <main className="bg-buttonText pt-8 md:pt-16 pb-16 min-h-full">
         <div className="max-w-full px-8 md:max-w-5xl flex flex-col mx-auto">
           <Suspense fallback={<LoadingSpinner />}>
             {listVinyles && vinyles && (

@@ -66,83 +66,78 @@ const Vinyle: NextPage<{
   }, [initialVinyle, refetch])
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <section className="py-8 flex flex-row justify-center">
-        <div className="border w-2/4 py-2 flex flex-col items-center md:items-start md:flex-row">
-          {vinyle && (
-            <>
-              <div className="relative w-[200px] h-[200px]">
-                <Image
-                  alt={vinyle.albumTitle}
-                  layout="fill"
-                  objectFit="contain"
-                  quality={50}
-                  src={vinyle.albumCoverUrl}
-                  placeholder="blur"
-                  blurDataURL={vinyle.albumCoverUrl}
-                />
-              </div>
-              <div className="flex-1 px-4">
-                <h1 className="text-4xl font-semibold underline decoration-solid">
-                  {vinyle.albumTitle}
-                </h1>
-                <h2 className="text-2xl">{vinyle.artistTitle}</h2>
-                <p className="text-xl">{vinyle.year}</p>
+    <ErrorBoundary fallback={<LoadingError />}>
+      <Suspense fallback={<LoadingSpinner />}>
+        <section className="py-8 flex flex-row justify-center">
+          <div className="border w-2/4 py-2 flex flex-col items-center md:items-start md:flex-row">
+            {vinyle && (
+              <>
+                <div className="relative w-[200px] h-[200px]">
+                  <Image
+                    alt={vinyle.albumTitle}
+                    layout="fill"
+                    objectFit="contain"
+                    quality={50}
+                    src={vinyle.albumCoverUrl}
+                    placeholder="blur"
+                    blurDataURL={vinyle.albumCoverUrl}
+                  />
+                </div>
+                <div className="flex-1 px-4">
+                  <h1 className="text-4xl font-semibold underline decoration-solid">
+                    {vinyle.albumTitle}
+                  </h1>
+                  <h2 className="text-2xl">{vinyle.artistTitle}</h2>
+                  <p className="text-xl">{vinyle.year}</p>
 
-                <Link href={`/users/${vinyle.user._id}`}>
-                  <a className="group flex flex-row py-2">
-                    <div className="relative w-[40px] h-[40px] group-hover:border-button border-2 transition-all duration-300 border-white rounded-full overflow-hidden">
-                      <Image
-                        alt={`Image de profil de ${vinyle.user.username}`}
-                        layout="fill"
-                        objectFit="contain"
-                        quality={50}
-                        src={vinyle.user.avatar}
-                        placeholder="blur"
-                        blurDataURL={vinyle.user.avatar}
-                      />
-                    </div>
-                    <h3 className="group-hover:text-button transition-all duration-300 text-lg group-hover:text-xl pl-2">
-                      {vinyle.user.username}
-                    </h3>
-                  </a>
-                </Link>
-                {/* <div className="flex flex-row">
-                  <button className="flex-1 bg-green-500">
-                    Envoyer un message
-                  </button>
-                  <button className="flex-1 bg-purple-600">
-                    Consulter le profil
-                  </button>
-                  <button className="flex-1 bg-red-600">Signaler</button>
-                </div> */}
+                  <Link href={`/users/${vinyle.user._id}`}>
+                    <a className="group flex flex-row py-2">
+                      <div className="relative w-[40px] h-[40px] group-hover:border-button border-2 transition-all duration-300 border-white rounded-full overflow-hidden">
+                        <Image
+                          alt={`Image de profil de ${vinyle.user.username}`}
+                          layout="fill"
+                          objectFit="contain"
+                          quality={50}
+                          src={vinyle.user.avatar}
+                          placeholder="blur"
+                          blurDataURL={vinyle.user.avatar}
+                        />
+                      </div>
+                      <h3 className="group-hover:text-button transition-all duration-300 text-lg group-hover:text-xl pl-2">
+                        {vinyle.user.username}
+                      </h3>
+                    </a>
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+        <div className="text-white flex flex-col md:flex-row justify-start">
+          <Suspense
+            fallback={
+              <div className="flex-1">
+                <LoadingSpinner />
               </div>
-            </>
-          )}
+            }
+          >
+            {vinyle && (
+              <SameArtist artistId={vinyle.artistId} vinyle={vinyle} />
+            )}
+          </Suspense>
+
+          <Suspense
+            fallback={
+              <div className="flex-1">
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            {vinyle && <Owners albumId={vinyle.albumId} vinyle={vinyle} />}
+          </Suspense>
         </div>
-      </section>
-      <div className="text-white flex flex-col md:flex-row justify-start">
-        <Suspense
-          fallback={
-            <div className="flex-1">
-              <LoadingSpinner />
-            </div>
-          }
-        >
-          {vinyle && <SameArtist artistId={vinyle.artistId} vinyle={vinyle} />}
-        </Suspense>
-
-        <Suspense
-          fallback={
-            <div className="flex-1">
-              <LoadingSpinner />
-            </div>
-          }
-        >
-          {vinyle && <Owners albumId={vinyle.albumId} vinyle={vinyle} />}
-        </Suspense>
-      </div>
-    </Suspense>
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 

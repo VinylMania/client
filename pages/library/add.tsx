@@ -1,4 +1,4 @@
-import React, {FormEvent, useRef, useState} from 'react'
+import React, {FormEvent, useContext, useEffect, useRef, useState} from 'react'
 import ArtistInput from '../../components/API input/ArtistInput'
 import AlbumInput from '../../components/API input/AlbumInput'
 import {DiscogAlbumModel, DiscogArtistModel} from '../../models/discogModel'
@@ -13,6 +13,9 @@ import ButtonLoader from '../../components/UI/ButtonLoader'
 import AlertWrapper from '../../components/Alerts/Alerts'
 import {AlertModel} from '../../models/alertModel'
 import {ErrorModel} from '../../models/errorModel'
+import Router, {useRouter} from 'next/router'
+import AuthContext from '../../context/auth-context'
+import {NextPage} from 'next'
 
 const postVinyle = async (
   artist: DiscogArtistModel,
@@ -39,7 +42,15 @@ const postVinyle = async (
   return response.data
 }
 
-const AddVinyl: React.FC = () => {
+const AddVinyl: NextPage = () => {
+  const auth = useContext(AuthContext)
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      Router.push('/')
+    }
+  }, [auth])
+
   const [alerts, setAlerts] = useState<AlertModel[]>([])
   const [artistName, setArtistName] = useState('')
   const [selectedArtist, setSelectedArtist] = useState<
@@ -101,124 +112,126 @@ const AddVinyl: React.FC = () => {
   )
 
   return (
-    <section className="w-full p-0 m-0">
-      <form
-        className="py-8 px-0 mx-0 lg:px-8 md:px-8 flex justify-center"
-        onSubmit={e => onSubmit(e)}
-      >
-        <div
-          className={`border-white border-2 bg-black/30 backdrop-blur-md p-8 gap-4 flex flex-col w-full lg:w-1/3 md:w-1/2 ${
-            selectedArtist
-              ? 'rounded-none md:rounded-l-3xl'
-              : 'rounded-none md:rounded-3xl'
-          }`}
+    <>
+      <section className="w-full p-0 m-0">
+        <form
+          className="py-8 px-0 mx-0 lg:px-8 md:px-8 flex justify-center"
+          onSubmit={e => onSubmit(e)}
         >
-          <AlertWrapper alerts={alerts} />
-          <ArtistInput
-            isArtistInputLocked={selectedArtist !== undefined}
-            setSelectedArtist={setSelectedArtist}
-            artistName={artistName}
-            selectedArtist={selectedArtist}
-            setArtistName={setArtistName}
-            artistInputRef={artistInputRef}
-          />
-          {selectedArtist && (
-            <AlbumInput
-              albumInputRef={albumInputRef}
-              selectedAlbum={selectedAlbum}
-              isAlbumInputLocked={selectedAlbum !== undefined}
-              setSelectedAlbum={setSelectedAlbum}
+          <div
+            className={`border-white border-2 bg-black/30 backdrop-blur-md p-8 gap-4 flex flex-col w-full lg:w-1/3 md:w-1/2 ${
+              selectedArtist
+                ? 'rounded-none md:rounded-l-3xl'
+                : 'rounded-none md:rounded-3xl'
+            }`}
+          >
+            <AlertWrapper alerts={alerts} />
+            <ArtistInput
+              isArtistInputLocked={selectedArtist !== undefined}
+              setSelectedArtist={setSelectedArtist}
+              artistName={artistName}
               selectedArtist={selectedArtist}
+              setArtistName={setArtistName}
+              artistInputRef={artistInputRef}
             />
-          )}
-          {selectedArtist && selectedAlbum && (
-            <button
-              className={`mt-2 ${true ? 'btn-submit' : 'btn-disabled'}`}
-              type="submit"
-            >
-              {' '}
-              {isLoading && <ButtonLoader />}
-              Ajouter le vinyle
-            </button>
-          )}
-        </div>
-        <div
-          className={`border-2 flex flex-col lg:flex-row gap-8 border-white rounded-none md:rounded-r-3xl border-l-0 p-8 bg-black/30 backdrop-blur-md ${
-            selectedArtist ? '' : 'hidden'
-          }`}
-        >
-          {selectedArtist && (
-            <figure>
-              <figcaption>
-                Artiste sélectionné :{' '}
-                <span className="block font-semibold">
-                  {selectedArtist.name}
-                </span>
-              </figcaption>
-              <div className="relative w-[160px] h-[160px] overflow-hidden">
-                <Image
-                  alt={selectedArtist.name}
-                  layout="fill"
-                  objectFit="contain"
-                  quality={50}
-                  src={selectedArtist.image}
-                  priority={true}
-                />
-              </div>
+            {selectedArtist && (
+              <AlbumInput
+                albumInputRef={albumInputRef}
+                selectedAlbum={selectedAlbum}
+                isAlbumInputLocked={selectedAlbum !== undefined}
+                setSelectedAlbum={setSelectedAlbum}
+                selectedArtist={selectedArtist}
+              />
+            )}
+            {selectedArtist && selectedAlbum && (
               <button
-                type="button"
-                onClick={() => {
-                  flushSync(() => {
-                    setSelectedArtist(undefined)
-                    selectedAlbum && setSelectedAlbum(undefined)
-                  })
-
-                  artistInputRef.current?.focus()
-                }}
-                className="group text-lg my-4 cursor-pointer flex flex-row items-center hover:text-button focus:text-button"
+                className={`mt-2 ${true ? 'btn-submit' : 'btn-disabled'}`}
+                type="submit"
               >
-                <ImCross className="mr-2 transform rotate-0 transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
-                Modifier
+                {' '}
+                {isLoading && <ButtonLoader />}
+                Ajouter le vinyle
               </button>
-            </figure>
-          )}
-          {selectedAlbum && (
-            <figure>
-              <figcaption>
-                Album sélectionné :{' '}
-                <span className="block font-semibold">
-                  {selectedAlbum.name}
-                </span>
-              </figcaption>
-              <div className="relative w-[160px] h-[160px] overflow-hidden">
-                <Image
-                  alt={selectedAlbum.name}
-                  layout="fill"
-                  objectFit="contain"
-                  quality={50}
-                  src={selectedAlbum.image}
-                  priority={true}
-                />
-              </div>
+            )}
+          </div>
+          <div
+            className={`border-2 flex flex-col lg:flex-row gap-8 border-white rounded-none md:rounded-r-3xl border-l-0 p-8 bg-black/30 backdrop-blur-md ${
+              selectedArtist ? '' : 'hidden'
+            }`}
+          >
+            {selectedArtist && (
+              <figure>
+                <figcaption>
+                  Artiste sélectionné :{' '}
+                  <span className="block font-semibold">
+                    {selectedArtist.name}
+                  </span>
+                </figcaption>
+                <div className="relative w-[160px] h-[160px] overflow-hidden">
+                  <Image
+                    alt={selectedArtist.name}
+                    layout="fill"
+                    objectFit="contain"
+                    quality={50}
+                    src={selectedArtist.image}
+                    priority={true}
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    flushSync(() => {
+                      setSelectedArtist(undefined)
+                      selectedAlbum && setSelectedAlbum(undefined)
+                    })
 
-              <button
-                type="button"
-                onClick={() => {
-                  flushSync(() => {
-                    setSelectedAlbum(undefined)
-                  })
-                  albumInputRef.current?.focus()
-                }}
-                className="group text-lg my-4 cursor-pointer flex flex-row items-center hover:text-button focus:text-button"
-              >
-                <ImCross className="mr-2 transform rotate-0 transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
-                Modifier
-              </button>
-            </figure>
-          )}
-        </div>
-      </form>
-    </section>
+                    artistInputRef.current?.focus()
+                  }}
+                  className="group text-lg my-4 cursor-pointer flex flex-row items-center hover:text-button focus:text-button"
+                >
+                  <ImCross className="mr-2 transform rotate-0 transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
+                  Modifier
+                </button>
+              </figure>
+            )}
+            {selectedAlbum && (
+              <figure>
+                <figcaption>
+                  Album sélectionné :{' '}
+                  <span className="block font-semibold">
+                    {selectedAlbum.name}
+                  </span>
+                </figcaption>
+                <div className="relative w-[160px] h-[160px] overflow-hidden">
+                  <Image
+                    alt={selectedAlbum.name}
+                    layout="fill"
+                    objectFit="contain"
+                    quality={50}
+                    src={selectedAlbum.image}
+                    priority={true}
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    flushSync(() => {
+                      setSelectedAlbum(undefined)
+                    })
+                    albumInputRef.current?.focus()
+                  }}
+                  className="group text-lg my-4 cursor-pointer flex flex-row items-center hover:text-button focus:text-button"
+                >
+                  <ImCross className="mr-2 transform rotate-0 transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
+                  Modifier
+                </button>
+              </figure>
+            )}
+          </div>
+        </form>
+      </section>
+    </>
   )
 }
 

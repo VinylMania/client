@@ -72,7 +72,7 @@ const AlbumItem: React.FC<{
           <button
             type="button"
             onClick={onClick}
-            className="outline-none    bg-black text-white border-2 border-black focus-visible:border-red-500 focus-visible:text-red-500 hover:border-red-500 focus:border-red-500 hover:text-red-500 focus:text-red-500 w-full absolute text-center bottom-0 z-40 transition-all duration-300"
+            className="outline-nonebg-black text-white border-2 border-black focus-visible:border-red-500 focus-visible:text-red-500 hover:border-red-500 focus:border-red-500 hover:text-red-500 focus:text-red-500 w-full absolute text-center bottom-0 transition-all duration-300"
           >
             Retirer ce vinyle
           </button>

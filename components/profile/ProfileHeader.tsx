@@ -49,7 +49,7 @@ const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
   }
 
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col w-full items-center bg-background">
       <ErrorBoundary fallback={<LoadingError />}>
         {userProfile && (
           <div className="flex flex-row items-center py-4">
@@ -60,7 +60,8 @@ const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
                 quality={75}
                 src={user?.avatar ? user.avatar : userProfile.avatar}
                 alt={`Avatar de l'utilisateur ${userProfile.username}`}
-                placeholder="empty"
+                placeholder="blur"
+                blurDataURL={user?.avatar ? user.avatar : userProfile.avatar}
               />
             </div>
 
