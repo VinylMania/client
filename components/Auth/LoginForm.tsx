@@ -20,12 +20,8 @@ export const LoginForm: NextPage = () => {
   const [alerts, setAlerts] = useState<AlertModel[]>([])
   const alertRef = useRef<HTMLDivElement>(null)
 
-  const mutation = useMutation<
-    AxiosResponse<{accessToken: string}>,
-    Error,
-    LoginModel
-  >(
-    async userCreds => {
+  const mutation = useMutation(
+    async (userCreds: LoginModel) => {
       const {data} = await axios.post<
         string,
         AxiosResponse<{accessToken: string}>

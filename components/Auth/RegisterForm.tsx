@@ -21,12 +21,8 @@ const RegisterForm: React.FC = () => {
   const [alerts, setAlerts] = useState<AlertModel[]>([])
   const alertRef = useRef<HTMLDivElement>(null)
 
-  const mutation = useMutation<
-    AxiosResponse<{accessToken: string}>,
-    Error,
-    RegisterModel
-  >(
-    async userCreds => {
+  const mutation = useMutation(
+    async (userCreds: RegisterModel) => {
       const {data} = await axios.post<
         string,
         AxiosResponse<{accessToken: string}>
