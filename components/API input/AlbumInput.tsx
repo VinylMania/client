@@ -81,7 +81,7 @@ const AlbumInput: React.FC<{
 
   return (
     <>
-      <label className="w-full font-semibold text-xl" htmlFor="artist">
+      <label className="w-full text-xl font-semibold" htmlFor="artist">
         Titre de l&apos;album
       </label>
       <input
@@ -99,7 +99,7 @@ const AlbumInput: React.FC<{
       />
       {isLoading && <LoadingSpinner />}
 
-      <div className="flex flex-row flex-wrap gap-8 justify-center">
+      <div className="flex flex-row flex-wrap justify-center gap-8">
         {!isLoading &&
           albums &&
           displayAlbumList &&
@@ -107,11 +107,11 @@ const AlbumInput: React.FC<{
             <div className="flex-1" key={album.id}>
               <button
                 onClick={() => onClick(album)}
-                className="group outline-none cursor-pointer text-paragraph transition-all duration-300 overflow-hidden"
+                className="group cursor-pointer overflow-hidden text-paragraph outline-none transition-all duration-300"
                 type="button"
               >
                 <span>{album.name}</span>
-                <div className="border-transparent border group-hover:border-button group-focus:border-button  relative w-[160px] h-[160px] overflow-hidden">
+                <div className="relative h-[160px] w-[160px] overflow-hidden  border border-transparent group-hover:border-button group-focus:border-button">
                   <Image
                     alt={album.name}
                     layout="fill"
@@ -127,7 +127,7 @@ const AlbumInput: React.FC<{
           ))}
       </div>
       {!isLoading && albums && albums.length === 0 && (
-        <p className="p-2 text-center text-first text-sm bg-buttonText">
+        <p className="bg-buttonText p-2 text-center text-sm text-first">
           Aucun résultat trouvé
         </p>
       )}

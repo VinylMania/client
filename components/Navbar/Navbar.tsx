@@ -7,10 +7,10 @@ import AuthContext from '../../context/auth-context'
 const Navbar: React.FC = () => {
   return (
     <>
-      <header className="relative md:fixed w-full isolate z-10 bg-buttonText text-heading drop-shadow-xl h-full md:h-16">
-        <nav className="max-w-4xl m-auto flex flex-col justify-center items-center md:flex-row gap-4 py-2 md:justify-end">
+      <header className="text-heading relative isolate z-10 h-full w-full bg-buttonText drop-shadow-xl md:fixed md:h-16">
+        <nav className="m-auto flex max-w-4xl flex-col items-center justify-center gap-4 py-2 md:flex-row md:justify-end">
           <Link href="/">
-            <a className="navlink md:mr-auto text-3xl font-bold">Accueil</a>
+            <a className="navlink text-3xl font-bold md:mr-auto">Accueil</a>
           </Link>
           <Link href="/library">
             <a className="navlink">Bibliothèque</a>

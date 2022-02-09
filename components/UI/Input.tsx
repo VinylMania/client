@@ -15,7 +15,7 @@ const Input: React.FC<TextInputModel> = ({
   maxLength,
 }) => (
   <div className="flex flex-col">
-    <label className="flex-1 text-headline font-light text-lg" htmlFor={id}>
+    <label className="flex-1 text-lg font-light text-headline" htmlFor={id}>
       {label}
     </label>
     <input

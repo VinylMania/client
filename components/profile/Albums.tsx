@@ -31,12 +31,12 @@ const Albums: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
   )
 
   return (
-    <section className="flex justify-center w-full h-full bg-buttonText">
-      <div className="max-w-full w-full md:max-w-5xl px-4 md:px-0 h-full py-8">
+    <section className="flex h-full w-full justify-center bg-buttonText">
+      <div className="h-full w-full max-w-full px-4 py-8 md:max-w-5xl md:px-0">
         {userVinyles && userVinyles.length > 0 && (
           <>
-            <h1 className="text-3xl pb-8">Collection</h1>
-            <div className="py-8 flex gap-4 gap-y-8 flex-row flex-wrap justify-center md:justify-around items-end">
+            <h1 className="pb-8 text-3xl">Collection</h1>
+            <div className="flex flex-row flex-wrap items-end justify-center gap-4 gap-y-8 py-8 md:justify-around">
               {userVinyles &&
                 userVinyles.length > 0 &&
                 userVinyles.map(album => (
@@ -53,7 +53,7 @@ const Albums: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
         )}
         {!userVinyles ||
           (userVinyles.length === 0 && (
-            <h1 className="text-3xl pb-8">
+            <h1 className="pb-8 text-3xl">
               Cet utilisateur n&apos;a pas encore ajouté de vinyle à sa
               collection.
             </h1>

@@ -6,16 +6,16 @@ const ModalBackground: React.FC<{closeModal: () => void}> = ({
   children,
   closeModal,
 }) => (
-  <div className="fixed isolate z-10 bg-black/50 h-screen w-screen backdrop-blur-md">
+  <div className="fixed isolate z-10 h-screen w-screen bg-black/50 backdrop-blur-md">
     <div
       onClick={() => closeModal()}
-      className="flex justify-center w-full h-full items-center py-8"
+      className="flex h-full w-full items-center justify-center py-8"
     >
       <div
         onClick={e => e.stopPropagation()}
-        className="bg-black/50 border-2 max-h-[75%] min-h-[200px] overflow-auto border-white rounded-lg select-none w-full max-w-2xl m-auto"
+        className="m-auto max-h-[75%] min-h-[200px] w-full max-w-2xl select-none overflow-auto rounded-lg border-2 border-white bg-black/50"
       >
-        <div className="flex flex-col w-full">
+        <div className="flex w-full flex-col">
           <div></div>
           <button
             aria-label="Fermer le modal"

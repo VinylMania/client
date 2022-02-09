@@ -39,10 +39,10 @@ const Owners: React.FC<{
     <>
       {similarVinyles && similarVinyles.length > 0 && (
         <div className="flex-1 bg-slate-600 py-4">
-          <h2 className="py-4 text-2xl font-bold text-center">
+          <h2 className="py-4 text-center text-2xl font-bold">
             Utilisateurs possédant ce vinyle
           </h2>
-          <div className="mx-auto overflow-hidden relative w-[128px] h-[128px] rounded-full">
+          <div className="relative mx-auto h-[128px] w-[128px] overflow-hidden rounded-full">
             <Image
               alt={vinyle.artistTitle}
               layout="fill"
@@ -54,7 +54,7 @@ const Owners: React.FC<{
             />
           </div>
           <ErrorBoundary fallback={<LoadingError />}>
-            <div className="w-2/3 py-4 overflow-hidden mx-auto">
+            <div className="mx-auto w-2/3 overflow-hidden py-4">
               {similarVinyles &&
                 similarVinyles
                   .filter(album => album.user._id !== vinyle.user._id)

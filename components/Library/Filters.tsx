@@ -42,14 +42,14 @@ const Filters: React.FC<{
 
   return (
     <>
-      <section className="pt-8 flex flex-col justify-center">
-        <h2 className="text-headline text-3xl font-semibold">
+      <section className="flex flex-col justify-center pt-8">
+        <h2 className="text-3xl font-semibold text-headline">
           Affiner la recherche
         </h2>
-        <form className="flex flex-col md:flex-row gap-8 py-8">
-          <div className="flex flex-col flex-1">
+        <form className="flex flex-col gap-8 py-8 md:flex-row">
+          <div className="flex flex-1 flex-col">
             <label
-              className="text-headline font-light text-lg"
+              className="text-lg font-light text-headline"
               htmlFor="artist-name"
             >
               Nom de l&apos;artiste
@@ -63,9 +63,9 @@ const Filters: React.FC<{
               className="form-text-inputs uppercase"
             />
           </div>
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-1 flex-col">
             <label
-              className="text-headline font-light text-lg"
+              className="text-lg font-light text-headline"
               htmlFor="album-name"
             >
               Nom de l&apos;album

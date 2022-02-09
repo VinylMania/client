@@ -1,8 +1,8 @@
 import React from 'react'
 
 const LoadingSpinner: React.FC = () => (
-  <div className="flex bg-background/50 rounded-xl flex-row flex-wrap justify-center items-center">
-    <div className="my-8 vinyl-spinner" />
+  <div className="flex flex-row flex-wrap items-center justify-center rounded-xl bg-background/50">
+    <div className="vinyl-spinner my-8" />
   </div>
 )
 export default LoadingSpinner

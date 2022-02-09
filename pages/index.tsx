@@ -17,8 +17,8 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
   return (
     <main className="flex flex-col justify-center">
       <div className="bg-background pt-16 pb-16">
-        <section className="max-w-4xl m-auto">
-          <article className="text-2xl font-bold text-headline pb-8">
+        <section className="m-auto max-w-4xl">
+          <article className="pb-8 text-2xl font-bold text-headline">
             Échange, collectionne, trie, fais le ménage ! Tu es un amoureux du
             vinyle ? Trouve dans ta ville ou ton quartier les 33 tours qui
             manquent à ta collection.
@@ -40,9 +40,9 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
         </section>
       </div>
       <div className="bg-buttonText py-16">
-        <section className="max-w-4xl m-auto">
-          <figure className="flex flex-col md:justify-center md:flex-row justify-start gap-16">
-            <div className="leading-none relative flex-none md:max-w-sm max-w-full w-full h-auto px-4 md:px-0">
+        <section className="m-auto max-w-4xl">
+          <figure className="flex flex-col justify-start gap-16 md:flex-row md:justify-center">
+            <div className="relative h-auto w-full max-w-full flex-none px-4 leading-none md:max-w-sm md:px-0">
               <Image
                 alt="platine à vinyles | Source : Unsplash by Kevin McCutcheon"
                 src={secondImage}
@@ -57,30 +57,30 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
 
             <article className="flex flex-col justify-between px-4 md:px-0">
               <p>
-                <em className="block not-italic border-l-4 border-red-600 pl-2 text-2xl">
+                <em className="block border-l-4 border-red-600 pl-2 text-2xl not-italic">
                   Je lâche
                 </em>
-                <span className="pt-8 block ">
+                <span className="block pt-8 ">
                   Fais ici la liste des vinyles dont tu es prêt à te
                   débarrasser.
                 </span>
               </p>
 
               <p>
-                <em className="block not-italic border-l-4 border-green-500 pl-2 text-2xl">
+                <em className="block border-l-4 border-green-500 pl-2 text-2xl not-italic">
                   Je cherche
                 </em>
-                <span className="pt-8 block ">
+                <span className="block pt-8 ">
                   Liste ici les vinyles que tu recherches (nom artiste ou titre
                   album)
                 </span>
               </p>
 
               <p>
-                <em className="block not-italic border-l-4 border-yellow-400 pl-2 text-2xl">
+                <em className="block border-l-4 border-yellow-400 pl-2 text-2xl not-italic">
                   Comment ça marche ?
                 </em>
-                <span className="pt-8 block ">
+                <span className="block pt-8 ">
                   Vinylmania est une plateforme d&apos;échange de disques sans
                   but commercial. Le service de mise en relation est libre et
                   gratuit. Concrètement comment ça marche ?
@@ -90,14 +90,14 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
           </figure>
           <article className="m-auto pt-16">
             <p>
-              <em className="block not-italic border-b-4 border-sky-400 text-2xl max-w-fit">
+              <em className="block max-w-fit border-b-4 border-sky-400 text-2xl not-italic">
                 Deux possibilités
               </em>
             </p>
             <ul>
               <li>
                 <p>
-                  <em className="flex flex-row items-center not-italic text-xl font-thin py-8">
+                  <em className="flex flex-row items-center py-8 text-xl font-thin not-italic">
                     <ArrowRight size={30} strokeWidth={2} />
                     <span className="pl-4 first-letter:capitalize">
                       échange
@@ -114,7 +114,7 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
 
               <li>
                 <p>
-                  <em className="flex flex-row items-center not-italic text-xl font-thin py-8">
+                  <em className="flex flex-row items-center py-8 text-xl font-thin not-italic">
                     <ArrowRight size={30} strokeWidth={2} />
                     <span className="pl-4 first-letter:capitalize">
                       échange

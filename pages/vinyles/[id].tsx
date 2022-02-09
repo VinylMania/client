@@ -68,11 +68,11 @@ const Vinyle: NextPage<{
   return (
     <ErrorBoundary fallback={<LoadingError />}>
       <Suspense fallback={<LoadingSpinner />}>
-        <section className="py-8 flex flex-row justify-center">
-          <div className="border w-2/4 py-2 flex flex-col items-center md:items-start md:flex-row">
+        <section className="flex flex-row justify-center py-8">
+          <div className="flex w-2/4 flex-col items-center border py-2 md:flex-row md:items-start">
             {vinyle && (
               <>
-                <div className="relative w-[200px] h-[200px]">
+                <div className="relative h-[200px] w-[200px]">
                   <Image
                     alt={vinyle.albumTitle}
                     layout="fill"
@@ -92,7 +92,7 @@ const Vinyle: NextPage<{
 
                   <Link href={`/users/${vinyle.user._id}`}>
                     <a className="group flex flex-row py-2">
-                      <div className="relative w-[40px] h-[40px] group-hover:border-button border-2 transition-all duration-300 border-white rounded-full overflow-hidden">
+                      <div className="relative h-[40px] w-[40px] overflow-hidden rounded-full border-2 border-white transition-all duration-300 group-hover:border-button">
                         <Image
                           alt={`Image de profil de ${vinyle.user.username}`}
                           layout="fill"
@@ -103,7 +103,7 @@ const Vinyle: NextPage<{
                           blurDataURL={vinyle.user.avatar}
                         />
                       </div>
-                      <h3 className="group-hover:text-button transition-all duration-300 text-lg group-hover:text-xl pl-2">
+                      <h3 className="pl-2 text-lg transition-all duration-300 group-hover:text-xl group-hover:text-button">
                         {vinyle.user.username}
                       </h3>
                     </a>
@@ -113,7 +113,7 @@ const Vinyle: NextPage<{
             )}
           </div>
         </section>
-        <div className="text-white flex flex-col md:flex-row justify-start">
+        <div className="flex flex-col justify-start text-white md:flex-row">
           <Suspense
             fallback={
               <div className="flex-1">

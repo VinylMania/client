@@ -10,8 +10,8 @@ const LibraryDetail: React.FC<{
   const {albumTitle, albumCoverUrl, artistTitle, year, _id} = vinyle
   return (
     <div className="flex-initial">
-      <figure className="relative group w-[200px] h-[200px] overflow-hidden">
-        <div className="group-focus:filter group:focus:blur-md group-hover:filter group-hover:blur-md transition-all duration-300">
+      <figure className="group relative h-[200px] w-[200px] overflow-hidden">
+        <div className="group:focus:blur-md transition-all duration-300 group-hover:blur-md group-hover:filter group-focus:filter">
           <Image
             alt={albumTitle}
             layout="intrinsic"
@@ -24,10 +24,10 @@ const LibraryDetail: React.FC<{
           />
         </div>
         <Link href={`/vinyles/${_id}`}>
-          <a className="bg-black bg-opacity-0 transition-all duration-300 absolute top-0 left-0 h-full w-full focus:bg-black hover:bg-black focus:bg-opacity-30 hover:bg-opacity-30 hover:transition-all focus:transition-all hover:duration-300 focus:duration-300">
-            <ul className="absolute top-0 opacity-0 right-0 bottom-0 left-0 overflow-hidden text-white transition-all duration-500 hover:opacity-100 focus:opacity-100">
-              <li className="text-lg px-2">{artistTitle}</li>
-              <li className="italic px-2">{albumTitle}</li>
+          <a className="absolute top-0 left-0 h-full w-full bg-black bg-opacity-0 transition-all duration-300 hover:bg-black hover:bg-opacity-30 hover:transition-all hover:duration-300 focus:bg-black focus:bg-opacity-30 focus:transition-all focus:duration-300">
+            <ul className="absolute top-0 right-0 bottom-0 left-0 overflow-hidden text-white opacity-0 transition-all duration-500 hover:opacity-100 focus:opacity-100">
+              <li className="px-2 text-lg">{artistTitle}</li>
+              <li className="px-2 italic">{albumTitle}</li>
               <li className="px-2">
                 <Moment format="YYYY" date={year} />
               </li>

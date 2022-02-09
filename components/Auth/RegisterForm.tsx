@@ -102,13 +102,13 @@ const RegisterForm: React.FC = () => {
       >
         <form onSubmit={onFormSubmit}>
           <fieldset
-            className="w-full flex flex-col gap-y-8"
+            className="flex w-full flex-col gap-y-8"
             disabled={mutation.isLoading}
           >
             <div className="flex flex-row gap-4">
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-headline font-light text-lg"
+                  className="flex-1 text-lg font-light text-headline"
                   htmlFor="username"
                 >
                   Surnom
@@ -127,7 +127,7 @@ const RegisterForm: React.FC = () => {
 
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-headline font-light text-lg"
+                  className="flex-1 text-lg font-light text-headline"
                   htmlFor="email"
                 >
                   Adresse e-mail
@@ -146,7 +146,7 @@ const RegisterForm: React.FC = () => {
             <div className="flex flex-row gap-4">
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-headline font-light text-lg"
+                  className="flex-1 text-lg font-light text-headline"
                   htmlFor="password"
                 >
                   Mot de passe
@@ -164,7 +164,7 @@ const RegisterForm: React.FC = () => {
 
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-headline font-light text-lg"
+                  className="flex-1 text-lg font-light text-headline"
                   htmlFor="password2"
                 >
                   Confirmation de MDP

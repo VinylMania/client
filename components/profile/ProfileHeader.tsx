@@ -49,11 +49,11 @@ const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
   }
 
   return (
-    <div className="flex flex-col w-full items-center bg-background">
+    <div className="flex w-full flex-col items-center bg-background">
       <ErrorBoundary fallback={<LoadingError />}>
         {userProfile && (
           <div className="flex flex-row items-center py-4">
-            <div className="relative w-[100px] h-[100px] border rounded-full overflow-hidden">
+            <div className="relative h-[100px] w-[100px] overflow-hidden rounded-full border">
               <Image
                 layout="fill"
                 objectFit="cover"
@@ -65,7 +65,7 @@ const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
               />
             </div>
 
-            <div className="flex flex-col gap-1 mx-4">
+            <div className="mx-4 flex flex-col gap-1">
               <p className="text-2xl font-bold capitalize text-headline">
                 {userProfile.username}
               </p>
@@ -84,7 +84,7 @@ const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
                 </Moment>
               </p>
               <a
-                className="max-w-fit hover:text-button hover:underline transition-all duration-300"
+                className="max-w-fit transition-all duration-300 hover:text-button hover:underline"
                 href={`mailto:${userProfile.email}`}
               >
                 Email : {userProfile.email}

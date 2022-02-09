@@ -113,13 +113,13 @@ const AddVinyl: NextPage = () => {
 
   return (
     <>
-      <section className="w-full p-0 m-0">
+      <section className="m-0 w-full p-0">
         <form
-          className="py-8 px-0 mx-0 lg:px-8 md:px-8 flex justify-center"
+          className="mx-0 flex justify-center py-8 px-0 md:px-8 lg:px-8"
           onSubmit={e => onSubmit(e)}
         >
           <div
-            className={`border-white border-2 bg-black/30 backdrop-blur-md p-8 gap-4 flex flex-col w-full lg:w-1/3 md:w-1/2 ${
+            className={`flex w-full flex-col gap-4 border-2 border-white bg-black/30 p-8 backdrop-blur-md md:w-1/2 lg:w-1/3 ${
               selectedArtist
                 ? 'rounded-none md:rounded-l-3xl'
                 : 'rounded-none md:rounded-3xl'
@@ -155,7 +155,7 @@ const AddVinyl: NextPage = () => {
             )}
           </div>
           <div
-            className={`border-2 flex flex-col lg:flex-row gap-8 border-white rounded-none md:rounded-r-3xl border-l-0 p-8 bg-black/30 backdrop-blur-md ${
+            className={`flex flex-col gap-8 rounded-none border-2 border-l-0 border-white bg-black/30 p-8 backdrop-blur-md md:rounded-r-3xl lg:flex-row ${
               selectedArtist ? '' : 'hidden'
             }`}
           >
@@ -167,7 +167,7 @@ const AddVinyl: NextPage = () => {
                     {selectedArtist.name}
                   </span>
                 </figcaption>
-                <div className="relative w-[160px] h-[160px] overflow-hidden">
+                <div className="relative h-[160px] w-[160px] overflow-hidden">
                   <Image
                     alt={selectedArtist.name}
                     layout="fill"
@@ -187,9 +187,9 @@ const AddVinyl: NextPage = () => {
 
                     artistInputRef.current?.focus()
                   }}
-                  className="group text-lg my-4 cursor-pointer flex flex-row items-center hover:text-button focus:text-button"
+                  className="group my-4 flex cursor-pointer flex-row items-center text-lg hover:text-button focus:text-button"
                 >
-                  <ImCross className="mr-2 transform rotate-0 transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
+                  <ImCross className="mr-2 rotate-0 transform transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
                   Modifier
                 </button>
               </figure>
@@ -202,7 +202,7 @@ const AddVinyl: NextPage = () => {
                     {selectedAlbum.name}
                   </span>
                 </figcaption>
-                <div className="relative w-[160px] h-[160px] overflow-hidden">
+                <div className="relative h-[160px] w-[160px] overflow-hidden">
                   <Image
                     alt={selectedAlbum.name}
                     layout="fill"
@@ -221,9 +221,9 @@ const AddVinyl: NextPage = () => {
                     })
                     albumInputRef.current?.focus()
                   }}
-                  className="group text-lg my-4 cursor-pointer flex flex-row items-center hover:text-button focus:text-button"
+                  className="group my-4 flex cursor-pointer flex-row items-center text-lg hover:text-button focus:text-button"
                 >
-                  <ImCross className="mr-2 transform rotate-0 transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
+                  <ImCross className="mr-2 rotate-0 transform transition-all duration-200 group-hover:rotate-90 group-focus:rotate-90" />
                   Modifier
                 </button>
               </figure>

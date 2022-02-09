@@ -11,7 +11,7 @@ const NavbarAuthenticated: React.FC<{
   return (
     <>
       <div className="group relative ml-2 hover:cursor-pointer">
-        <div className="relative w-[40px] h-[40px] bg-button rounded-full overflow-hidden mx-auto">
+        <div className="relative mx-auto h-[40px] w-[40px] overflow-hidden rounded-full bg-button">
           {user && user.avatar && (
             <Image
               src={user.avatar}
@@ -24,31 +24,31 @@ const NavbarAuthenticated: React.FC<{
             />
           )}
         </div>
-        <ul className="min-w-max flex md:hidden md:right-0 md:backdrop-blur-lg md:bg-black/50 md:group-hover:flex md:shadow-2xl md:absolute z-10 flex-col">
+        <ul className="z-10 flex min-w-max flex-col md:absolute md:right-0 md:hidden md:bg-black/50 md:shadow-2xl md:backdrop-blur-lg md:group-hover:flex">
           {user && user._id && (
             <Link href={`/users/${user._id}`}>
-              <a className="navlink bg-opacity-0 transition-all duration-300 py-2 px-4 text-left hover:bg-opacity-25 bg-black hover:transition-all hover:duration-300">
-                <CgProfile className="inline-block text-xl mr-2" /> Mon profil
+              <a className="navlink bg-black bg-opacity-0 py-2 px-4 text-left transition-all duration-300 hover:bg-opacity-25 hover:transition-all hover:duration-300">
+                <CgProfile className="mr-2 inline-block text-xl" /> Mon profil
               </a>
             </Link>
           )}
 
           <Link href="/library/add">
-            <a className="navlink bg-opacity-0 transition-all duration-300 py-2 px-4 text-left hover:bg-opacity-25 bg-black hover:transition-all hover:duration-300">
-              <CgDisc className="inline-block text-xl mr-2" />
+            <a className="navlink bg-black bg-opacity-0 py-2 px-4 text-left transition-all duration-300 hover:bg-opacity-25 hover:transition-all hover:duration-300">
+              <CgDisc className="mr-2 inline-block text-xl" />
               Ajouter un disque
             </a>
           </Link>
 
           <button
             type="button"
-            className="navlink bg-opacity-0 transition-all duration-300 py-2 px-4 text-left hover:bg-opacity-25 bg-black  hover:transition-all hover:duration-300"
+            className="navlink bg-black bg-opacity-0 py-2 px-4 text-left transition-all duration-300 hover:bg-opacity-25  hover:transition-all hover:duration-300"
             onClick={() => {
               console.log('Clicking the button log out')
               logout()
             }}
           >
-            <CgLogOut className="inline-block text-xl mr-2" />
+            <CgLogOut className="mr-2 inline-block text-xl" />
             Se déconnecter
           </button>
         </ul>
@@ -56,7 +56,7 @@ const NavbarAuthenticated: React.FC<{
       <Link href="/library/add">
         <a
           aria-label="Ajouter un vinyle"
-          className="hover:text-button focus:text-button md:mr-auto text-3xl font-bold"
+          className="text-3xl font-bold hover:text-button focus:text-button md:mr-auto"
         >
           <CgMathPlus size={32} className="fill-current" />
         </a>

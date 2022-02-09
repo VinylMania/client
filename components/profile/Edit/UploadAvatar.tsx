@@ -52,22 +52,22 @@ const UploadAvatar: React.FC<{closeModal: () => void}> = ({closeModal}) => {
   return (
     <div>
       <form
-        className="flex flex-col gap-8 items-center min-h-[600px]"
+        className="flex min-h-[600px] flex-col items-center gap-8"
         onSubmit={postMedia}
       >
-        <div className="border border-slate-400 w-[400px] h-[400px] overflow-hidden">
+        <div className="h-[400px] w-[400px] overflow-hidden border border-slate-400">
           <ErrorBoundary fallback={<LoadingError />}>
             {avatar && (
-              <div className="relative w-[400px] h-[400px]">
+              <div className="relative h-[400px] w-[400px]">
                 <button
-                  className="z-10 cursor-pointer absolute top-0 right-0 text-button flex-1 :text-red-500"
+                  className=":text-red-500 absolute top-0 right-0 z-10 flex-1 cursor-pointer text-button"
                   onClick={() => resetAvatar()}
                   aria-label="Supprimer l'image"
                 >
                   <AiOutlineCloseCircle size={32} className="fill-current" />
                 </button>
                 <Image
-                  className="w-full mb-2"
+                  className="mb-2 w-full"
                   alt="Avatar"
                   layout="fill"
                   objectFit="contain"
@@ -81,7 +81,7 @@ const UploadAvatar: React.FC<{closeModal: () => void}> = ({closeModal}) => {
             {!avatar && (
               <label
                 htmlFor="avatarUpload"
-                className="relative flex gap-4 justify-center text-button items-center p-4 w-full h-full bg-white/10 font-semibold cursor-pointer text-2xl"
+                className="relative flex h-full w-full cursor-pointer items-center justify-center gap-4 bg-white/10 p-4 text-2xl font-semibold text-button"
               >
                 <MdOutlineFileUpload size={38} className="fill-current" />{' '}
                 Ajouter un avatar
@@ -99,7 +99,7 @@ const UploadAvatar: React.FC<{closeModal: () => void}> = ({closeModal}) => {
           </ErrorBoundary>
         </div>
 
-        <div className="w-[400px] flex gap-4 flex-row">
+        <div className="flex w-[400px] flex-row gap-4">
           <button
             className="btn-submit flex-1"
             type="submit"

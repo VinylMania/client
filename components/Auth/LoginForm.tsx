@@ -92,12 +92,12 @@ export const LoginForm: NextPage = () => {
       >
         <form className="w-full px-8" onSubmit={onFormSubmit}>
           <fieldset
-            className="w-full flex flex-col gap-y-8"
+            className="flex w-full flex-col gap-y-8"
             disabled={mutation.isLoading}
           >
             <div className="flex flex-col">
               <label
-                className="flex-1 text-headline font-light text-lg"
+                className="flex-1 text-lg font-light text-headline"
                 htmlFor="email"
               >
                 Adresse e-mail
@@ -115,7 +115,7 @@ export const LoginForm: NextPage = () => {
 
             <div className="flex flex-col">
               <label
-                className="flex-1 text-headline font-light text-lg"
+                className="flex-1 text-lg font-light text-headline"
                 htmlFor="password"
               >
                 Mot de passe

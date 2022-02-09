@@ -44,8 +44,8 @@ const AlbumItem: React.FC<{
 
   return (
     <>
-      <figure className="relative group w-[200px] h-[200px] overflow-hidden">
-        <div className="group-focus:filter group:focus:blur-md group-hover:filter group-hover:blur-md transition-all duration-300">
+      <figure className="group relative h-[200px] w-[200px] overflow-hidden">
+        <div className="group:focus:blur-md transition-all duration-300 group-hover:blur-md group-hover:filter group-focus:filter">
           <Image
             alt={albumTitle}
             layout="intrinsic"
@@ -58,10 +58,10 @@ const AlbumItem: React.FC<{
           />
         </div>
         <Link href={`/vinyles/${_id}`}>
-          <a className="outline-none group bg-black bg-opacity-0 transition-all duration-300 absolute top-0 left-0 h-full w-full focus:bg-black/30 group-hover:bg-black/30  group-hover:transition-all focus:transition-all group-hover:duration-300 focus:duration-300 focus:backdrop-blur-sm">
-            <ul className="absolute top-0 opacity-0 right-0 bottom-0 left-0 overflow-hidden text-white transition-all duration-300 group-hover:opacity-100 group-focus:opacity-100">
-              <li className="text-lg px-2">{artistTitle}</li>
-              <li className="italic px-2">{albumTitle}</li>
+          <a className="group absolute top-0 left-0 h-full w-full bg-black bg-opacity-0 outline-none transition-all duration-300 focus:bg-black/30 focus:backdrop-blur-sm  focus:transition-all focus:duration-300 group-hover:bg-black/30 group-hover:transition-all group-hover:duration-300">
+            <ul className="absolute top-0 right-0 bottom-0 left-0 overflow-hidden text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus:opacity-100">
+              <li className="px-2 text-lg">{artistTitle}</li>
+              <li className="px-2 italic">{albumTitle}</li>
               <li className="px-2">
                 <Moment format="YYYY" date={year} />
               </li>
@@ -72,7 +72,7 @@ const AlbumItem: React.FC<{
           <button
             type="button"
             onClick={onClick}
-            className="outline-nonebg-black text-white border-2 border-black focus-visible:border-red-500 focus-visible:text-red-500 hover:border-red-500 focus:border-red-500 hover:text-red-500 focus:text-red-500 w-full absolute text-center bottom-0 transition-all duration-300"
+            className="outline-nonebg-black absolute bottom-0 w-full border-2 border-black text-center text-white transition-all duration-300 hover:border-red-500 hover:text-red-500 focus:border-red-500 focus:text-red-500 focus-visible:border-red-500 focus-visible:text-red-500"
           >
             Retirer ce vinyle
           </button>

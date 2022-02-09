@@ -14,7 +14,7 @@ const getVinyles = async (): Promise<VinyleResponse[]> => {
   return response.data
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const initialVinyles = await getVinyles()
   return {
     props: {
@@ -45,28 +45,28 @@ const Libraries: NextPage<{initialVinyles: VinyleResponse[] | null}> = ({
 
   return (
     <>
-      <main className="bg-buttonText pt-8 md:pt-16 pb-16 min-h-full">
-        <div className="max-w-full px-8 md:max-w-5xl flex flex-col mx-auto">
+      <main className="min-h-full bg-buttonText pt-8 pb-16 md:pt-16">
+        <div className="mx-auto flex max-w-full flex-col px-8 md:max-w-5xl">
           <Suspense fallback={<LoadingSpinner />}>
             {listVinyles && vinyles && (
               <Filters vinyles={listVinyles} setFilters={setFilters} />
             )}
 
             {!listVinyles?.length && (
-              <p className="text-center text-2xl text-headline font-bold py-8">
+              <p className="py-8 text-center text-2xl font-bold text-headline">
                 La bibliothèque est vide pour le moment.
               </p>
             )}
 
             {listVinyles && listVinyles.length > 0 && vinyles?.length === 0 && (
-              <p className="text-center text-2xl text-headline font-bold py-8">
+              <p className="py-8 text-center text-2xl font-bold text-headline">
                 Aucun résultat correspondant à votre recherche.
               </p>
             )}
 
             {listVinyles && vinyles && vinyles.length > 0 && (
               <section>
-                <article className="bg-background p-4 rounded-xl flex flex-wrap gap-8 overflow-hidden justify-center md:justify-between">
+                <article className="flex flex-wrap justify-center gap-8 overflow-hidden rounded-xl bg-background p-4 md:justify-between">
                   {vinyles.map((vinyle, index) => (
                     <LibraryDetail key={index} vinyle={vinyle} />
                   ))}
