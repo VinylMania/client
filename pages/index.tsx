@@ -19,9 +19,11 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
       <div className="bg-background pt-16 pb-16">
         <section className="m-auto max-w-4xl">
           <article className="pb-8 text-2xl font-bold text-headline">
-            Échange, collectionne, trie, fais le ménage ! Tu es un amoureux du
-            vinyle ? Trouve dans ta ville ou ton quartier les 33 tours qui
-            manquent à ta collection.
+            <h1 className="pb-12">Amoureux du vinyle ?</h1>
+            <p>
+              Échange, collectionne, trie, fais le ménage ! Trouve dans ta ville
+              ou ton quartier les 33 tours qui manquent à ta collection.
+            </p>
           </article>
 
           <figure className="relative">
@@ -39,7 +41,7 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
           </figure>
         </section>
       </div>
-      <div className="bg-buttonText py-16">
+      <div className="bg-buttonText py-16 text-paragraph">
         <section className="m-auto max-w-4xl">
           <figure className="flex flex-col justify-start gap-16 md:flex-row md:justify-center">
             <div className="relative h-auto w-full max-w-full flex-none px-4 leading-none md:max-w-sm md:px-0">

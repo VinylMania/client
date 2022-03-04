@@ -2,6 +2,9 @@
   "name": "vinyl-mania-client",
   "private": true,
   "dependencies": {
+    "@mantine/core": "^3.6.13",
+    "@mantine/hooks": "^3.6.13",
+    "@mantine/next": "^3.6.13",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

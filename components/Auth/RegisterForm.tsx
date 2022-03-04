@@ -10,6 +10,7 @@ import ButtonLoader from '../UI/ButtonLoader'
 import {AlertModel} from '../../models/alertModel'
 import {flushSync} from 'react-dom'
 import {ErrorModel} from '../../models/errorModel'
+import {useFocusTrap} from '@mantine/hooks'
 
 const RegisterForm: React.FC = () => {
   const [registerData, setRegisterData] = useState<RegisterModel>({
@@ -18,6 +19,8 @@ const RegisterForm: React.FC = () => {
     password: '',
     password2: '',
   })
+
+  const focusTrapRef = useFocusTrap()
 
   const [alerts, setAlerts] = useState<AlertModel[]>([])
   const alertRef = useRef<HTMLDivElement>(null)
@@ -37,7 +40,6 @@ const RegisterForm: React.FC = () => {
     {
       onSuccess: (token: string) => {
         token && localStorage.setItem('token', token)
-        // loadUser()
         console.log(token)
         loadUser()
       },
@@ -100,20 +102,21 @@ const RegisterForm: React.FC = () => {
         textLink="Déjà inscrit ?"
         textLinkBold="Je me connecte"
       >
-        <form onSubmit={onFormSubmit}>
+        <form ref={focusTrapRef} onSubmit={onFormSubmit}>
           <fieldset
-            className="flex w-full flex-col gap-y-8"
+            className="flex w-full flex-col gap-y-8 text-buttonText"
             disabled={mutation.isLoading}
           >
             <div className="flex flex-row gap-4">
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-lg font-light text-headline"
+                  className="flex-1 text-lg font-light text-paragraph"
                   htmlFor="username"
                 >
                   Surnom
                 </label>
                 <input
+                  data-autoFocus
                   placeholder="adresse@email.fr"
                   id="username"
                   type="text"
@@ -127,7 +130,7 @@ const RegisterForm: React.FC = () => {
 
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-lg font-light text-headline"
+                  className="flex-1 text-lg font-light text-paragraph"
                   htmlFor="email"
                 >
                   Adresse e-mail
@@ -146,7 +149,7 @@ const RegisterForm: React.FC = () => {
             <div className="flex flex-row gap-4">
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-lg font-light text-headline"
+                  className="flex-1 text-lg font-light text-paragraph"
                   htmlFor="password"
                 >
                   Mot de passe
@@ -164,7 +167,7 @@ const RegisterForm: React.FC = () => {
 
               <div className="flex flex-col">
                 <label
-                  className="flex-1 text-lg font-light text-headline"
+                  className="flex-1 text-lg font-light text-paragraph"
                   htmlFor="password2"
                 >
                   Confirmation de MDP

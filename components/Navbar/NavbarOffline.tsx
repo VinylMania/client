@@ -16,7 +16,7 @@ const NavbarOffline: React.FC = () => {
           })
           toggleRegister(true)
         }}
-        className="navlink"
+        className="navlink before:bg-current"
       >
         S&apos;inscrire
       </button>
@@ -28,7 +28,7 @@ const NavbarOffline: React.FC = () => {
           })
           toggleLogin(true)
         }}
-        className="navlink"
+        className="navlink before:bg-current"
       >
         Se connecter
       </button>

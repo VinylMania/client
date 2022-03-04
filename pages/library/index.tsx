@@ -45,7 +45,7 @@ const Libraries: NextPage<{initialVinyles: VinyleResponse[] | null}> = ({
 
   return (
     <>
-      <main className="min-h-full bg-buttonText pt-8 pb-16 md:pt-16">
+      <main className=" h-full bg-buttonText pt-8 pb-16 md:pt-16">
         <div className="mx-auto flex max-w-full flex-col px-8 md:max-w-5xl">
           <Suspense fallback={<LoadingSpinner />}>
             {listVinyles && vinyles && (
@@ -76,6 +76,7 @@ const Libraries: NextPage<{initialVinyles: VinyleResponse[] | null}> = ({
           </Suspense>
         </div>
       </main>
+      <div className="flex-1 bg-buttonText" />
     </>
   )
 }

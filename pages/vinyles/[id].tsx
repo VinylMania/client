@@ -114,25 +114,13 @@ const Vinyle: NextPage<{
           </div>
         </section>
         <div className="flex flex-col justify-start text-white md:flex-row">
-          <Suspense
-            fallback={
-              <div className="flex-1">
-                <LoadingSpinner />
-              </div>
-            }
-          >
+          <Suspense fallback={<></>}>
             {vinyle && (
               <SameArtist artistId={vinyle.artistId} vinyle={vinyle} />
             )}
           </Suspense>
 
-          <Suspense
-            fallback={
-              <div className="flex-1">
-                <LoadingSpinner />
-              </div>
-            }
-          >
+          <Suspense fallback={<></>}>
             {vinyle && <Owners albumId={vinyle.albumId} vinyle={vinyle} />}
           </Suspense>
         </div>

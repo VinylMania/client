@@ -13,7 +13,7 @@ import ButtonLoader from '../../components/UI/ButtonLoader'
 import AlertWrapper from '../../components/Alerts/Alerts'
 import {AlertModel} from '../../models/alertModel'
 import {ErrorModel} from '../../models/errorModel'
-import Router, {useRouter} from 'next/router'
+import Router from 'next/router'
 import AuthContext from '../../context/auth-context'
 import {NextPage} from 'next'
 
@@ -113,13 +113,13 @@ const AddVinyl: NextPage = () => {
 
   return (
     <>
-      <section className="m-0 w-full p-0">
+      <section className="m-0 h-full w-full bg-background p-0">
         <form
-          className="mx-0 flex justify-center py-8 px-0 md:px-8 lg:px-8"
+          className="mx-0 flex justify-center py-8 px-0 text-paragraph md:px-8 lg:px-8"
           onSubmit={e => onSubmit(e)}
         >
           <div
-            className={`flex w-full flex-col gap-4 border-2 border-white bg-black/30 p-8 backdrop-blur-md md:w-1/2 lg:w-1/3 ${
+            className={` flex w-full flex-col gap-4 border-2 border-white bg-black/30 p-8 text-paragraph backdrop-blur-md md:w-1/2 lg:w-1/3 ${
               selectedArtist
                 ? 'rounded-none md:rounded-l-3xl'
                 : 'rounded-none md:rounded-3xl'
@@ -231,6 +231,7 @@ const AddVinyl: NextPage = () => {
           </div>
         </form>
       </section>
+      <div className="flex-1 bg-background" />
     </>
   )
 }

@@ -10,6 +10,7 @@ import type {AlertModel} from '../../models/alertModel'
 import ButtonLoader from '../UI/ButtonLoader'
 import {flushSync} from 'react-dom'
 import {NextPage} from 'next'
+import {useFocusTrap} from '@mantine/hooks'
 
 export const LoginForm: NextPage = () => {
   const [formData, setFormData] = useState<LoginModel>({
@@ -19,6 +20,8 @@ export const LoginForm: NextPage = () => {
 
   const [alerts, setAlerts] = useState<AlertModel[]>([])
   const alertRef = useRef<HTMLDivElement>(null)
+
+  const focusTrapRef = useFocusTrap()
 
   const mutation = useMutation(
     async (userCreds: LoginModel) => {
@@ -90,19 +93,24 @@ export const LoginForm: NextPage = () => {
         textLink="Pas de compte ?"
         textLinkBold="Inscrivez-vous dès maintenant !"
       >
-        <form className="w-full px-8" onSubmit={onFormSubmit}>
+        <form
+          ref={focusTrapRef}
+          className="w-full px-8"
+          onSubmit={onFormSubmit}
+        >
           <fieldset
-            className="flex w-full flex-col gap-y-8"
+            className="flex w-full flex-col gap-y-8 text-buttonText"
             disabled={mutation.isLoading}
           >
             <div className="flex flex-col">
               <label
-                className="flex-1 text-lg font-light text-headline"
+                className="flex-1 text-lg font-light text-paragraph"
                 htmlFor="email"
               >
                 Adresse e-mail
               </label>
               <input
+                data-autofocus
                 placeholder="adresse@email.fr"
                 id="email"
                 type="email"
@@ -115,7 +123,7 @@ export const LoginForm: NextPage = () => {
 
             <div className="flex flex-col">
               <label
-                className="flex-1 text-lg font-light text-headline"
+                className="flex-1 text-lg font-light text-paragraph"
                 htmlFor="password"
               >
                 Mot de passe
