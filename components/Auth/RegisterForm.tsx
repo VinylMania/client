@@ -97,11 +97,7 @@ const RegisterForm: React.FC = () => {
   return (
     <>
       <div ref={alertRef}>{alerts && <AlertWrapper alerts={alerts} />}</div>
-      <FormContainer
-        title="Inscription"
-        textLink="Déjà inscrit ?"
-        textLinkBold="Je me connecte"
-      >
+      <FormContainer title="Inscription">
         <form ref={focusTrapRef} onSubmit={onFormSubmit}>
           <fieldset
             className="flex w-full flex-col gap-y-8 text-buttonText"

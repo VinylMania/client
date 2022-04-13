@@ -1,44 +1,32 @@
+import {searchVinyleQuery} from 'library'
 import React, {useEffect, useState} from 'react'
-import {VinyleResponse} from '../../models/albumModel'
-import Input from '../UI/Input'
 
 const Filters: React.FC<{
-  vinyles: VinyleResponse[]
   setFilters: React.Dispatch<
-    React.SetStateAction<VinyleResponse[] | null | undefined>
+    React.SetStateAction<
+      | {
+          artistTitle: searchVinyleQuery['artistTitle']
+          albumTitle: searchVinyleQuery['albumTitle']
+        }
+      | undefined
+    >
   >
-}> = ({vinyles, setFilters}) => {
-  const [artistName, setArtistName] = useState('')
-  const [albumTitle, setAlbumTitle] = useState('')
+}> = ({setFilters}) => {
+  const [params, setParams] = useState<{
+    artistTitle: searchVinyleQuery['artistTitle']
+    albumTitle: searchVinyleQuery['albumTitle']
+  }>({artistTitle: '', albumTitle: ''})
 
   useEffect(() => {
-    if (vinyles?.length) {
-      if (!artistName.length && !albumTitle.length) {
-        return setFilters(vinyles)
-      }
-      if (albumTitle.length && !artistName.length)
-        return setFilters(
-          vinyles.filter(lib =>
-            lib.albumTitle.toLowerCase().includes(albumTitle),
-          ),
-        )
-      if (artistName.length && !albumTitle.length)
-        return setFilters(
-          vinyles.filter(lib =>
-            lib.artistTitle.toLowerCase().includes(artistName),
-          ),
-        )
+    const interval = setInterval(() => {
+      setFilters(params)
+    }, 2500)
+    console.log(params)
 
-      if (artistName.length && albumTitle.length)
-        return setFilters(
-          vinyles.filter(
-            lib =>
-              lib.artistTitle.toLowerCase().includes(artistName) &&
-              lib.albumTitle.toLowerCase().includes(albumTitle),
-          ),
-        )
+    return () => {
+      clearInterval(interval)
     }
-  }, [artistName, albumTitle, vinyles, setFilters])
+  }, [params, setFilters])
 
   return (
     <>
@@ -59,7 +47,13 @@ const Filters: React.FC<{
               id="artist-name"
               type="text"
               name="artist-name"
-              onChange={e => setArtistName(e.target.value.toLowerCase().trim())}
+              value={params.artistTitle}
+              onChange={e =>
+                setParams({
+                  ...params,
+                  artistTitle: e.target.value.toLowerCase(),
+                })
+              }
               className="form-text-inputs uppercase"
             />
           </div>
@@ -75,7 +69,13 @@ const Filters: React.FC<{
               id="album-name"
               type="text"
               name="album-name"
-              onChange={e => setAlbumTitle(e.target.value.toLowerCase().trim())}
+              value={params.albumTitle}
+              onChange={e =>
+                setParams({
+                  ...params,
+                  albumTitle: e.target.value.toLowerCase(),
+                })
+              }
               className="form-text-inputs uppercase"
             />
           </div>

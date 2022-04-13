@@ -13,7 +13,7 @@ const UserProfile: NextPage = () => {
   const userId = router.query.userId as UserModel['_id']
 
   return (
-    <section className="min-h-full w-full flex-1 bg-buttonText text-paragraph">
+    <section className="h-full w-full flex-1 bg-buttonText text-paragraph">
       <ErrorBoundary fallback={<LoadingError />}>
         <Suspense fallback={<LoadingSpinner />}>
           {userId && <ProfileHeader userId={userId} />}

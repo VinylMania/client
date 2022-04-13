@@ -4,13 +4,13 @@
 
 @layer components {
   #__next {
-    @apply flex min-h-full flex-col;
+    @apply flex max-h-full min-h-full flex-col bg-background;
   }
   body {
     @apply bg-background text-paragraph;
   }
   .btn-submit {
-    @apply w-max cursor-pointer rounded-full border-2 border-button bg-buttonText px-4 py-2 text-center font-bold text-button transition-all duration-300 hover:border-buttonText hover:bg-button hover:px-6 hover:py-3 hover:text-buttonText focus:border-buttonText focus:bg-button focus:px-6 focus:py-3 focus:text-buttonText disabled:cursor-not-allowed disabled:border-slate-300 disabled:text-slate-300 disabled:hover:bg-inherit disabled:hover:px-4 disabled:hover:py-2 disabled:hover:text-slate-300;
+    @apply w-max cursor-pointer rounded-full border-2 border-button bg-buttonText px-4 py-2 text-center font-bold text-button transition-all duration-300 hover:border-buttonText hover:bg-button hover:text-buttonText focus:border-buttonText focus:bg-button  focus:text-buttonText disabled:cursor-not-allowed disabled:border-slate-300 disabled:text-slate-300 disabled:hover:bg-inherit disabled:hover:px-4 disabled:hover:py-2 disabled:hover:text-slate-300;
   }
   .btn-disabled {
     @apply w-max cursor-not-allowed border border-white p-2 text-center font-bold text-white opacity-60 transition-all duration-200;

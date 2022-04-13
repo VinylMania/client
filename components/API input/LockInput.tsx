@@ -22,7 +22,7 @@ const LockInput: React.FC<{
           onMouseLeave={() => setIsHover(false)}
           type="button"
           onClick={onUnlock}
-          className="my-4 flex cursor-pointer flex-row items-center text-lg hover:text-third"
+          className="hover:text-third my-4 flex cursor-pointer flex-row items-center text-lg"
         >
           <ImCross
             className={`mr-2 transform transition-all duration-200 ${

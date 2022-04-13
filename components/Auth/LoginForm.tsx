@@ -88,11 +88,7 @@ export const LoginForm: NextPage = () => {
   return (
     <>
       <div ref={alertRef}>{alerts && <AlertWrapper alerts={alerts} />}</div>
-      <FormContainer
-        title="Connexion"
-        textLink="Pas de compte ?"
-        textLinkBold="Inscrivez-vous dès maintenant !"
-      >
+      <FormContainer title="Connexion">
         <form
           ref={focusTrapRef}
           className="w-full px-8"

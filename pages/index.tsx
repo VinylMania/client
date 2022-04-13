@@ -17,7 +17,7 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
   return (
     <main className="flex flex-col justify-center">
       <div className="bg-background pt-16 pb-16">
-        <section className="m-auto max-w-4xl">
+        <section className="m-auto max-w-5xl">
           <article className="pb-8 text-2xl font-bold text-headline">
             <h1 className="pb-12">Amoureux du vinyle ?</h1>
             <p>
@@ -42,7 +42,7 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
         </section>
       </div>
       <div className="bg-buttonText py-16 text-paragraph">
-        <section className="m-auto max-w-4xl">
+        <section className="m-auto max-w-5xl">
           <figure className="flex flex-col justify-start gap-16 md:flex-row md:justify-center">
             <div className="relative h-auto w-full max-w-full flex-none px-4 leading-none md:max-w-sm md:px-0">
               <Image
@@ -82,11 +82,12 @@ const Home: NextPage<{imageUrl: string; secondImage: string}> = ({
                 <em className="block border-l-4 border-yellow-400 pl-2 text-2xl not-italic">
                   Comment ça marche ?
                 </em>
-                <span className="block pt-8 ">
+                <span className="block pt-8">
                   Vinylmania est une plateforme d&apos;échange de disques sans
                   but commercial. Le service de mise en relation est libre et
-                  gratuit. Concrètement comment ça marche ?
+                  gratuit.
                 </span>
+                <span>Concrètement comment ça marche ?</span>
               </p>
             </article>
           </figure>

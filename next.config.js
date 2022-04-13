@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
+
   images: {
     domains: [
+      '*.gravatar.com',
+      's.gravatar.com',
       'gravatar.com',
       'www.gravatar.com',
       'img.discogs.com',

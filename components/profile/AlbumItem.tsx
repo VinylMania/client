@@ -43,21 +43,21 @@ const AlbumItem: React.FC<{
   }
 
   return (
-    <>
-      <figure className="group relative h-[200px] w-[200px] overflow-hidden">
-        <div className="group:focus:blur-md transition-all duration-300 group-hover:blur-md group-hover:filter group-focus:filter">
-          <Image
-            alt={albumTitle}
-            layout="intrinsic"
-            width={200}
-            height={200}
-            blurDataURL={albumCoverUrl}
-            src={albumCoverUrl}
-            quality={50}
-            placeholder="blur"
-          />
-        </div>
-        <Link href={`/vinyles/${_id}`}>
+    <div className="flex gap-4 bg-red-300">
+      <figure className="group relative h-[30px] w-[30px] overflow-hidden rounded-full">
+        <Image
+          alt={albumTitle}
+          layout="fill"
+          objectFit="cover"
+          width={30}
+          height={30}
+          blurDataURL={albumCoverUrl}
+          src={albumCoverUrl}
+          quality={50}
+          placeholder="blur"
+        />
+      </figure>
+      {/* <Link href={`/vinyles/${_id}`}>
           <a className="group absolute top-0 left-0 h-full w-full bg-black bg-opacity-0 outline-none transition-all duration-300 focus:bg-black/30 focus:backdrop-blur-sm  focus:transition-all focus:duration-300 group-hover:bg-black/30 group-hover:transition-all group-hover:duration-300">
             <ul className="absolute top-0 right-0 bottom-0 left-0 overflow-hidden text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus:opacity-100">
               <li className="px-2 text-lg">{artistTitle}</li>
@@ -67,18 +67,18 @@ const AlbumItem: React.FC<{
               </li>
             </ul>
           </a>
-        </Link>
-        {isAuth && isOwner && (
-          <button
-            type="button"
-            onClick={onClick}
-            className="outline-nonebg-black absolute bottom-0 w-full border-2 border-black text-center text-white transition-all duration-300 hover:border-red-500 hover:text-red-500 focus:border-red-500 focus:text-red-500 focus-visible:border-red-500 focus-visible:text-red-500"
-          >
-            Retirer ce vinyle
-          </button>
-        )}
-      </figure>
-    </>
+        </Link> */}
+      <p className="text-lg">{albumTitle.split('-')[1] ?? albumTitle}</p>
+      {isAuth && isOwner && (
+        <button
+          type="button"
+          onClick={onClick}
+          className="w-fit border-2 border-black bg-black text-center text-white"
+        >
+          Retirer ce vinyle
+        </button>
+      )}
+    </div>
   )
 }
 

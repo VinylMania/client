@@ -127,7 +127,7 @@ const AlbumInput: React.FC<{
           ))}
       </div>
       {!isLoading && albums && albums.length === 0 && (
-        <p className="bg-buttonText p-2 text-center text-sm text-first">
+        <p className="text-first bg-buttonText p-2 text-center text-sm">
           Aucun résultat trouvé
         </p>
       )}

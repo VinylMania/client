@@ -10,6 +10,9 @@ import {useQuery} from 'react-query'
 import AuthContext from '../../context/auth-context'
 import {ErrorBoundary} from 'react-error-boundary'
 import LoadingError from '../UI/LoadingError'
+import {Button} from '@mantine/core'
+import {Send} from 'react-feather'
+import Link from 'next/link'
 
 const getProfile = async (userId: UserModel['_id']): Promise<UserModel> => {
   const config = provideConfig()
@@ -92,6 +95,22 @@ const ProfileHeader: React.FC<{userId: UserModel['_id']}> = ({userId}) => {
             </div>
           </div>
         )}
+        {isAuthenticated &&
+          user &&
+          userProfile &&
+          user._id !== userProfile._id && (
+            <div className="py-2 pb-4">
+              <Link href={`/chat/${userProfile._id}`} passHref>
+                <Button
+                  type="button"
+                  className="btn-submit border-2"
+                  leftIcon={<Send />}
+                >
+                  Envoyer un message
+                </Button>
+              </Link>
+            </div>
+          )}
         {isAuthenticated &&
           user &&
           userProfile &&

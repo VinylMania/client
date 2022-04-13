@@ -12,6 +12,7 @@ import type {UserModel} from '../models/userModel'
 import loadUser from '../utils/load-user'
 import {flushSync} from 'react-dom'
 import {MantineProvider} from '@mantine/core'
+import 'moment/locale/fr'
 
 export async function getStaticProps() {}
 

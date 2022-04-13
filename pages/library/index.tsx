@@ -1,21 +1,36 @@
-import React, {Suspense, useEffect, useState} from 'react'
+import React, {Suspense, useEffect} from 'react'
 import LoadingSpinner from '../../components/UI/LoadingSpinner'
 import type {VinyleResponse} from '../../models/albumModel'
-import LibraryDetail from '../../components/Library/LibraryDetail'
 import {NextPage} from 'next'
-import {useQuery} from 'react-query'
-import Filters from '../../components/Library/Filters'
 import axios from 'axios'
+import {ErrorBoundary} from 'react-error-boundary'
+import LoadingError from '../../components/UI/LoadingError'
+import VinyleWrapper from '../../components/Library/VinyleWrapper'
 
-const getVinyles = async (): Promise<VinyleResponse[]> => {
-  const response = await axios.get<VinyleResponse[]>(
-    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles`,
+export interface searchVinyleQuery {
+  artistTitle: VinyleResponse['artistTitle']
+  itemId: VinyleResponse['_id']
+  albumTitle: VinyleResponse['albumTitle']
+}
+
+const getVinyles = async (
+  searchVinyle: searchVinyleQuery | null = null,
+): Promise<VinyleResponse[]> => {
+  const response = await axios.post<string, VinyleResponse[]>(
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/vinyles/search`,
+    JSON.stringify({
+      artistTitle: '',
+      albumTitle: '',
+      itemId: '',
+      ...searchVinyle,
+    }),
   )
+
   return response.data
 }
 
-export async function getServerSideProps() {
-  const initialVinyles = await getVinyles()
+export async function getStaticProps() {
+  const initialVinyles = await getVinyles(null)
   return {
     props: {
       initialVinyles,
@@ -23,50 +38,32 @@ export async function getServerSideProps() {
   }
 }
 
-const Libraries: NextPage<{initialVinyles: VinyleResponse[] | null}> = ({
+const Libraries: NextPage<{initialVinyles: VinyleResponse[]}> = ({
   initialVinyles,
 }) => {
-  const [vinyles, setFilters] = useState<VinyleResponse[] | null>()
-
-  const {data: listVinyles} = useQuery(
-    'getVinyles',
-    () => {
-      return getVinyles()
-    },
-    {
-      initialData: initialVinyles,
-      retry: false,
-    },
-  )
-
-  useEffect(() => {
-    setFilters(listVinyles)
-  }, [listVinyles])
-
   return (
     <>
-      <main className=" h-full bg-buttonText pt-8 pb-16 md:pt-16">
+      <section className="flex h-full flex-col items-center justify-center gap-8 bg-background pt-8 pb-16 text-paragraph md:pt-8">
+        <ErrorBoundary fallback={<LoadingError />}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <VinyleWrapper
+              getVinyles={getVinyles}
+              initialVinyles={initialVinyles}
+            />
+          </Suspense>
+        </ErrorBoundary>
+      </section>
+    </>
+  )
+}
+/* <main className="h-full border-2 bg-buttonText pt-8 pb-16 md:pt-16">
         <div className="mx-auto flex max-w-full flex-col px-8 md:max-w-5xl">
           <Suspense fallback={<LoadingSpinner />}>
-            {listVinyles && vinyles && (
-              <Filters vinyles={listVinyles} setFilters={setFilters} />
-            )}
-
-            {!listVinyles?.length && (
-              <p className="py-8 text-center text-2xl font-bold text-headline">
-                La bibliothèque est vide pour le moment.
-              </p>
-            )}
-
-            {listVinyles && listVinyles.length > 0 && vinyles?.length === 0 && (
-              <p className="py-8 text-center text-2xl font-bold text-headline">
-                Aucun résultat correspondant à votre recherche.
-              </p>
-            )}
+            
 
             {listVinyles && vinyles && vinyles.length > 0 && (
               <section>
-                <article className="flex flex-wrap justify-center gap-8 overflow-hidden rounded-xl bg-background p-4 md:justify-between">
+                <article className="grid grid-cols-4 gap-8 overflow-hidden rounded-xl">
                   {vinyles.map((vinyle, index) => (
                     <LibraryDetail key={index} vinyle={vinyle} />
                   ))}
@@ -76,9 +73,6 @@ const Libraries: NextPage<{initialVinyles: VinyleResponse[] | null}> = ({
           </Suspense>
         </div>
       </main>
-      <div className="flex-1 bg-buttonText" />
-    </>
-  )
-}
+      <div className="flex-1 bg-buttonText" /> */
 
 export default Libraries

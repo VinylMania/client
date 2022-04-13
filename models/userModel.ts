@@ -20,6 +20,11 @@ export interface UserModel {
   date_updated: string
 }
 
+export interface Users {
+  users: UserModel[]
+  itemId: UserModel['_id']
+}
+
 export interface UserProfileModel {
   _id: string
   user: UserModel

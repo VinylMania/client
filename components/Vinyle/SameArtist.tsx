@@ -27,10 +27,8 @@ const SameArtist: React.FC<{
   return (
     <>
       {artistVinyles && artistVinyles.length > 0 && (
-        <div className="flex-1 bg-slate-900 py-4">
-          <h2 className="py-4 text-center text-2xl font-bold">
-            Du même artiste
-          </h2>
+        <div className="w-fit px-4">
+          <h2 className="text-center italic">Du même artiste</h2>
           <div className="relative mx-auto h-[128px] w-[128px] overflow-hidden rounded-full">
             <Image
               alt={vinyle.artistTitle}
@@ -43,7 +41,7 @@ const SameArtist: React.FC<{
             />
           </div>
           <ErrorBoundary fallback={<LoadingError />}>
-            <div className="mx-auto w-2/3 overflow-hidden py-4">
+            <div className="flex flex-col flex-wrap gap-2 py-4">
               {artistVinyles &&
                 artistVinyles.length > 0 &&
                 React.Children.toArray(
@@ -52,9 +50,12 @@ const SameArtist: React.FC<{
                     .map(artistVinyle => (
                       <VinyleLinkItem
                         key={artistVinyle._id}
-                        text={artistVinyle.albumTitle}
+                        text={
+                          artistVinyle.albumTitle.split('-')[1] ??
+                          artistVinyle.albumTitle
+                        }
                         avatar={artistVinyle.albumCoverUrl}
-                        link={`/vinyles/${artistVinyle._id}`}
+                        link={`/library/${artistVinyle._id}`}
                         alt={`Image de profil de ${artistVinyle.user.username}`}
                       />
                     )),

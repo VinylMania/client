@@ -11,8 +11,8 @@ const VinyleLinkItem: React.FC<{
 }> = ({link, alt, avatar, text}) => {
   return (
     <Link key={link} href={link} scroll={false}>
-      <a className="flex flex-row items-start justify-start bg-black p-2 font-thin hover:bg-third focus:bg-third">
-        <div className="relative h-[36px] w-[36px] overflow-hidden rounded-full">
+      <a className="flex flex-row items-start justify-start rounded-full bg-black/40 px-4 py-2 font-thin hover:bg-button focus:bg-button">
+        <div className="relative h-[28px] min-h-[28px] w-[28px] min-w-[28px] overflow-hidden rounded-full">
           <Image
             alt={alt}
             layout="fill"
